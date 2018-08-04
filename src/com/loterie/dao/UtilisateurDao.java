@@ -1,4 +1,5 @@
 package com.loterie.dao;
+import com.loterie.config.Constants;
 
 import static com.loterie.tools.Tools.*;
 
@@ -18,14 +19,6 @@ import com.loterie.tools.Tools;
 public class UtilisateurDao {
 	// TODO: Déplacer dans un ConnexionForm 
 	private static final String ERR_MDP_INVALIDE 		= "Le mot de passe saisi est invalide ou l'utilisateur n'existe pas.";
-	
-	private static final int MDP_TAILLE_MIN				= 8;
-	private static final int SEL_TAILLE_MIN 			= 8;
-	private static final int VARIABILITE_SEL 			= 8;
-
-	private static final String SELECT_PAR_NOM 			= "SELECT u FROM Utilisateur u WHERE u.pseudo = :pseudo";
-	private static final String SELECT_PAR_NOM_PRENOM 	= "SELECT u FROM Utilisateur u WHERE u.nom = :nom AND u.prenom = :prenom";
-	private static final String SELECT_PAR_EMAIL		= "SELECT u FROM Utilisateur u WHERE u.email = :email";
 	
 	@PersistenceContext(name = "loterie_PU")
 	private EntityManager em;
@@ -56,7 +49,7 @@ public class UtilisateurDao {
 		};
 		
 		Object[] listeParametres = {
-				MDP_TAILLE_MIN
+				Constants.MDP_TAILLE_MIN
 		};
 		
 		if (listeControles.length != listeParametres.length) {
@@ -70,7 +63,7 @@ public class UtilisateurDao {
 	}
 	
 	public void changerGrainDeSel(Utilisateur utilisateur, String mdp) {
-		String grainDeSel = chaineAleatoire((int) Math.round(Math.random() * VARIABILITE_SEL) + SEL_TAILLE_MIN, true, true, false);
+		String grainDeSel = chaineAleatoire((int) Math.round(Math.random() * Constants.VARIABILITE_SEL) + Constants.SEL_TAILLE_MIN, true, true, false);
 		String sha256mdp = encoderSHA256(mdp + grainDeSel);
 		utilisateur.setGrainDeSel(grainDeSel);
 		utilisateur.setMotDePasse(sha256mdp);
@@ -93,7 +86,7 @@ public class UtilisateurDao {
 		Utilisateur utilisateur = null;
 		
 		try {
-			Query query = em.createQuery(SELECT_PAR_NOM);
+			Query query = em.createQuery(Constants.SELECT_UTILISATEUR_PAR_NOM);
 			query.setParameter("pseudo", pseudo);
 			
 			utilisateur = (Utilisateur) query.getSingleResult();
@@ -109,7 +102,7 @@ public class UtilisateurDao {
 		Utilisateur utilisateur = null;
 		
 		try {
-			Query query = em.createQuery(SELECT_PAR_NOM_PRENOM);
+			Query query = em.createQuery(Constants.SELECT_UTILISATEUR_PAR_NOM_PRENOM);
 			query.setParameter("nom", nom);
 			query.setParameter("prenom", prenom);
 			
@@ -125,7 +118,7 @@ public class UtilisateurDao {
 		Utilisateur utilisateur = null;
 		
 		try {
-			Query query = em.createQuery(SELECT_PAR_EMAIL);
+			Query query = em.createQuery(Constants.SELECT_UTILISATEUR_PAR_EMAIL);
 			query.setParameter("email", email);
 
 			utilisateur = (Utilisateur) query.getSingleResult();

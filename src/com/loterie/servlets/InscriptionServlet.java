@@ -1,4 +1,5 @@
 package com.loterie.servlets;
+import com.loterie.config.Constants;
 
 import java.io.IOException;
 import java.util.Map;
@@ -20,14 +21,12 @@ public class InscriptionServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID 		= 4L;
-	private static final String SUBSCR_PAGE 		= "/WEB-INF/publique/subscriptionPage.jsp";
-	private static final String SUBSCR_OK_PAGE 		= "/WEB-INF/publique/homePage.jsp";
 	@EJB
 	private UtilisateurDao utilisateurDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getServletContext().getRequestDispatcher(SUBSCR_PAGE).forward(req, resp);
+		req.getServletContext().getRequestDispatcher(Constants.URL_INSCRIPTION).forward(req, resp);
 	}
 
 	@Override
@@ -37,9 +36,9 @@ public class InscriptionServlet extends HttpServlet {
 		
 		if (erreurs.isEmpty()) {
 			cuf.creerUtilisateur();
-			req.getServletContext().getRequestDispatcher(SUBSCR_OK_PAGE).forward(req, resp);
+			req.getServletContext().getRequestDispatcher(Constants.URL_INSCRIPTION_OK).forward(req, resp);
 		} else {
-			req.getServletContext().getRequestDispatcher(SUBSCR_PAGE).forward(req, resp);
+			req.getServletContext().getRequestDispatcher(Constants.URL_INSCRIPTION).forward(req, resp);
 		}
 	}
 

@@ -1,4 +1,5 @@
 package com.loterie.servlets;
+import com.loterie.config.Constants;
 
 import java.io.IOException;
 
@@ -20,14 +21,12 @@ public class GestionMdpServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 2L;
-	private static final String CREATE_PASS_PAGE = "/WEB-INF/set-password.jsp";
-	private static final String HOME_PAGE = "/index.jsp";
 	@EJB
 	private UtilisateurDao utilisateurDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getServletContext().getRequestDispatcher(CREATE_PASS_PAGE).forward(req, resp);
+		req.getServletContext().getRequestDispatcher(Constants.URL_CREER_MDP).forward(req, resp);
 	}
 
 	@Override
@@ -37,7 +36,7 @@ public class GestionMdpServlet extends HttpServlet {
 		
 		if (utilisateur != null) {
 			utilisateurDao.changerMotDePasse(utilisateur, req);
-			req.getServletContext().getRequestDispatcher(HOME_PAGE).forward(req, resp);
+			req.getServletContext().getRequestDispatcher(Constants.URL_ACCUEIL).forward(req, resp);
 		}
 	}
 	

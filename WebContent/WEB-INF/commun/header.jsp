@@ -2,7 +2,9 @@
 <ul>
 	<li><a href="<c:url value="/accueil" />">Accueil</a></li>
 	<li><a href="<c:url value="/resultats" />">Résultats</a></li>
-	<li><a href="<c:url value="/membre/profil" />">Mon profil</a></li>
+	<c:if test="${loggedIn == true}">
+		<li><a href="<c:url value="/membre/profil" />">Mon profil</a></li>
+	</c:if>
 	<c:choose>
 		<c:when test="${not loggedIn}">
 			<li><a href="<c:url value="/inscription" />">S'inscrire</a></li>

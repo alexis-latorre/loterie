@@ -1,4 +1,5 @@
 package com.loterie.servlets;
+import com.loterie.config.Constants;
 
 import java.io.IOException;
 import java.util.Map;
@@ -21,8 +22,6 @@ public class ConnexionServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final String HOME_PAGE = "/WEB-INF/publique/homePage.jsp";
-	private static final String CREATE_PASS_PAGE = "/WEB-INF/set-password.jsp";
 	@EJB
 	private UtilisateurDao utilisateurDao;
 
@@ -36,7 +35,7 @@ public class ConnexionServlet extends HttpServlet {
 		}
 		req.setAttribute("loggedIn", loggedIn);
 
-		req.getServletContext().getRequestDispatcher(HOME_PAGE).forward(req, resp);
+		req.getServletContext().getRequestDispatcher(Constants.URL_ACCUEIL).forward(req, resp);
 	}
 
 	@Override
@@ -45,7 +44,7 @@ public class ConnexionServlet extends HttpServlet {
 		String pseudo = req.getParameter("pseudo");
 		Utilisateur utilisateur = null;
 		utilisateur = utilisateurDao.trouverParPseudo(pseudo);
-		String cible = HOME_PAGE;
+		String cible = Constants.URL_ACCUEIL;
 		
 		if (utilisateur != null) {
 			session.setAttribute("utilisateur", utilisateur);
@@ -57,17 +56,17 @@ public class ConnexionServlet extends HttpServlet {
 				if (mdpValide) {
 					utilisateurDao.changerGrainDeSel(utilisateur, req.getParameter("motDePasse"));
 					session.setAttribute("loggedIn", true);
-					cible = HOME_PAGE;
+					cible = Constants.URL_ACCUEIL;
 				} else {
 					session.setAttribute("loggedIn", false);
 					session.setAttribute("utilisateur", null);
-					cible = HOME_PAGE;
+					cible = Constants.URL_ACCUEIL;
 				}
 			} else {
-				cible = CREATE_PASS_PAGE;
+				cible = Constants.URL_CREER_MDP;
 			}
 		} else {
-			cible = HOME_PAGE;
+			cible = Constants.URL_ACCUEIL;
 		}
 		Map<String, String> erreursUtilisateur = utilisateurDao.getErreurs();
 		req.setAttribute("erreursUtilisateur", erreursUtilisateur);

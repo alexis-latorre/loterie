@@ -1,4 +1,5 @@
 package com.loterie.servlets;
+import com.loterie.config.Constants;
 
 import java.io.IOException;
 
@@ -19,7 +20,6 @@ public class DeconnexionServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 3L;
-	private static final String HOME_PAGE = "/WEB-INF/publique/homePage.jsp";
 	@EJB
 	private UtilisateurDao utilisateurDao;
 
@@ -35,6 +35,6 @@ public class DeconnexionServlet extends HttpServlet {
 		req.setAttribute("utilisateur", null);
 		}
 
-		req.getServletContext().getRequestDispatcher(HOME_PAGE).forward(req, resp);
+		req.getServletContext().getRequestDispatcher(Constants.URL_ACCUEIL).forward(req, resp);
 	}	
 }

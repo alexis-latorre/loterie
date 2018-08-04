@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "utilisateur")
-public class Utilisateur {
+public class Utilisateur {	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -21,7 +21,7 @@ public class Utilisateur {
 	private String grainDeSel;
 	@Column(name = "mot_de_passe")	
 	private String motDePasse;
-	private String reserve;
+	private Long niveau;
 	
 	public Long getId() {
 		return id;
@@ -65,10 +65,10 @@ public class Utilisateur {
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
 	}
-	public String getReserve() {
-		return reserve;
+	public Long getNiveau() {
+		return niveau;
 	}
-	public void setReserve(String reserve) {
-		this.reserve = reserve;
+	public void setNiveau(Long niveau) {
+		this.niveau = niveau;
 	}
 }

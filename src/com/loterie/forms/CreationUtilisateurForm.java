@@ -1,13 +1,14 @@
 package com.loterie.forms;
+import com.loterie.config.Constants; 
 
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
+import com.loterie.config.Constants;
 import com.loterie.tools.Tools;
 
 import static com.loterie.tools.Tools.*;
@@ -18,10 +19,6 @@ public class CreationUtilisateurForm {
 	private static final String EMAIL_EXISTANT 			= "Cette adresse email est déjà utilisée par un autre compte.";
 	private static final String ERREUR_MDP 				= "Le mot de passe entré n'est pas valide.";
 	private static final String ERREUR_MDPC 			= "Les mots de pass entrés sont différents.";
-	
-	private static final int MDP_TAILLE_MIN 			= 8;
-	private static final int SEL_TAILLE_MIN 			= 8;
-	private static final int VARIABILITE_SEL 			= 8;
 	
 	private Utilisateur utilisateur;
 	private Map<String, String> erreurs;
@@ -44,7 +41,7 @@ public class CreationUtilisateurForm {
 		validerMDP(mdp, mdpc);
 		
 		if (erreurs.isEmpty()) {
-			String grainDeSel = chaineAleatoire((int) Math.round(Math.random() * VARIABILITE_SEL) + SEL_TAILLE_MIN, true, true, false);
+			String grainDeSel = chaineAleatoire((int) Math.round(Math.random() * Constants.VARIABILITE_SEL) + Constants.SEL_TAILLE_MIN, true, true, false);
 			String sha256mdp = encoderSHA256(mdp + grainDeSel);
 			
 			utilisateur.setPseudo(pseudo);
@@ -53,6 +50,7 @@ public class CreationUtilisateurForm {
 			utilisateur.setEmail(email);
 			utilisateur.setGrainDeSel(grainDeSel);
 			utilisateur.setMotDePasse(sha256mdp);
+			utilisateur.setNiveau(Constants.UTILISATEUR_ROLE_BASIQUE);
 		}
 	}
 	
@@ -100,7 +98,7 @@ public class CreationUtilisateurForm {
 		};
 		
 		Object[] listeParametres = {
-				MDP_TAILLE_MIN
+				Constants.MDP_TAILLE_MIN
 		};
 		
 		if (listeControles.length != listeParametres.length) {

@@ -1,5 +1,7 @@
 package com.loterie.tools;
 
+import java.nio.charset.Charset;
+
 import com.google.common.hash.Hashing;
 
 public class Tools {
@@ -68,6 +70,6 @@ public class Tools {
 	}
 	
 	public static String encoderSHA256(String chaine) {
-		return Hashing.sha256().hashString(chaine).toString();
+		return Hashing.sha256().hashString(chaine, Charset.forName("UTF-8")).toString();
 	}
 }
