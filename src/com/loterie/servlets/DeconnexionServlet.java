@@ -28,11 +28,11 @@ public class DeconnexionServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		
 		if (session.getAttribute("loggedIn") != null) {
-			req.setAttribute("loggedIn", false);
+			session.setAttribute("loggedIn", false);
 		}
 		
 		if (session.getAttribute("utilisateur") != null) {
-		req.setAttribute("utilisateur", null);
+			session.setAttribute("utilisateur", null);
 		}
 
 		req.getServletContext().getRequestDispatcher(Constants.URL_ACCUEIL).forward(req, resp);

@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.loterie.config.Constants;
+
 @Entity
 @Table(name = "utilisateur")
 public class Utilisateur {	
@@ -70,5 +72,21 @@ public class Utilisateur {
 	}
 	public void setNiveau(Long niveau) {
 		this.niveau = niveau;
+	}
+	
+	public boolean estAdministrateur() {
+		return this.niveau <= Constants.UTILISATEUR_ROLE_ADMIN;
+	}
+	
+	public boolean estModerateur() {
+		return this.niveau <= Constants.UTILISATEUR_ROLE_MODERATEUR;
+	}
+	
+	public boolean estMembre() {
+		return this.niveau <= Constants.UTILISATEUR_ROLE_MEMBRE;
+	}
+	
+	public boolean estBasique() {
+		return this.niveau <= Constants.UTILISATEUR_ROLE_BASIQUE;
 	}
 }

@@ -2,7 +2,10 @@ package com.loterie.tools;
 
 import java.nio.charset.Charset;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.google.common.hash.Hashing;
+import com.loterie.config.Constants;
 
 public class Tools {
 	private static final String LETTRES_MAJ 	= "abcdefghijklmnopqrstuvwxyz";
@@ -71,5 +74,9 @@ public class Tools {
 	
 	public static String encoderSHA256(String chaine) {
 		return Hashing.sha256().hashString(chaine, Charset.forName("UTF-8")).toString();
+	}
+	
+	public static String URIsansContexte(HttpServletRequest req) {
+		return req.getRequestURI().replaceAll(Constants.CONTEXTE, "");
 	}
 }

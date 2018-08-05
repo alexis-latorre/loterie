@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
@@ -77,7 +78,13 @@ public class UtilisateurDao {
 		String sha256mdp = encoderSHA256(mdp + grainDeSel);
 		
 		boolean valide = sha256mdp.equals(mdp256);
-		ajouterErreur("mdpInvalide", ERR_MDP_INVALIDE);
+		
+		if (!valide) {
+			System.err.println("------------------------");
+			System.err.println(sha256mdp);
+			System.err.println(mdp256);
+			ajouterErreur("mdpInvalide", ERR_MDP_INVALIDE);
+		}
 		
 		return valide;
 	}
@@ -90,8 +97,10 @@ public class UtilisateurDao {
 			query.setParameter("pseudo", pseudo);
 			
 			utilisateur = (Utilisateur) query.getSingleResult();
+		} catch (NoResultException e) {
+			System.out.println("[WARNING]: No user found with pseudo '" + pseudo + "'.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			//ajouterErreur("mdpInvalide", ERR_MDP_INVALIDE);
 		}
 		

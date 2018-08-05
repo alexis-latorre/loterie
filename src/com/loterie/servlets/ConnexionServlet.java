@@ -40,11 +40,11 @@ public class ConnexionServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String cible = Constants.URL_ACCUEIL;
 		HttpSession session = req.getSession();
 		String pseudo = req.getParameter("pseudo");
 		Utilisateur utilisateur = null;
 		utilisateur = utilisateurDao.trouverParPseudo(pseudo);
-		String cible = Constants.URL_ACCUEIL;
 		
 		if (utilisateur != null) {
 			session.setAttribute("utilisateur", utilisateur);
@@ -56,6 +56,7 @@ public class ConnexionServlet extends HttpServlet {
 				if (mdpValide) {
 					utilisateurDao.changerGrainDeSel(utilisateur, req.getParameter("motDePasse"));
 					session.setAttribute("loggedIn", true);
+					req.setAttribute("utilisateur", utilisateur);
 					cible = Constants.URL_ACCUEIL;
 				} else {
 					session.setAttribute("loggedIn", false);

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
-import com.loterie.config.Constants;
 import com.loterie.tools.Tools;
 
 import static com.loterie.tools.Tools.*;
@@ -18,7 +17,7 @@ public class CreationUtilisateurForm {
 	private static final String UTILISATEUR_EXISTANT 	= "L'utilisateur est déjà affilié à un compte.";
 	private static final String EMAIL_EXISTANT 			= "Cette adresse email est déjà utilisée par un autre compte.";
 	private static final String ERREUR_MDP 				= "Le mot de passe entré n'est pas valide.";
-	private static final String ERREUR_MDPC 			= "Les mots de pass entrés sont différents.";
+	private static final String ERREUR_MDPC 			= "Les mots de passe entrés sont différents.";
 	
 	private Utilisateur utilisateur;
 	private Map<String, String> erreurs;

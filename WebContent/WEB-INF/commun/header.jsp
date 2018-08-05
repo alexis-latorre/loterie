@@ -4,6 +4,9 @@
 	<li><a href="<c:url value="/resultats" />">Résultats</a></li>
 	<c:if test="${loggedIn == true}">
 		<li><a href="<c:url value="/membre/profil" />">Mon profil</a></li>
+		<c:if test="${utilisateur.niveau <= 0}">
+			<li><a href="<c:url value="/admin" />">Administration</a></li>
+		</c:if>
 	</c:if>
 	<c:choose>
 		<c:when test="${not loggedIn}">

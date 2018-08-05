@@ -1,6 +1,6 @@
-		<label>Utilisateur : <input type="text" name="pseudo" id="input-pseudo" /></label>
+		<label>Utilisateur : <input type="text" name="pseudo" id="input-pseudo" value="alatorre" /></label>
 		<br />
-		<label>Mot de passe : <input type="password" name="motDePasse" id="input-motDePasse" /></label>
+		<label>Mot de passe : <input type="password" name="motDePasse" id="input-motDePasse" value="useruser" /></label>
 		<br />
 		<c:if test="${not empty erreursUtilisateur}">
 			<c:if test="${not empty erreursUtilisateur.mdpInvalide}">
