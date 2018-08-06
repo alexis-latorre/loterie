@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 
 import com.loterie.config.Constants;
 import com.loterie.dao.GrilleDao;
+import com.loterie.dao.LienGUDao;
 import com.loterie.entities.Grille;
+import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;
 
@@ -34,6 +36,8 @@ public class ProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 6L;
 	@EJB
 	private GrilleDao grilleDao;
+	@EJB
+	private LienGUDao lienGUDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,6 +51,18 @@ public class ProfilServlet extends HttpServlet {
 			if (utilisateur.estMembre()) {
 				if (uri.equals(Constants.URI_MEMBRE_AFFICHER_GRILLES)) {
 					List<Grille> grilles = grilleDao.trouverParUtilisateur(utilisateur);
+					List<Long> grillesIds = new ArrayList<Long>();
+					List<Grille> grillesCreees = grilleDao.trouverParCreateur(utilisateur);
+
+					for (Grille grille : grilles) {
+						grillesIds.add(grille.getId());
+					}
+					
+					for (Grille grille : grillesCreees) {
+						if (!grillesIds.contains(grille.getId())) {
+							grilles.add(grille);
+						}
+					}
 					req.setAttribute("grilles", grilles);
 					cible = Constants.URL_MEMBRE_AFFICHER_GRILLES;
 				} else if (uri.equals(Constants.URI_MEMBRE_CREER_GRILLE)) {
@@ -139,6 +155,16 @@ public class ProfilServlet extends HttpServlet {
 					
 					req.setAttribute("grille", grille);
 					cible = Constants.URL_MEMBRE_MODIFIER_GRILLE;
+				} else if (uri.equals(Constants.URI_MEMBRE_REJOINDRE_GRILLE)) {
+					String id = req.getParameter("id");
+					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
+					LienGrilleUtilisateur lienGU = new LienGrilleUtilisateur(); 
+
+					lienGU.setUtilisateur(utilisateur);
+					lienGU.setGrille(grille);
+					lienGUDao.enregistrerLienGrilleUtilisateur(lienGU);
+					
+					cible = Constants.URL_MEMBRE_AFFICHER_GRILLES;
 				} else {
 					cible = Constants.URL_MEMBRE_ACCUEIL;
 				}

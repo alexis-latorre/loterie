@@ -33,11 +33,28 @@ public class GrilleDao {
 		this.erreurs = erreurs;
 	}
 	
+	public List<Grille> trouverParCreateur(Utilisateur utilisateur) {
+		List<Grille> grilles = new ArrayList<Grille>();
+		
+		try {
+			Query query = em.createQuery(Constants.SELECT_GRILLES_PAR_CREATEUR);
+			query.setParameter("utilisateur", utilisateur);
+			
+			grilles = (List<Grille>) query.getResultList();
+		} catch (NoResultException e) {
+			System.out.println("[WARNING]: Pas de grille trouvee pour '" + utilisateur.getPseudo() + "'.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return grilles;
+	}
+	
 	public List<Grille> trouverParUtilisateur(Utilisateur utilisateur) {
 		List<Grille> grilles = new ArrayList<Grille>();
 		
 		try {
-			Query query = em.createQuery(Constants.SELECT_GRILLE_PAR_UTILISATEUR);
+			Query query = em.createQuery(Constants.SELECT_GRILLES_PAR_UTILISATEUR);
 			query.setParameter("utilisateur", utilisateur);
 			
 			grilles = (List<Grille>) query.getResultList();

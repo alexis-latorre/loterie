@@ -25,6 +25,8 @@ public interface Constants {
 	public static final String URI_MEMBRE_CREER_GRILLE				= "/membre/creerGrille";
 	public static final String URI_MEMBRE_MODIFIER_GRILLE			= "/membre/editerGrille";
 	public static final String URI_MEMBRE_SUPPRIMER_GRILLE			= "/membre/supprimerGrille";
+	public static final String URI_MEMBRE_REJOINDRE_GRILLE			= "/membre/rejoindreGrille";
+	public static final String URI_MEMBRE_QUITTER_GRILLE			= "/membre/quitterGrille";
 	
 	/** 
 	 *  Constantes liées aux URL 
@@ -54,6 +56,7 @@ public interface Constants {
 	public static final String SELECT_UTILISATEUR_PAR_NOM 			= "SELECT u FROM Utilisateur u WHERE u.pseudo = :pseudo";
 	public static final String SELECT_UTILISATEUR_PAR_NOM_PRENOM 	= "SELECT u FROM Utilisateur u WHERE u.nom = :nom AND u.prenom = :prenom";
 	public static final String SELECT_UTILISATEUR_PAR_EMAIL			= "SELECT u FROM Utilisateur u WHERE u.email = :email";
-	public static final String SELECT_GRILLE_PAR_UTILISATEUR		= "SELECT g FROM Grille g JOIN g.utilisateur u WHERE u = :utilisateur";
+	public static final String SELECT_GRILLES_PAR_CREATEUR			= "SELECT g FROM Grille g JOIN g.utilisateur u WHERE u = :utilisateur";
+	public static final String SELECT_GRILLES_PAR_UTILISATEUR		= "SELECT l.grille FROM LienGrilleUtilisateur l WHERE l.utilisateur = :utilisateur";
 	public static final String SELECT_GRILLE_PAR_ID					= "SELECT g FROM Grille g WHERE g.id = :id";
 }

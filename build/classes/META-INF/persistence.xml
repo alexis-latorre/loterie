@@ -4,9 +4,10 @@
 		<jta-data-source>jdbc/loterie_bonecp_resource</jta-data-source>
 		<class>com.loterie.entities.Utilisateur</class>
 		<class>com.loterie.entities.Grille</class>
-        <!--properties>
+		<class>com.loterie.entities.LienGrilleUtilisateur</class>
+        <properties>
             <property name="eclipselink.logging.level.sql" value="FINE"/>
             <property name="eclipselink.logging.parameters" value="true"/>
-        </properties-->	
+        </properties>	
 	</persistence-unit>
 </persistence>

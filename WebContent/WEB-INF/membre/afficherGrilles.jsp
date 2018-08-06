@@ -13,15 +13,27 @@
 		<c:when test="${not empty grilles}">
 			<c:forEach items="${grilles}" var="grille">
 				<div>
-					<p><a title="Editer cette grille" href="<c:url value="/membre/editerGrille?id=${grille.id}" />">éditer</a> | 
-					<a title="Supprimer cette grille" href="<c:url value="/membre/supprimerGrille?id=${grille.id}" />">suppr.</a></p>
-					<h4>${fn:join(grille.numeros, ', ')} - ${fn:join(grille.etoiles, ', ')}</h4>
+					<p>
+						<c:choose>
+							<c:when test="${utilisateur.id == grille.utilisateur.id}">
+							<a title="Quitter cette grille" href="<c:url value="/membre/quitterGrille?id=${grille.id}" />">quitter</a> 
+							</c:when>
+							<c:otherwise>
+							<a title="Rejoindre cette grille" href="<c:url value="/membre/rejoindreGrille?id=${grille.id}" />">rejoindre</a>
+							</c:otherwise>
+						</c:choose>
+						<c:if test="${utilisateur.id == grille.utilisateur.id}">
+						| <a title="Editer cette grille" href="<c:url value="/membre/editerGrille?id=${grille.id}" />">éditer</a> | 
+						<a title="Supprimer cette grille" href="<c:url value="/membre/supprimerGrille?id=${grille.id}" />">suppr.</a>
+						</c:if>
+					</p>
+					<h4>${grille.id} : ${fn:join(grille.numeros, ', ')} - ${fn:join(grille.etoiles, ', ')}</h4>
 				</div>
 			</c:forEach>
 			<p><a href="<c:url value="/membre/creerGrille" />">Ajouter une grille</a></p>
 		</c:when>
 		<c:otherwise>
-			Vous n'avez créé aucune grille.
+			Vous ne participez à aucune grille.
 			<p><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a></p>
 		</c:otherwise>
 	</c:choose>
