@@ -15,16 +15,16 @@
 				<div>
 					<p>
 						<c:choose>
-							<c:when test="${utilisateur.id == grille.utilisateur.id}">
-							<a title="Quitter cette grille" href="<c:url value="/membre/quitterGrille?id=${grille.id}" />">quitter</a> 
+							<c:when test="${grille.rejoindre == false}">
+							<a title="Quitter cette grille" href="<c:url value="/membre/quitterGrille"><c:param name="id" value="${grille.id}" /></c:url>">quitter</a> 
 							</c:when>
 							<c:otherwise>
-							<a title="Rejoindre cette grille" href="<c:url value="/membre/rejoindreGrille?id=${grille.id}" />">rejoindre</a>
+							<a title="Rejoindre cette grille" href="<c:url value="/membre/rejoindreGrille"><c:param name="id" value="${grille.id}" /></c:url>">rejoindre</a>
 							</c:otherwise>
 						</c:choose>
 						<c:if test="${utilisateur.id == grille.utilisateur.id}">
-						| <a title="Editer cette grille" href="<c:url value="/membre/editerGrille?id=${grille.id}" />">éditer</a> | 
-						<a title="Supprimer cette grille" href="<c:url value="/membre/supprimerGrille?id=${grille.id}" />">suppr.</a>
+						| <a title="Editer cette grille" href="<c:url value="/membre/editerGrille"><c:param name="id" value="${grille.id}" /></c:url>">éditer</a> | 
+						<a title="Supprimer cette grille" href="<c:url value="/membre/supprimerGrille"><c:param name="id" value="${grille.id}" /></c:url>">suppr.</a>
 						</c:if>
 					</p>
 					<h4>${grille.id} : ${fn:join(grille.numeros, ', ')} - ${fn:join(grille.etoiles, ', ')}</h4>

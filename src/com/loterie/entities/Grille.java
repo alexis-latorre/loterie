@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "grille")
@@ -26,6 +27,8 @@ public class Grille {
 	@ManyToOne
 	@JoinColumn(name = "fk_createur")
 	private Utilisateur utilisateur;
+	@Transient
+	private boolean rejoindre;
 	
 	public Long getId() {
 		return id;
@@ -89,5 +92,13 @@ public class Grille {
 	
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+
+	public boolean isRejoindre() {
+		return rejoindre;
+	}
+
+	public void setRejoindre(boolean rejoindre) {
+		this.rejoindre = rejoindre;
 	}
 }

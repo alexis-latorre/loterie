@@ -26,7 +26,9 @@ import com.loterie.tools.Tools;
 		Constants.URI_MEMBRE_AFFICHER_GRILLES,
 		Constants.URI_MEMBRE_CREER_GRILLE, 
 		Constants.URI_MEMBRE_MODIFIER_GRILLE, 
-		Constants.URI_MEMBRE_SUPPRIMER_GRILLE
+		Constants.URI_MEMBRE_SUPPRIMER_GRILLE,
+		Constants.URI_MEMBRE_REJOINDRE_GRILLE,
+		Constants.URI_MEMBRE_QUITTER_GRILLE
 		})
 public class ProfilServlet extends HttpServlet {
 
@@ -50,16 +52,20 @@ public class ProfilServlet extends HttpServlet {
 		if (utilisateur != null) {
 			if (utilisateur.estMembre()) {
 				if (uri.equals(Constants.URI_MEMBRE_AFFICHER_GRILLES)) {
-					List<Grille> grilles = grilleDao.trouverParUtilisateur(utilisateur);
+					List<Grille> grillesRejointes = grilleDao.trouverParUtilisateur(utilisateur);
 					List<Long> grillesIds = new ArrayList<Long>();
 					List<Grille> grillesCreees = grilleDao.trouverParCreateur(utilisateur);
+					List<Grille> grilles = new ArrayList<Grille>();
 
-					for (Grille grille : grilles) {
+					for (Grille grille : grillesRejointes) {
 						grillesIds.add(grille.getId());
+						grille.setRejoindre(false);
+						grilles.add(grille);
 					}
 					
 					for (Grille grille : grillesCreees) {
 						if (!grillesIds.contains(grille.getId())) {
+							grille.setRejoindre(true);
 							grilles.add(grille);
 						}
 					}
@@ -163,8 +169,21 @@ public class ProfilServlet extends HttpServlet {
 					lienGU.setUtilisateur(utilisateur);
 					lienGU.setGrille(grille);
 					lienGUDao.enregistrerLienGrilleUtilisateur(lienGU);
-					
-					cible = Constants.URL_MEMBRE_AFFICHER_GRILLES;
+
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URI_MEMBRE_AFFICHER_GRILLES);
+					return;
+				} else if (uri.equals(Constants.URI_MEMBRE_QUITTER_GRILLE)) {
+					String id = req.getParameter("id");
+					System.out.println("ok1");
+					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
+					System.out.println("ok2");
+					LienGrilleUtilisateur lienGU = lienGUDao.trouverParGrille(grille);
+					System.out.println("ok3");
+					lienGUDao.supprimerLienGU(lienGU);
+					System.out.println("ok4");
+
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URI_MEMBRE_AFFICHER_GRILLES);
+					return;
 				} else {
 					cible = Constants.URL_MEMBRE_ACCUEIL;
 				}

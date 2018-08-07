@@ -59,4 +59,6 @@ public interface Constants {
 	public static final String SELECT_GRILLES_PAR_CREATEUR			= "SELECT g FROM Grille g JOIN g.utilisateur u WHERE u = :utilisateur";
 	public static final String SELECT_GRILLES_PAR_UTILISATEUR		= "SELECT l.grille FROM LienGrilleUtilisateur l WHERE l.utilisateur = :utilisateur";
 	public static final String SELECT_GRILLE_PAR_ID					= "SELECT g FROM Grille g WHERE g.id = :id";
+	public static final String SELECT_LIEN_GU_PAR_ID				= "SELECT l FROM LienGrilleUtilisateur l WHERE l.id = :id";
+	public static final String SELECT_LIEN_GU_PAR_GRILLE			= "SELECT l FROM LienGrilleUtilisateur l WHERE l.grille = :grille";
 }
