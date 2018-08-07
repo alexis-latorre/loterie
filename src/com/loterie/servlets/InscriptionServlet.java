@@ -26,7 +26,7 @@ public class InscriptionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getServletContext().getRequestDispatcher(Constants.URL_INSCRIPTION).forward(req, resp);
+		req.getServletContext().getRequestDispatcher(Constants.URN_INSCRIPTION).forward(req, resp);
 	}
 
 	@Override
@@ -36,9 +36,9 @@ public class InscriptionServlet extends HttpServlet {
 		
 		if (erreurs.isEmpty()) {
 			cuf.creerUtilisateur();
-			req.getServletContext().getRequestDispatcher(Constants.URL_INSCRIPTION_OK).forward(req, resp);
+			req.getServletContext().getRequestDispatcher(Constants.URN_INSCRIPTION_OK).forward(req, resp);
 		} else {
-			req.getServletContext().getRequestDispatcher(Constants.URL_INSCRIPTION).forward(req, resp);
+			req.getServletContext().getRequestDispatcher(Constants.URN_INSCRIPTION).forward(req, resp);
 		}
 	}
 

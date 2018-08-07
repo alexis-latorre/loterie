@@ -15,7 +15,11 @@ import javax.servlet.http.HttpSession;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 
-@WebServlet(urlPatterns = {"/accueil", "/login"})
+@WebServlet(urlPatterns = {
+		Constants.URL_ROOT,
+		Constants.URL_PUBLIC_ACCUEIL,
+		Constants.URL_PUBLIC_CONNEXION
+		})
 public class ConnexionServlet extends HttpServlet {
 
 	/**
@@ -35,12 +39,12 @@ public class ConnexionServlet extends HttpServlet {
 		}
 		req.setAttribute("loggedIn", loggedIn);
 
-		req.getServletContext().getRequestDispatcher(Constants.URL_ACCUEIL).forward(req, resp);
+		req.getServletContext().getRequestDispatcher(Constants.URN_ACCUEIL).forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String cible = Constants.URL_ACCUEIL;
+		String cible = Constants.URN_ACCUEIL;
 		HttpSession session = req.getSession();
 		String pseudo = req.getParameter("pseudo");
 		Utilisateur utilisateur = null;
@@ -57,17 +61,17 @@ public class ConnexionServlet extends HttpServlet {
 					utilisateurDao.changerGrainDeSel(utilisateur, req.getParameter("motDePasse"));
 					session.setAttribute("loggedIn", true);
 					req.setAttribute("utilisateur", utilisateur);
-					cible = Constants.URL_ACCUEIL;
+					cible = Constants.URN_ACCUEIL;
 				} else {
 					session.setAttribute("loggedIn", false);
 					session.setAttribute("utilisateur", null);
-					cible = Constants.URL_ACCUEIL;
+					cible = Constants.URN_ACCUEIL;
 				}
 			} else {
-				cible = Constants.URL_CREER_MDP;
+				cible = Constants.URN_CREER_MDP;
 			}
 		} else {
-			cible = Constants.URL_ACCUEIL;
+			cible = Constants.URN_ACCUEIL;
 		}
 		Map<String, String> erreursUtilisateur = utilisateurDao.getErreurs();
 		req.setAttribute("erreursUtilisateur", erreursUtilisateur);

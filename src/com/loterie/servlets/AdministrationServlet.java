@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 import com.loterie.config.Constants;
 import com.loterie.entities.Utilisateur;
 
-@WebServlet(urlPatterns = {"/admin"})
+@WebServlet(urlPatterns = {
+		Constants.URL_ADMIN_ACCUEIL
+		})
 public class AdministrationServlet extends HttpServlet {
 
 	/**
@@ -22,13 +24,13 @@ public class AdministrationServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String cible = Constants.URL_ADMIN_403;
+		String cible = Constants.URN_ADMIN_403;
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		
 		if (utilisateur != null) {
 			if (utilisateur.estModerateur()) {
-				cible = Constants.URL_ADMIN_ACCUEIL;
+				cible = Constants.URN_ADMIN_ACCUEIL;
 			}
 		}
 		req.getServletContext().getRequestDispatcher(cible).forward(req, resp);

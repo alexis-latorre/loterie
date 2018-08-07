@@ -94,7 +94,7 @@ public class Grille {
 		this.utilisateur = utilisateur;
 	}
 
-	public boolean isRejoindre() {
+	public boolean getRejoindre() {
 		return rejoindre;
 	}
 

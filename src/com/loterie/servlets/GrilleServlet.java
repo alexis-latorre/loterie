@@ -22,15 +22,15 @@ import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;
 
 @WebServlet(urlPatterns = {
-		"/membre/profil", 
-		Constants.URI_MEMBRE_AFFICHER_GRILLES,
-		Constants.URI_MEMBRE_CREER_GRILLE, 
-		Constants.URI_MEMBRE_MODIFIER_GRILLE, 
-		Constants.URI_MEMBRE_SUPPRIMER_GRILLE,
-		Constants.URI_MEMBRE_REJOINDRE_GRILLE,
-		Constants.URI_MEMBRE_QUITTER_GRILLE
+		Constants.URL_MEMBRE_PROFIL,
+		Constants.URL_MEMBRE_AFFICHER_GRILLES,
+		Constants.URL_MEMBRE_CREER_GRILLE, 
+		Constants.URL_MEMBRE_MODIFIER_GRILLE, 
+		Constants.URL_MEMBRE_SUPPRIMER_GRILLE,
+		Constants.URL_MEMBRE_REJOINDRE_GRILLE,
+		Constants.URL_MEMBRE_QUITTER_GRILLE
 		})
-public class ProfilServlet extends HttpServlet {
+public class GrilleServlet extends HttpServlet {
 
 	/**
 	 * 
@@ -43,15 +43,15 @@ public class ProfilServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String uri = Tools.URIsansContexte(req);
+		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		// TODO: Créer une 403 membre
-		String cible = Constants.URL_ADMIN_403;
+		String cible = Constants.URN_ADMIN_403;
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 
 		if (utilisateur != null) {
 			if (utilisateur.estMembre()) {
-				if (uri.equals(Constants.URI_MEMBRE_AFFICHER_GRILLES)) {
+				if (uri.equals(Constants.URL_MEMBRE_AFFICHER_GRILLES)) {
 					List<Grille> grillesRejointes = grilleDao.trouverParUtilisateur(utilisateur);
 					List<Long> grillesIds = new ArrayList<Long>();
 					List<Grille> grillesCreees = grilleDao.trouverParCreateur(utilisateur);
@@ -70,8 +70,8 @@ public class ProfilServlet extends HttpServlet {
 						}
 					}
 					req.setAttribute("grilles", grilles);
-					cible = Constants.URL_MEMBRE_AFFICHER_GRILLES;
-				} else if (uri.equals(Constants.URI_MEMBRE_CREER_GRILLE)) {
+					cible = Constants.URN_MEMBRE_AFFICHER_GRILLES;
+				} else if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
 					int nbLignesNumeros = 5;
 					int numerosParLigne = 13;
 					int nbNumeros = 0;
@@ -110,14 +110,14 @@ public class ProfilServlet extends HttpServlet {
 					}
 					req.setAttribute("tableEtoiles", tableEtoiles);
 					
-					cible = Constants.URL_MEMBRE_CREER_GRILLE;
-				} else if (uri.equals(Constants.URI_MEMBRE_SUPPRIMER_GRILLE)) {
+					cible = Constants.URN_MEMBRE_CREER_GRILLE;
+				} else if (uri.equals(Constants.URL_MEMBRE_SUPPRIMER_GRILLE)) {
 					String id = req.getParameter("id");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
 					grilleDao.supprimerGrille(grille);
-					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URI_MEMBRE_AFFICHER_GRILLES);
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
-				} else if (uri.equals(Constants.URI_MEMBRE_MODIFIER_GRILLE)) {
+				} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 					String id = req.getParameter("id");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
 					//TODO: Factoriser les numéros et étoiles
@@ -160,8 +160,8 @@ public class ProfilServlet extends HttpServlet {
 					req.setAttribute("tableEtoiles", tableEtoiles);
 					
 					req.setAttribute("grille", grille);
-					cible = Constants.URL_MEMBRE_MODIFIER_GRILLE;
-				} else if (uri.equals(Constants.URI_MEMBRE_REJOINDRE_GRILLE)) {
+					cible = Constants.URN_MEMBRE_MODIFIER_GRILLE;
+				} else if (uri.equals(Constants.URL_MEMBRE_REJOINDRE_GRILLE)) {
 					String id = req.getParameter("id");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
 					LienGrilleUtilisateur lienGU = new LienGrilleUtilisateur(); 
@@ -170,9 +170,9 @@ public class ProfilServlet extends HttpServlet {
 					lienGU.setGrille(grille);
 					lienGUDao.enregistrerLienGrilleUtilisateur(lienGU);
 
-					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URI_MEMBRE_AFFICHER_GRILLES);
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
-				} else if (uri.equals(Constants.URI_MEMBRE_QUITTER_GRILLE)) {
+				} else if (uri.equals(Constants.URL_MEMBRE_QUITTER_GRILLE)) {
 					String id = req.getParameter("id");
 					System.out.println("ok1");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
@@ -182,10 +182,10 @@ public class ProfilServlet extends HttpServlet {
 					lienGUDao.supprimerLienGU(lienGU);
 					System.out.println("ok4");
 
-					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URI_MEMBRE_AFFICHER_GRILLES);
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 				} else {
-					cible = Constants.URL_MEMBRE_ACCUEIL;
+					cible = Constants.URN_MEMBRE_ACCUEIL;
 				}
 			}
 		}
@@ -194,12 +194,12 @@ public class ProfilServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String cible = Constants.URL_MEMBRE_AFFICHER_GRILLES;
-		String uri = Tools.URIsansContexte(req);
+		String cible = Constants.URN_MEMBRE_AFFICHER_GRILLES;
+		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		
-		if (uri.equals(Constants.URI_MEMBRE_CREER_GRILLE)) {
+		if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
 			List<String> numeros = Arrays.asList(req.getParameterValues("numeros[]"));
 			List<String> etoiles = Arrays.asList(req.getParameterValues("etoiles[]"));
 			Grille grille = new Grille();
@@ -215,9 +215,9 @@ public class ProfilServlet extends HttpServlet {
 				grille.setUtilisateur(utilisateur);
 				grilleDao.enregistrerGrille(grille);
 			}
-			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URI_MEMBRE_AFFICHER_GRILLES);
+			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;
-		} else if (uri.equals(Constants.URI_MEMBRE_MODIFIER_GRILLE)) {
+		} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 			String id = req.getParameter("id");
 			List<String> numeros = Arrays.asList(req.getParameterValues("numeros[]"));
 			List<String> etoiles = Arrays.asList(req.getParameterValues("etoiles[]"));
@@ -234,7 +234,7 @@ public class ProfilServlet extends HttpServlet {
 				grille.setUtilisateur(utilisateur);*/
 				grilleDao.modifierGrille(grille);
 			}
-			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URI_MEMBRE_AFFICHER_GRILLES);
+			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;
 		}
 		req.getServletContext().getRequestDispatcher(cible).forward(req, resp);

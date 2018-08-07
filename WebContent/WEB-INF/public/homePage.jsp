@@ -20,7 +20,7 @@
 	
 	<c:if test="${not loggedIn}">
 		<h4>Accédez à votre espace membre en vous connectant ci-dessous :</h4>
-		<form method="post" action="<c:url value="/login" />">
+		<form method="post" action="<c:url value="/connexion" />">
 			<c:import url="/WEB-INF/forms/loginForm.jsp" />
 		</form>
 	</c:if>

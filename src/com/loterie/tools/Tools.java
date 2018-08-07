@@ -75,8 +75,4 @@ public class Tools {
 	public static String encoderSHA256(String chaine) {
 		return Hashing.sha256().hashString(chaine, Charset.forName("UTF-8")).toString();
 	}
-	
-	public static String URIsansContexte(HttpServletRequest req) {
-		return req.getRequestURI().replaceAll(Constants.CONTEXTE, "");
-	}
 }

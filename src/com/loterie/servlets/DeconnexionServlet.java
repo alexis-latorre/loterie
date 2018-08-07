@@ -13,7 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import com.loterie.dao.UtilisateurDao;
 
-@WebServlet(urlPatterns = {"/deconnexion"})
+@WebServlet(urlPatterns = {
+		Constants.URL_PUBLIC_DECONNEXION
+		})
 public class DeconnexionServlet extends HttpServlet {
 
 	/**
@@ -35,6 +37,6 @@ public class DeconnexionServlet extends HttpServlet {
 			session.setAttribute("utilisateur", null);
 		}
 
-		req.getServletContext().getRequestDispatcher(Constants.URL_ACCUEIL).forward(req, resp);
+		req.getServletContext().getRequestDispatcher(Constants.URN_ACCUEIL).forward(req, resp);
 	}	
 }

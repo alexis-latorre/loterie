@@ -1,6 +1,9 @@
 package com.loterie.config;
 
 public interface Constants {
+	/**
+	 *  Constantes d'application
+	 */
 	public static final String CONTEXTE								= "/loterie";
 	public static final int EUROMILLIONS_NUMEROS					= 50;
 	public static final int EUROMILLIONS_ETOILES					= 12;
@@ -8,6 +11,9 @@ public interface Constants {
 	public static final int EUROMILLIONS_NUMEROS_SELECTION_MAX		= 6;
 	public static final int EUROMILLIONS_ETOILES_SELECTION_MIN		= 2;
 	public static final int EUROMILLIONS_ETOILES_SELECTION_MAX		= 12;
+	public static final int MDP_TAILLE_MIN							= 8;
+	public static final int SEL_TAILLE_MIN 							= 8;
+	public static final int VARIABILITE_SEL 						= 8;
 	
 	/** 
 	 *  Constantes liées aux entités 
@@ -18,40 +24,40 @@ public interface Constants {
 	public static final Long UTILISATEUR_ROLE_BASIQUE 				= 5L; 
 	
 	/** 
-	 *  Constantes liées aux Servlets 
+	 *  Mapping URL 
 	 */
-	public static final String URI_MEMBRE_PROFIL 					= "/membre/profil";
-	public static final String URI_MEMBRE_AFFICHER_GRILLES			= "/membre/afficherGrilles";
-	public static final String URI_MEMBRE_CREER_GRILLE				= "/membre/creerGrille";
-	public static final String URI_MEMBRE_MODIFIER_GRILLE			= "/membre/editerGrille";
-	public static final String URI_MEMBRE_SUPPRIMER_GRILLE			= "/membre/supprimerGrille";
-	public static final String URI_MEMBRE_REJOINDRE_GRILLE			= "/membre/rejoindreGrille";
-	public static final String URI_MEMBRE_QUITTER_GRILLE			= "/membre/quitterGrille";
+	public static final String URL_ROOT								= "/";
+	public static final String URL_PUBLIC_ACCUEIL					= "/accueil";
+	public static final String URL_PUBLIC_CONNEXION					= "/connexion";
+	public static final String URL_PUBLIC_DECONNEXION				= "/deconnexion";
+	public static final String URL_CREER_MDP 						= "/creerMotDePasse";
+	public static final String URL_MEMBRE_PROFIL 					= "/membre/profil";
+	public static final String URL_MEMBRE_AFFICHER_GRILLES			= "/membre/afficherGrilles";
+	public static final String URL_MEMBRE_CREER_GRILLE				= "/membre/creerGrille";
+	public static final String URL_MEMBRE_MODIFIER_GRILLE			= "/membre/editerGrille";
+	public static final String URL_MEMBRE_SUPPRIMER_GRILLE			= "/membre/supprimerGrille";
+	public static final String URL_MEMBRE_REJOINDRE_GRILLE			= "/membre/rejoindreGrille";
+	public static final String URL_MEMBRE_QUITTER_GRILLE			= "/membre/quitterGrille";
+	public static final String URL_ADMIN_ACCUEIL					= "/admin/accueil";
 	
 	/** 
-	 *  Constantes liées aux URL 
+	 *  Ressources JSP 
 	 */
-	public static final String URL_ACCUEIL 							= "/WEB-INF/publique/homePage.jsp";
-	public static final String URL_CREER_MDP 						= "/WEB-INF/set-password.jsp";
-	public static final String URL_INSCRIPTION						= "/WEB-INF/publique/subscriptionPage.jsp";
-	public static final String URL_MEMBRE_ACCUEIL					= "/WEB-INF/membre/homePage.jsp";
-	public static final String URL_MEMBRE_AFFICHER_GRILLES			= "/WEB-INF/membre/afficherGrilles.jsp";
-	public static final String URL_MEMBRE_CREER_GRILLE				= "/WEB-INF/membre/creerGrille.jsp";
-	public static final String URL_MEMBRE_MODIFIER_GRILLE			= "/WEB-INF/membre/modifierGrille.jsp";
-	//TODO: Créer page confirmation inscription
-	public static final String URL_ADMIN_403						= "/WEB-INF/admin/403.jsp";
-	public static final String URL_INSCRIPTION_OK					= "/WEB-INF/publique/homePage.jsp";
-	public static final String URL_ADMIN_ACCUEIL					= "/WEB-INF/admin/homePage.jsp";
+	public static final String URN_ACCUEIL 							= "/WEB-INF/public/homePage.jsp";
+	public static final String URN_CREER_MDP 						= "/WEB-INF/public/set-password.jsp";
+	public static final String URN_INSCRIPTION						= "/WEB-INF/public/subscriptionPage.jsp";
+	public static final String URN_INSCRIPTION_OK					= "/WEB-INF/public/subscriptionPage.jsp";
+	
+	public static final String URN_MEMBRE_ACCUEIL					= "/WEB-INF/membre/homePage.jsp";
+	public static final String URN_MEMBRE_AFFICHER_GRILLES			= "/WEB-INF/membre/afficherGrilles.jsp";
+	public static final String URN_MEMBRE_CREER_GRILLE				= "/WEB-INF/membre/creerGrille.jsp";
+	public static final String URN_MEMBRE_MODIFIER_GRILLE			= "/WEB-INF/membre/modifierGrille.jsp";
+	
+	public static final String URN_ADMIN_403						= "/WEB-INF/admin/403.jsp";
+	public static final String URN_ADMIN_ACCUEIL					= "/WEB-INF/admin/homePage.jsp";
 
 	/** 
-	 *  Constantes liées aux DAO 
-	 */	
-	public static final int MDP_TAILLE_MIN							= 8;
-	public static final int SEL_TAILLE_MIN 							= 8;
-	public static final int VARIABILITE_SEL 						= 8;
-
-	/** 
-	 *  Constantes liées au SGBD
+	 *  Requêtes SQL
 	 */
 	public static final String SELECT_UTILISATEUR_PAR_NOM 			= "SELECT u FROM Utilisateur u WHERE u.pseudo = :pseudo";
 	public static final String SELECT_UTILISATEUR_PAR_NOM_PRENOM 	= "SELECT u FROM Utilisateur u WHERE u.nom = :nom AND u.prenom = :prenom";

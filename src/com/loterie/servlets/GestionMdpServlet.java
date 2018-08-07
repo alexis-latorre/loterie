@@ -26,7 +26,7 @@ public class GestionMdpServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getServletContext().getRequestDispatcher(Constants.URL_CREER_MDP).forward(req, resp);
+		req.getServletContext().getRequestDispatcher(Constants.URN_CREER_MDP).forward(req, resp);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class GestionMdpServlet extends HttpServlet {
 		
 		if (utilisateur != null) {
 			utilisateurDao.changerMotDePasse(utilisateur, req);
-			req.getServletContext().getRequestDispatcher(Constants.URL_ACCUEIL).forward(req, resp);
+			req.getServletContext().getRequestDispatcher(Constants.URN_ACCUEIL).forward(req, resp);
 		}
 	}
 	
