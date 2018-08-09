@@ -97,6 +97,7 @@ public class UtilisateurDao {
 			query.setParameter("pseudo", pseudo);
 			
 			utilisateur = (Utilisateur) query.getSingleResult();
+			em.refresh(utilisateur);
 		} catch (NoResultException e) {
 			System.out.println("[WARNING]: No user found with pseudo '" + pseudo + "'.");
 		} catch (Exception e) {

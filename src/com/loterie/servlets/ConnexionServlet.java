@@ -2,6 +2,8 @@ package com.loterie.servlets;
 import com.loterie.config.Constants;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -12,8 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.loterie.dao.GrilleDao;
+import com.loterie.dao.JourDao;
 import com.loterie.dao.UtilisateurDao;
+import com.loterie.entities.Grille;
+import com.loterie.entities.Jour;
 import com.loterie.entities.Utilisateur;
+import com.loterie.tools.Tools;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_ROOT,
@@ -28,6 +35,10 @@ public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private UtilisateurDao utilisateurDao;
+	@EJB
+	private JourDao jourDao;
+	@EJB
+	private GrilleDao grilleDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,6 +47,18 @@ public class ConnexionServlet extends HttpServlet {
 				
 		if (session.getAttribute("loggedIn") != null) {
 			loggedIn = (boolean) session.getAttribute("loggedIn");
+		}
+		
+		if (loggedIn) {
+			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+			List<Jour> jours = jourDao.trouverParNumeroEtUtilisateur(Tools.getNumeroJourCourante(), utilisateur);
+			List<Grille> grilles = new ArrayList<Grille>();
+			
+			for (Jour jour : jours) {
+				Grille grille = jour.getLgu().getGrille();
+				grilles.add(grille);
+			}
+			req.setAttribute("grilles", grilles);
 		}
 		req.setAttribute("loggedIn", loggedIn);
 

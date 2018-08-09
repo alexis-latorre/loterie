@@ -4,6 +4,8 @@ import java.nio.charset.Charset;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.joda.time.DateTime;
+
 import com.google.common.hash.Hashing;
 import com.loterie.config.Constants;
 
@@ -74,5 +76,11 @@ public class Tools {
 	
 	public static String encoderSHA256(String chaine) {
 		return Hashing.sha256().hashString(chaine, Charset.forName("UTF-8")).toString();
+	}
+
+	public static int getNumeroJourCourante() {
+		DateTime maintenant = new DateTime();
+		
+		return maintenant.getWeekOfWeekyear();
 	}
 }
