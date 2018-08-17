@@ -27,6 +27,8 @@ public class Grille {
 	@ManyToOne
 	@JoinColumn(name = "fk_createur")
 	private Utilisateur utilisateur;
+	@JoinColumn(name = "fk_jeu_id")
+	private Jeu jeu;
 	@Transient
 	private boolean rejoindre;
 	
@@ -92,6 +94,14 @@ public class Grille {
 	
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+	
+	public Jeu getJeu() {
+		return jeu;
+	}
+	
+	public void setJeu(Jeu jeu) {
+		this.jeu = jeu;
 	}
 
 	public boolean getRejoindre() {

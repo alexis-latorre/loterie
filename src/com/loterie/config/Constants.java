@@ -14,6 +14,9 @@ public interface Constants {
 	public static final int MDP_TAILLE_MIN									= 8;
 	public static final int SEL_TAILLE_MIN 									= 8;
 	public static final int VARIABILITE_SEL 								= 8;
+	public static final String[] JOURS_LONGS								= {"lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"};
+	public static final String[] JOURS_COURTS								= {"lun", "mar", "mer", "jeu", "ven", "sam", "dim"};
+	public static final String[] JOURS_INITIALES							= {"l", "ma", "me", "j", "v", "s", "d"};
 	
 	/** 
 	 *  Constantes liées aux entités 
@@ -64,13 +67,14 @@ public interface Constants {
 	public static final String SELECT_UTILISATEUR_PAR_EMAIL					= "SELECT u FROM Utilisateur u WHERE u.email = :email";
 	public static final String SELECT_GRILLES_PAR_CREATEUR					= "SELECT g FROM Grille g JOIN g.utilisateur u WHERE u = :utilisateur";
 	public static final String SELECT_GRILLES_PAR_UTILISATEUR				= "SELECT l.grille FROM LienGrilleUtilisateur l WHERE l.utilisateur = :utilisateur";
+	public static final String SELECT_GRILLES_PAR_DATE_ET_UTILISATEUR 		= "SELECT l.grille FROM LienGrilleUtilisateur l, Jour j WHERE l.utilisateur = :utilisateur AND j.date_jour = :date_jour";
 	public static final String SELECT_GRILLE_PAR_ID							= "SELECT g FROM Grille g WHERE g.id = :id";
 	public static final String SELECT_LIEN_GU_PAR_ID						= "SELECT l FROM LienGrilleUtilisateur l WHERE l.id = :id";
 	public static final String SELECT_LIEN_GU_PAR_GRILLE					= "SELECT l FROM LienGrilleUtilisateur l WHERE l.grille = :grille";
 	// TODO: Implémenter méthode
 	public static final String SELECT_LIEN_GU_PAR_GRILLE_ET_UTILISATEUR		= "SELECT l FROM LienGrilleUtilisateur l WHERE l.grille = :grille AND l.utilisateur = :utilisateur";
-	public static final String SELECT_JOUR_PAR_NUMERO						= "SELECT j FROM Jour j WHERE j.numero = :numero";
+	public static final String SELECT_JOUR_PAR_DATE							= "SELECT j FROM Jour j WHERE j.date_jour = :date_jour";
 	public static final String SELECT_JOUR_PAR_LGU							= "SELECT j FROM Jour j WHERE j.lgu = :lgu";
-	public static final String SELECT_JOUR_PAR_NUMERO_ET_LGU				= "SELECT j FROM Jour j WHERE j.numero = :numero AND j.lgu = :lgu";
-	public static final String SELECT_JOUR_PAR_NUMERO_ET_UTILISATEUR 		= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE j.numero = :numero AND l.utilisateur = :utilisateur";
+	public static final String SELECT_JOUR_PAR_DATE_ET_LGU					= "SELECT j FROM Jour j WHERE j.date_jour = :date_jour AND j.lgu = :lgu";
+	public static final String SELECT_JOUR_PAR_DATE_ET_UTILISATEUR 			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE j.date_jour = :date_jour AND l.utilisateur = :utilisateur";
 }

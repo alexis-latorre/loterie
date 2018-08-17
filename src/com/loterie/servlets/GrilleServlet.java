@@ -115,7 +115,7 @@ public class GrilleServlet extends HttpServlet {
 					String id = req.getParameter("id");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
 					grilleDao.supprimerGrille(grille);
-					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
+					Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 				} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 					String id = req.getParameter("id");
@@ -170,7 +170,7 @@ public class GrilleServlet extends HttpServlet {
 					lienGU.setGrille(grille);
 					lienGUDao.enregistrerLienGrilleUtilisateur(lienGU);
 
-					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
+					Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 				} else if (uri.equals(Constants.URL_MEMBRE_QUITTER_GRILLE)) {
 					String id = req.getParameter("id");
@@ -182,7 +182,7 @@ public class GrilleServlet extends HttpServlet {
 					lienGUDao.supprimerLienGU(lienGU);
 					System.out.println("ok4");
 
-					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
+					Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 				} else {
 					cible = Constants.URN_MEMBRE_ACCUEIL;
@@ -215,7 +215,7 @@ public class GrilleServlet extends HttpServlet {
 				grille.setUtilisateur(utilisateur);
 				grilleDao.enregistrerGrille(grille);
 			}
-			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
+			Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;
 		} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 			String id = req.getParameter("id");
@@ -234,7 +234,7 @@ public class GrilleServlet extends HttpServlet {
 				grille.setUtilisateur(utilisateur);*/
 				grilleDao.modifierGrille(grille);
 			}
-			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
+			Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;
 		}
 		req.getServletContext().getRequestDispatcher(cible).forward(req, resp);

@@ -1,13 +1,13 @@
 package com.loterie.tools;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
-
 import com.google.common.hash.Hashing;
-import com.loterie.config.Constants;
 
 public class Tools {
 	private static final String LETTRES_MAJ 	= "abcdefghijklmnopqrstuvwxyz";
@@ -77,10 +77,54 @@ public class Tools {
 	public static String encoderSHA256(String chaine) {
 		return Hashing.sha256().hashString(chaine, Charset.forName("UTF-8")).toString();
 	}
+	
+	public static String getMaintenant() {
+		DateTime maintenant = new DateTime();
+		return maintenant.getYear() + "-" + maintenant.getMonthOfYear() + "-" + maintenant.getDayOfMonth();
+	}
 
-	public static int getNumeroJourCourante() {
+	public static int getNumeroSemaineCourante() {
 		DateTime maintenant = new DateTime();
 		
 		return maintenant.getWeekOfWeekyear();
+	}
+	
+	public static void redirigerVers(HttpServletRequest req, HttpServletResponse resp, String cible) throws IOException {
+		resp.sendRedirect(req.getServletContext().getContextPath() + cible);
+	}
+	
+	public static String padRight(Object o, int n) {
+		return padRight(o, n, '0');  
+	}
+	
+	public static String padRight(Object o, int n, char c) {
+		String source = String.valueOf(o);
+		String retour = "";
+		
+		if (source.length() >= n) {
+			retour = source;
+		} else {
+			for (int i = 0; i < (n - source.length()); i++) {
+				retour += c;
+			}
+			retour += source;
+		}
+		return retour;
+	}
+	
+	public static String padLeft(Object o, int n) {
+		return padLeft(o, n, '0');  
+	}
+
+	public static String padLeft(Object o, int n, char c) {
+		String source = String.valueOf(o);
+		String retour = source;
+		
+		if (source.length() < n) {
+			for (int i = 0; i < (n - source.length()); i++) {
+				retour += c;
+			}
+		}
+		return retour;
 	}
 }

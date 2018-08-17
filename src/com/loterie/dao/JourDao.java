@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.joda.time.DateTime;
 import com.loterie.config.Constants;
 import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Jour;
@@ -31,33 +32,33 @@ public class JourDao {
 		
 		return jour;		
 	}
-	
-	public Jour trouverParNumero(int numero) {
-		Jour jour = null;
+
+	public List<Jour> trouverParJourEtUtilisateur(String date_jour, Utilisateur utilisateur) {
+		List<Jour> jour = new ArrayList<Jour>();
 		
 		try {
-			Query requete = em.createQuery(Constants.SELECT_JOUR_PAR_NUMERO);
-			requete.setParameter("numero", numero);
-			jour = (Jour) requete.getSingleResult();
+			Query requete = em.createQuery(Constants.SELECT_JOUR_PAR_DATE_ET_UTILISATEUR);
+			requete.setParameter("date_jour", date_jour);
+			requete.setParameter("utilisateur", utilisateur);
+			jour = (List<Jour>) requete.getResultList();
 		} catch (Exception e) {
-			System.out.println("[WARNING]: Pas de jour trouvee pour le numero '" + numero + "'.");
+			System.out.println("[WARNING]: Pas de jour trouvee pour la date '" + date_jour + "' et l'utilisateur '" + utilisateur.getPseudo() + "'.");
 		}
 		
 		return jour;		
 	}
-	
-	public List<Jour> trouverParNumeroEtUtilisateur(int numero, Utilisateur utilisateur) {
-		List<Jour> jour = new ArrayList<Jour>();
+
+	public Jour trouverParDate(String date_jour) {
+		Jour jour = null;
 		
 		try {
-			Query requete = em.createQuery(Constants.SELECT_JOUR_PAR_NUMERO_ET_UTILISATEUR);
-			requete.setParameter("numero", numero);
-			requete.setParameter("utilisateur", utilisateur);
-			jour = (List<Jour>) requete.getResultList();
+			Query requete = em.createQuery(Constants.SELECT_JOUR_PAR_DATE);
+			requete.setParameter("date_jour", date_jour);
+			jour = (Jour) requete.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("[WARNING]: Pas de jour trouvee pour le numero '" + numero + "' et l'utilisateur '" + utilisateur.getPseudo() + "'.");
+			System.out.println("[WARNING]: Pas de jour trouve pour la date '" + date_jour + "'.");
 		}
 		
-		return jour;		
+		return jour;
 	}
 }

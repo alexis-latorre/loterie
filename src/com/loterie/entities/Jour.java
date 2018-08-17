@@ -8,13 +8,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.joda.time.DateTime;
+
 @Entity
 @Table(name = "jour")
 public class Jour {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Long numero;
+	private String date_jour;
 	@ManyToOne(targetEntity = LienGrilleUtilisateur.class)
 	@JoinColumn(name = "fk_lien_gu_id")
 	private LienGrilleUtilisateur lgu;
@@ -28,12 +30,16 @@ public class Jour {
 		this.id = id;
 	}
 	
-	public Long getNumero() {
-		return numero;
+	public String getDateJour() {
+		return date_jour;
 	}
 	
-	public void setNumero(Long numero) {
-		this.numero = numero;
+	public void setDateJour(String date_jour) {
+		this.date_jour = date_jour;
+	}
+	
+	public void setDateJour(DateTime dt) {
+		this.date_jour = dt.getYear() + "-" + dt.getMonthOfYear() + "-" + dt.getDayOfMonth();
 	}
 	
 	public LienGrilleUtilisateur getLgu() {

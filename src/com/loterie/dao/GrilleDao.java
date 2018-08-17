@@ -94,4 +94,22 @@ public class GrilleDao {
 	public void modifierGrille(Grille grille) {
 		em.merge(grille);
 	}
+
+	public List<Grille> trouverParJourEtUtilisateur(String date_jour, Utilisateur utilisateur) {
+		List<Grille> grilles = new ArrayList<Grille>();
+		
+		try {
+			Query query = em.createQuery(Constants.SELECT_GRILLES_PAR_DATE_ET_UTILISATEUR);
+			query.setParameter("utilisateur", utilisateur);
+			query.setParameter("date_jour", date_jour);
+			
+			grilles = (List<Grille>) query.getResultList();
+		} catch (NoResultException e) {
+			System.out.println("[WARNING]: Pas de grille trouvee pour '" + utilisateur.getPseudo() + "' le '" + date_jour + "'.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return grilles;
+	}
 }
