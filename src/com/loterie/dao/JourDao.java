@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.joda.time.DateTime;
 import com.loterie.config.Constants;
 import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Jour;
@@ -45,7 +44,7 @@ public class JourDao {
 			System.out.println("[WARNING]: Pas de jour trouvee pour la date '" + date_jour + "' et l'utilisateur '" + utilisateur.getPseudo() + "'.");
 		}
 		
-		return jour;		
+		return jour;
 	}
 
 	public Jour trouverParDate(String date_jour) {
@@ -60,5 +59,21 @@ public class JourDao {
 		}
 		
 		return jour;
+	}
+
+	public List<Jour> trouverParIntervalleEtUtilisateur(String premiereDate, String derniereDate, Utilisateur utilisateur) {
+		List<Jour> jours = new ArrayList<Jour>();
+		
+		try {
+			Query requete = em.createQuery(Constants.SELECT_JOUR_PAR_INTERVALLE_ET_UTILISATEUR);
+			requete.setParameter("date_debut", premiereDate);
+			requete.setParameter("date_fin", derniereDate);
+			requete.setParameter("utilisateur", utilisateur);
+			jours = (List<Jour>) requete.getResultList();
+		} catch (Exception e) {
+			System.out.println("[WARNING]: Pas de jour trouvee entre le '" + premiereDate + "' et le '" + derniereDate + "' pour  l'utilisateur '" + utilisateur.getPseudo() + "'.");
+		}
+		
+		return jours;
 	}
 }

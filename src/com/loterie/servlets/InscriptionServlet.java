@@ -34,6 +34,7 @@ public class InscriptionServlet extends HttpServlet {
 		CreationUtilisateurForm cuf = new CreationUtilisateurForm(utilisateurDao, req);
 		Map<String, String> erreurs = cuf.getErreurs();
 		
+		// Si aucune erreur n'est décelée, l'utilisateur est inscrit en base
 		if (erreurs.isEmpty()) {
 			cuf.creerUtilisateur();
 			req.getServletContext().getRequestDispatcher(Constants.URN_INSCRIPTION_OK).forward(req, resp);

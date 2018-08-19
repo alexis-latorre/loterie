@@ -29,14 +29,17 @@ public class DeconnexionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		
+		// Assure que la connexion est bien terminée
 		if (session.getAttribute("loggedIn") != null) {
 			session.setAttribute("loggedIn", false);
 		}
-		
+
+		// Assure que l'utilisateur est bien détruit de la session
 		if (session.getAttribute("utilisateur") != null) {
 			session.setAttribute("utilisateur", null);
 		}
-
+		// Détruit la session avant de renvoyer l'utilisateur à l'accueil
+		session.invalidate();
 		req.getServletContext().getRequestDispatcher(Constants.URN_ACCUEIL).forward(req, resp);
 	}	
 }

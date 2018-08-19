@@ -1,11 +1,7 @@
 package com.loterie.servlets;
-import com.loterie.business.Mois;
 import com.loterie.config.Constants;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -20,13 +16,10 @@ import org.joda.time.DateTime;
 
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
-import com.loterie.dao.LienGUDao;
 import com.loterie.dao.UtilisateurDao;
-import com.loterie.entities.Grille;
-import com.loterie.entities.Jour;
-import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Utilisateur;
-import com.loterie.tools.Tools;
+import com.loterie.forms.ConnexionForm;
+import com.loterie.forms.RecuperationGrillesDuMoisForm;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_ROOT,
@@ -50,35 +43,21 @@ public class ConnexionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		boolean loggedIn = false;
-				
+
+		// Met à jour l'information de connexion de la session
 		if (session.getAttribute("loggedIn") != null) {
 			loggedIn = (boolean) session.getAttribute("loggedIn");
 		}
 		
+		// Si l'utilisateur est authentifié, le calendrier est affiché en page d'accueil
 		if (loggedIn) {
-			DateTime maintenant = new DateTime();
-			Mois mois = new Mois(maintenant);
-			
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-			//List<Grille> grilles = new ArrayList<Grille>();
-			
-			for (com.loterie.business.Jour jour : mois.getJours()) {
-				Jour jourDb = jourDao.trouverParDate(jour.getDateJour());
-				if (jourDb != null) {
-
-					List<Grille> grilles = grilleDao.trouverParJourEtUtilisateur(jour.getDateJour(), utilisateur);
-					
-					if (grilles != null) {
-						jour.setGrilles(grilles);
-						jour.setPaye(jourDb.isPaye());
-					}
-					/*Grille grille = jour.getLgu().getGrille();
-					grilles.add(grille);*/
-				}
-			}
-			//req.setAttribute("grilles", grilles);
-			req.setAttribute("mois", mois);
+			// Récupère les grilles du mois pour lequel l'utilisateur participe ou celles qu'il a créées
+			RecuperationGrillesDuMoisForm grillesDuMoisForm = new RecuperationGrillesDuMoisForm(new DateTime(), 
+					utilisateur, jourDao);
+			req.setAttribute("mois", grillesDuMoisForm.getMois());
 		}
+		// Transmet l'information de connexion à la page JSP
 		req.setAttribute("loggedIn", loggedIn);
 
 		req.getServletContext().getRequestDispatcher(Constants.URN_ACCUEIL).forward(req, resp);
@@ -88,24 +67,31 @@ public class ConnexionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String cible = Constants.URN_ACCUEIL;
 		HttpSession session = req.getSession();
-		String pseudo = req.getParameter("pseudo");
-		Utilisateur utilisateur = null;
-		utilisateur = utilisateurDao.trouverParPseudo(pseudo);
+		ConnexionForm connexionForm = new ConnexionForm(utilisateurDao, req);
+		Utilisateur utilisateur = connexionForm.getUtilisateur();
+		Map<String, String> erreurs = connexionForm.getErreurs();
+		boolean connexionOK = erreurs.isEmpty();
 		
+		/* Les actions de type POST ne peuvent être effectuées que si l'utilisateur est authentifié, sinon il est
+		redirigé vers l'accueil */
 		if (utilisateur != null) {
 			session.setAttribute("utilisateur", utilisateur);
-			String mdp = utilisateur.getMotDePasse();
 			
-			if (mdp != null) {
-				boolean mdpValide = utilisateurDao.verifierMotDePasse(utilisateur, req);
-				
-				if (mdpValide) {
-					utilisateurDao.changerGrainDeSel(utilisateur, req.getParameter("motDePasse"));
+			/* Si le mot de passe n'est pas encore défini en BDD, l'utilisateur est invité à le créer sur la 
+			 * page dédiée à la création/modification de mot de passe
+			 */
+			if (utilisateur.getMotDePasse() != null) {				
+				// Si toute la procédure de connexion s'est bien déroulée
+				if (connexionOK) {
+					// La session et la JSP sont mis à jour
 					session.setAttribute("loggedIn", true);
 					req.setAttribute("utilisateur", utilisateur);
-					Tools.redirigerVers(req, resp, Constants.URL_PUBLIC_ACCUEIL);
+					// L'utilisateur est redirigé vers la page d'accueil
+					// TODO: Rediriger vers la page demandée par l'utilisateur 
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_PUBLIC_ACCUEIL);
 					return;
 				} else {
+					// La session est réinitialisée en cas d'échec d'authentification
 					session.setAttribute("loggedIn", false);
 					session.setAttribute("utilisateur", null);
 					cible = Constants.URN_ACCUEIL;
@@ -116,8 +102,8 @@ public class ConnexionServlet extends HttpServlet {
 		} else {
 			cible = Constants.URN_ACCUEIL;
 		}
-		Map<String, String> erreursUtilisateur = utilisateurDao.getErreurs();
-		req.setAttribute("erreursUtilisateur", erreursUtilisateur);
+		// Transmet les erreurs (s'il y en a) à la JSP
+		req.setAttribute("erreursUtilisateur", erreurs);
 		req.getServletContext().getRequestDispatcher(cible).forward(req, resp);
 	}
 	

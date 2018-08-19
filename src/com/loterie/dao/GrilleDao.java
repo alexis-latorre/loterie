@@ -112,4 +112,23 @@ public class GrilleDao {
 		
 		return grilles;
 	}
+
+	public List<Grille> trouverParIntervalleEtUtilisateur(String date_debut, String date_fin, Utilisateur utilisateur) {
+		List<Grille> grilles = new ArrayList<Grille>();
+		
+		try {
+			Query query = em.createQuery(Constants.SELECT_GRILLES_PAR_INTERVALLE_ET_UTILISATEUR);
+			query.setParameter("utilisateur", utilisateur);
+			query.setParameter("date_debut", date_debut);
+			query.setParameter("date_fin", date_fin);
+			
+			grilles = (List<Grille>) query.getResultList();
+		} catch (NoResultException e) {
+			System.out.println("[WARNING]: Pas de grille trouvee pour '" + utilisateur.getPseudo() + "' entre le '" + date_debut + "' et le '" + date_fin + "'.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return grilles;
+	}
 }

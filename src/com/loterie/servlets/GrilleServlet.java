@@ -15,11 +15,12 @@ import javax.servlet.http.HttpSession;
 
 import com.loterie.config.Constants;
 import com.loterie.dao.GrilleDao;
+import com.loterie.dao.JeuDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.entities.Grille;
+import com.loterie.entities.Jeu;
 import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Utilisateur;
-import com.loterie.tools.Tools;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_MEMBRE_PROFIL,
@@ -40,12 +41,13 @@ public class GrilleServlet extends HttpServlet {
 	private GrilleDao grilleDao;
 	@EJB
 	private LienGUDao lienGUDao;
+	@EJB
+	private JeuDao jeuDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
-		// TODO: Créer une 403 membre
-		String cible = Constants.URN_ADMIN_403;
+		String cible = Constants.URN_MEMBRE_403;
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 
@@ -72,38 +74,34 @@ public class GrilleServlet extends HttpServlet {
 					req.setAttribute("grilles", grilles);
 					cible = Constants.URN_MEMBRE_AFFICHER_GRILLES;
 				} else if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
-					int nbLignesNumeros = 5;
-					int numerosParLigne = 13;
 					int nbNumeros = 0;
 					List<List<Integer>> tableNumeros = new ArrayList<List<Integer>>();
 					
-					for (int i = 0; i < nbLignesNumeros; i++) {
+					for (int i = 0; i < Constants.EUROMILLIONS_NUMEROS_NB_LIGNES; i++) {
 						List<Integer> ligne = new ArrayList<Integer>();
 						
-						for (int j = 1; j <= numerosParLigne; j++) {
+						for (int j = 1; j <= Constants.EUROMILLIONS_NUMEROS_NB_PAR_LIGNES; j++) {
 							nbNumeros++;
 							
 							if (nbNumeros <= Constants.EUROMILLIONS_NUMEROS) {
-								ligne.add((i * numerosParLigne) + j);
+								ligne.add((i * Constants.EUROMILLIONS_NUMEROS_NB_PAR_LIGNES) + j);
 							}
 						}
 						tableNumeros.add(ligne);
 					}
 					req.setAttribute("tableNumeros", tableNumeros);
 					
-					int nbLignesEtoiles = 5;
-					int etoilesParLigne = 13;
 					int nbEtoiles = 0;
 					List<List<Integer>> tableEtoiles = new ArrayList<List<Integer>>();
 					
-					for (int i = 0; i < nbLignesEtoiles; i++) {
+					for (int i = 0; i < Constants.EUROMILLIONS_ETOILES_NB_LIGNES; i++) {
 						List<Integer> ligne = new ArrayList<Integer>();
 						
-						for (int j = 1; j <= etoilesParLigne; j++) {
+						for (int j = 1; j <= Constants.EUROMILLIONS_ETOILES_NB_PAR_LIGNES; j++) {
 							nbEtoiles++;
 							
 							if (nbEtoiles <= Constants.EUROMILLIONS_ETOILES) {
-								ligne.add((i * etoilesParLigne) + j);
+								ligne.add((i * Constants.EUROMILLIONS_ETOILES_NB_PAR_LIGNES) + j);
 							}
 						}
 						tableEtoiles.add(ligne);
@@ -115,44 +113,39 @@ public class GrilleServlet extends HttpServlet {
 					String id = req.getParameter("id");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
 					grilleDao.supprimerGrille(grille);
-					Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 				} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 					String id = req.getParameter("id");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
-					//TODO: Factoriser les numéros et étoiles
-					int nbLignesNumeros = 5;
-					int numerosParLigne = 13;
 					int nbNumeros = 0;
 					List<List<Integer>> tableNumeros = new ArrayList<List<Integer>>();
 					
-					for (int i = 0; i < nbLignesNumeros; i++) {
+					for (int i = 0; i < Constants.EUROMILLIONS_NUMEROS_NB_LIGNES; i++) {
 						List<Integer> ligne = new ArrayList<Integer>();
 						
-						for (int j = 1; j <= numerosParLigne; j++) {
+						for (int j = 1; j <= Constants.EUROMILLIONS_NUMEROS_NB_PAR_LIGNES; j++) {
 							nbNumeros++;
 							
 							if (nbNumeros <= Constants.EUROMILLIONS_NUMEROS) {
-								ligne.add((i * numerosParLigne) + j);
+								ligne.add((i * Constants.EUROMILLIONS_NUMEROS_NB_PAR_LIGNES) + j);
 							}
 						}
 						tableNumeros.add(ligne);
 					}
 					req.setAttribute("tableNumeros", tableNumeros);
 					
-					int nbLignesEtoiles = 5;
-					int etoilesParLigne = 13;
 					int nbEtoiles = 0;
 					List<List<Integer>> tableEtoiles = new ArrayList<List<Integer>>();
 					
-					for (int i = 0; i < nbLignesEtoiles; i++) {
+					for (int i = 0; i < Constants.EUROMILLIONS_ETOILES_NB_LIGNES; i++) {
 						List<Integer> ligne = new ArrayList<Integer>();
 						
-						for (int j = 1; j <= etoilesParLigne; j++) {
+						for (int j = 1; j <= Constants.EUROMILLIONS_ETOILES_NB_PAR_LIGNES; j++) {
 							nbEtoiles++;
 							
 							if (nbEtoiles <= Constants.EUROMILLIONS_ETOILES) {
-								ligne.add((i * etoilesParLigne) + j);
+								ligne.add((i * Constants.EUROMILLIONS_ETOILES_NB_PAR_LIGNES) + j);
 							}
 						}
 						tableEtoiles.add(ligne);
@@ -170,19 +163,15 @@ public class GrilleServlet extends HttpServlet {
 					lienGU.setGrille(grille);
 					lienGUDao.enregistrerLienGrilleUtilisateur(lienGU);
 
-					Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 				} else if (uri.equals(Constants.URL_MEMBRE_QUITTER_GRILLE)) {
 					String id = req.getParameter("id");
-					System.out.println("ok1");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
-					System.out.println("ok2");
 					LienGrilleUtilisateur lienGU = lienGUDao.trouverParGrille(grille);
-					System.out.println("ok3");
 					lienGUDao.supprimerLienGU(lienGU);
-					System.out.println("ok4");
 
-					Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 				} else {
 					cible = Constants.URN_MEMBRE_ACCUEIL;
@@ -198,6 +187,10 @@ public class GrilleServlet extends HttpServlet {
 		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		Jeu jeu = jeuDao.trouverParNom(Constants.EUROMILLIONS_NOM);
+		String etoilePlusStr = req.getParameter("etoilePlus");
+		boolean etoilePlus = etoilePlusStr != null && Long.valueOf(etoilePlusStr) == 1L;
+		String myMillion = req.getParameter("myMillion");
 		
 		if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
 			List<String> numeros = Arrays.asList(req.getParameterValues("numeros[]"));
@@ -212,10 +205,11 @@ public class GrilleServlet extends HttpServlet {
 				grille.setEtoiles(etoiles);
 				grille.setEtoilePlus(false);
 				grille.setMyMillion(null);
+				grille.setJeu(jeu);
 				grille.setUtilisateur(utilisateur);
 				grilleDao.enregistrerGrille(grille);
 			}
-			Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
+			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;
 		} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 			String id = req.getParameter("id");
@@ -229,12 +223,11 @@ public class GrilleServlet extends HttpServlet {
 					&& etoiles.size() <= Constants.EUROMILLIONS_ETOILES_SELECTION_MAX) {
 				grille.setNumeros(numeros);
 				grille.setEtoiles(etoiles);
-				/*grille.setEtoilePlus(false);
-				grille.setMyMillion(null);
-				grille.setUtilisateur(utilisateur);*/
+				grille.setEtoilePlus(etoilePlus);
+				grille.setMyMillion(myMillion);
 				grilleDao.modifierGrille(grille);
 			}
-			Tools.redirigerVers(req, resp, Constants.URL_MEMBRE_AFFICHER_GRILLES);
+			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;
 		}
 		req.getServletContext().getRequestDispatcher(cible).forward(req, resp);

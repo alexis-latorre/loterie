@@ -30,11 +30,17 @@ class TestTools {
 		Object[] criteres = {
 				8
 				};
-		testMotDePasseValide("test", options, criteres, false);
-		testMotDePasseValide("testtest", options, criteres, true);
-		// TODO: Contrôler options != null
-		options[0] = -1;
-		testMotDePasseValide("test", options, criteres, true);
+		try {
+			testMotDePasseValide("test", options, criteres, false);
+			testMotDePasseValide("testtest", options, criteres, true);
+
+			if (options != null) {
+				options[0] = -1;
+			}
+			testMotDePasseValide("test", options, criteres, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		/* Étant donné que la chaîne retournée est constituée de caractères 
 		 * aléatoires, on ne test que la taille de la chaîne attendue */
@@ -44,7 +50,7 @@ class TestTools {
 		testEncoderSHA256("mdp256", "2d39e4cc7a57ab53478f92864b3ec2ff230354558f046478f11a1ecf62fa1aea");
 	}
 
-	private void testMotDePasseValide(String motDePasse, int[] options, Object[] criteres, boolean resultat) {
+	private void testMotDePasseValide(String motDePasse, int[] options, Object[] criteres, boolean resultat) throws Exception {
 		Object[] expected = {
 				resultat
 		};

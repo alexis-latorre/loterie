@@ -1,20 +1,29 @@
 package com.loterie.business;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.joda.time.DateTime;
 
-public class Mois {
+import com.loterie.entities.Jour;
+
+public class MoisHTML {
 	private int premierJour;
 	private int dernierJour;
+	private String premiereDate;
+	private String derniereDate;
 	private int numero;
-	private List<Jour> jours;
+	private List<JourHTML> jours;
+	private Map<String, JourHTML> joursHTML;
 	
-	public Mois(DateTime dt) {
+	public MoisHTML(DateTime dt) {
 		this.premierJour = dt.dayOfMonth().getMinimumValue();
 		this.dernierJour = dt.dayOfMonth().getMaximumValue();
 		this.numero = dt.getMonthOfYear();
-		this.jours = new ArrayList<Jour>();
+		this.jours = new ArrayList<JourHTML>();
+		this.joursHTML = new HashMap<>();
 
 		DateTime pj = new DateTime(dt.getYear(), dt.getMonthOfYear(), this.premierJour, 0, 0, 0);
 		DateTime dj = new DateTime(dt.getYear(), dt.getMonthOfYear(), this.dernierJour, 0, 0, 0);
@@ -24,20 +33,31 @@ public class Mois {
 		
 		if (premierJourSemaine != 1) {			
 			for (int i = premierJourSemaine; i > 1; i--) {
-				Jour jour = new Jour(pj.minusDays(i - 1));
+				JourHTML jour = new JourHTML(pj.minusDays(i - 1));
 				this.jours.add(jour);
+				this.joursHTML.put(jour.getDateJour(), jour);
+				
+				if (i == premierJourSemaine) {
+					premiereDate = jour.getDateJour();
+				}
 			}
 		}
 		
 		for (int i = 0; i < dernierJour; i++) {
-			Jour jour = new Jour(pj.plusDays(i));
+			JourHTML jour = new JourHTML(pj.plusDays(i));
 			this.jours.add(jour);
+			this.joursHTML.put(jour.getDateJour(), jour);
 		}
 		
 		if (dernierJourSemaine != 7) {			
 			for (int i = 1; i <= (7 - dernierJourSemaine); i++) {
-				Jour jour = new Jour(dj.plusDays(i));
+				JourHTML jour = new JourHTML(dj.plusDays(i));
 				this.jours.add(jour);
+				this.joursHTML.put(jour.getDateJour(), jour);
+				
+				if (i == (7 - dernierJourSemaine)) {
+					derniereDate = jour.getDateJour();
+				}
 			}
 		}
 	}
@@ -58,6 +78,14 @@ public class Mois {
 		this.dernierJour = dernierJour;
 	}
 
+	public String getPremiereDate() {
+		return premiereDate;
+	}
+
+	public String getDerniereDate() {
+		return derniereDate;
+	}
+
 	public int getNumero() {
 		return numero;
 	}
@@ -66,12 +94,12 @@ public class Mois {
 		this.numero = numero;
 	}
 
-	public List<Jour> getJours() {
+	public List<JourHTML> getJours() {
 		return jours;
 	}
 
-	public Jour getJour(String date) {
-		for (Jour jour : jours) {
+	public JourHTML getJour(String date) {
+		for (JourHTML jour : jours) {
 			if (jour.getDateJour().equals(date)) {
 				return jour;
 			}
@@ -79,7 +107,17 @@ public class Mois {
 		return null;
 	}
 
-	public void setJours(List<Jour> jours) {
+	public void setJours(List<JourHTML> jours) {
 		this.jours = jours;
+	}
+
+	public Map<String, JourHTML> getJoursHTML() {
+		return joursHTML;
+	}
+
+	public void combinerJours(List<Jour> jours) {
+		for (Jour jour : jours) {
+			joursHTML.get(jour.getDateJour()).addGrille(jour.getLgu().getGrille());
+		}
 	}
 }
