@@ -105,8 +105,12 @@ public class CreationUtilisateurForm {
 			return;
 		}
 		
-		if (!motDePasseValide(mdp, listeControles, listeParametres)) {
-			erreurs.put("motDePasse", ERREUR_MDP);
+		try {
+			if (!motDePasseValide(mdp, listeControles, listeParametres)) {
+				erreurs.put("motDePasse", ERREUR_MDP);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		if (!comparerChainesNonNull(mdp, mdpc)) {

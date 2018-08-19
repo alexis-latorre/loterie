@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 
-@WebServlet(urlPatterns = {"/updatePassword"})
+@WebServlet(urlPatterns = {
+		Constants.URL_MODIFIER_MDP
+		})
 public class GestionMdpServlet extends HttpServlet {
 
 	/**
@@ -33,9 +35,12 @@ public class GestionMdpServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		String mdp = req.getParameter("motDePasse");
+		String mdpc = req.getParameter("motDePasseConfirmation");
 		
+		// L'utilisateur doit exister pour modifier son mot de passe
 		if (utilisateur != null) {
-			utilisateurDao.changerMotDePasse(utilisateur, req);
+			utilisateurDao.changerMotDePasse(utilisateur, mdp, mdpc);
 			req.getServletContext().getRequestDispatcher(Constants.URN_ACCUEIL).forward(req, resp);
 		}
 	}

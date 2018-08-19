@@ -1,5 +1,6 @@
 package com.loterie.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -8,7 +9,7 @@ import com.loterie.config.Constants;
 import com.loterie.entities.Grille;
 import com.loterie.tools.Tools;
 
-public class Jour {
+public class JourHTML {
 	private DateTime dt;
 	private int numeroDansSemaine;
 	private int numeroDansMois;
@@ -19,7 +20,7 @@ public class Jour {
 	private List<Grille> grilles;
 	private boolean paye;
 	
-	public Jour(DateTime dt) {
+	public JourHTML(DateTime dt) {
 		this.dt = dt;
 		this.numeroDansSemaine = dt.getDayOfWeek();
 		int indiceJour = this.numeroDansSemaine - 1;
@@ -28,6 +29,7 @@ public class Jour {
 		this.nomLong = Constants.JOURS_LONGS[indiceJour];
 		this.nomCourt = Constants.JOURS_COURTS[indiceJour];
 		this.initiale = Constants.JOURS_INITIALES[indiceJour];
+		this.grilles = new ArrayList<>();
 	}
 
 	public int getNumeroDansSemaine() {
@@ -88,6 +90,10 @@ public class Jour {
 
 	public void setGrilles(List<Grille> grilles) {
 		this.grilles = grilles;
+	}
+
+	public void addGrille(Grille grille) {
+		this.grilles.add(grille);
 	}
 
 	public boolean isPaye() {

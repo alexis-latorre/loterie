@@ -24,11 +24,14 @@ public class AdministrationServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// Si l'utilisateur n'a pas de droit d'aministration, il sera redirigé vers la page d'erreur 403
 		String cible = Constants.URN_ADMIN_403;
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		
+		// Vérifie si l'utilisateur existe en session
 		if (utilisateur != null) {
+			// Vérifie que l'utilisateur en session est au minimum un modérateur
 			if (utilisateur.estModerateur()) {
 				cible = Constants.URN_ADMIN_ACCUEIL;
 			}

@@ -3,48 +3,24 @@ import com.loterie.config.Constants;
 
 import static com.loterie.tools.Tools.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.servlet.http.HttpServletRequest;
-
 import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;
 
 @Stateful
-public class UtilisateurDao {
-	// TODO: Déplacer dans un ConnexionForm 
-	private static final String ERR_MDP_INVALIDE 		= "Le mot de passe saisi est invalide ou l'utilisateur n'existe pas.";
-	
+public class UtilisateurDao {	
 	@PersistenceContext(name = "loterie_PU")
 	private EntityManager em;
-	private Map<String, String> erreurs = new HashMap<String, String>();
 	
 	public void enregistrerUtilisateur(Utilisateur utilisateur) {
 		em.persist(utilisateur);
 	}
 	
-	public Map<String, String> getErreurs() {
-		return erreurs;
-	}
-
-	public void setErreurs(Map<String, String> erreurs) {
-		this.erreurs = erreurs;
-	}
-
-	private void ajouterErreur(String cle, String erreur) {
-		erreurs.put(cle, erreur);
-	}
-	
-	public void changerMotDePasse(Utilisateur utilisateur, HttpServletRequest req) {
-		String mdp = req.getParameter("motDePasse");
-		String mdpc = req.getParameter("motDePasseConfirmation");
-		
+	public void changerMotDePasse(Utilisateur utilisateur, String mdp, String mdpc) {		
 		int[] listeControles = {
 				Tools.VERIF_TAILLE
 		};
@@ -58,8 +34,12 @@ public class UtilisateurDao {
 			return;
 		}
 
-		if (comparerChainesNonNull(mdp, mdpc) && motDePasseValide(mdp, listeControles, listeParametres)) {
-			changerGrainDeSel(utilisateur, mdp);
+		try {
+			if (comparerChainesNonNull(mdp, mdpc) && motDePasseValide(mdp, listeControles, listeParametres)) {
+				changerGrainDeSel(utilisateur, mdp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -71,20 +51,12 @@ public class UtilisateurDao {
 		em.merge(utilisateur);
 	}
 	
-	public boolean verifierMotDePasse(Utilisateur utilisateur, HttpServletRequest req) {
-		String mdp = req.getParameter("motDePasse");
+	public boolean verifierMotDePasse(Utilisateur utilisateur, String mdp) {
 		String mdp256 = utilisateur.getMotDePasse();
 		String grainDeSel = utilisateur.getGrainDeSel();
 		String sha256mdp = encoderSHA256(mdp + grainDeSel);
 		
 		boolean valide = sha256mdp.equals(mdp256);
-		
-		if (!valide) {
-			System.err.println("------------------------");
-			System.err.println(sha256mdp);
-			System.err.println(mdp256);
-			ajouterErreur("mdpInvalide", ERR_MDP_INVALIDE);
-		}
 		
 		return valide;
 	}
