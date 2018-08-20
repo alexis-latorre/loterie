@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.loterie.config.Constants;
@@ -24,6 +26,9 @@ public class Utilisateur {
 	@Column(name = "mot_de_passe")	
 	private String motDePasse;
 	private Long niveau;
+	@ManyToOne
+	@JoinColumn(name = "fk_portefeuille_id")
+	private Portefeuille portefeuille;
 	
 	public Long getId() {
 		return id;
@@ -72,6 +77,14 @@ public class Utilisateur {
 	}
 	public void setNiveau(Long niveau) {
 		this.niveau = niveau;
+	}
+	
+	public Portefeuille getPortefeuille() {
+		return portefeuille;
+	}
+	
+	public void setPortefeuille(Portefeuille portefeuille) {
+		this.portefeuille = portefeuille;
 	}
 	
 	public boolean estAdministrateur() {

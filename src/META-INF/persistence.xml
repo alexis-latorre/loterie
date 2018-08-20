@@ -7,6 +7,7 @@
 		<class>com.loterie.entities.LienGrilleUtilisateur</class>
 		<class>com.loterie.entities.Jour</class>
 		<class>com.loterie.entities.Jeu</class>
+		<class>com.loterie.entities.Portefeuille</class>
         <properties>
             <property name="eclipselink.logging.level.sql" value="FINE"/>
             <property name="eclipselink.logging.parameters" value="true"/>

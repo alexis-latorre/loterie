@@ -6,6 +6,7 @@ public interface Messages {
 	 */
 	public static final String MSG_UTILISATEUR_INTROUVABLE 			= "Utilisateur introuvable";
 	public static final String MSG_MDP_INVALIDE			 			= "Le mot de passe saisi est invalide ou l'utilisateur n'existe pas.";
+	public static final String MSG_FONDS_INVALIDES		 			= "Le montant entré est incorrect. Veuillez saisir un nombre valide.";
 			
 	/**
 	 * Messages de la console

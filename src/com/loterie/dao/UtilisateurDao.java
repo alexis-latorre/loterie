@@ -48,7 +48,7 @@ public class UtilisateurDao {
 		String sha256mdp = encoderSHA256(mdp + grainDeSel);
 		utilisateur.setGrainDeSel(grainDeSel);
 		utilisateur.setMotDePasse(sha256mdp);
-		em.merge(utilisateur);
+		maj(utilisateur);
 	}
 	
 	public boolean verifierMotDePasse(Utilisateur utilisateur, String mdp) {
@@ -109,5 +109,9 @@ public class UtilisateurDao {
 		}
 		
 		return utilisateur;
+	}
+
+	public void maj(Utilisateur utilisateur) {
+		em.merge(utilisateur);
 	}
 }
