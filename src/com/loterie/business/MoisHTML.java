@@ -117,7 +117,9 @@ public class MoisHTML {
 
 	public void combinerJours(List<Jour> jours) {
 		for (Jour jour : jours) {
-			joursHTML.get(jour.getDateJour()).addGrille(jour.getLgu().getGrille());
+			JourHTML jourHTML = joursHTML.get(jour.getDateJour()); 
+			jourHTML.addGrille(jour.getLgu().getGrille());
+			jourHTML.setPaye(jour.isPaye());
 		}
 	}
 }

@@ -58,6 +58,8 @@ public interface Constants {
 	public static final String URL_MEMBRE_SUPPRIMER_GRILLE					= "/membre/supprimerGrille";
 	public static final String URL_MEMBRE_REJOINDRE_GRILLE					= "/membre/rejoindreGrille";
 	public static final String URL_MEMBRE_QUITTER_GRILLE					= "/membre/quitterGrille";
+	public static final String URL_MEMBRE_PORTEFEUILLE						= "/membre/monPortefeuille";
+	public static final String URL_MEMBRE_PORTEFEUILLE_AJOUT				= "/membre/ajouterFonds";
 	public static final String URL_ADMIN_ACCUEIL							= "/admin/accueil";
 	
 	/** 
@@ -73,6 +75,7 @@ public interface Constants {
 	public static final String URN_MEMBRE_AFFICHER_GRILLES					= "/WEB-INF/membre/afficherGrilles.jsp";
 	public static final String URN_MEMBRE_CREER_GRILLE						= "/WEB-INF/membre/creerGrille.jsp";
 	public static final String URN_MEMBRE_MODIFIER_GRILLE					= "/WEB-INF/membre/modifierGrille.jsp";
+	public static final String URN_MEMBRE_PORTEFEUILLE						= "/WEB-INF/membre/afficherPortefeuille.jsp";
 	
 	public static final String URN_ADMIN_403								= "/WEB-INF/admin/403.jsp";
 	public static final String URN_ADMIN_ACCUEIL							= "/WEB-INF/admin/homePage.jsp";
@@ -95,7 +98,7 @@ public interface Constants {
 	public static final String SELECT_JOUR_PAR_LGU							= "SELECT j FROM Jour j WHERE j.lgu = :lgu";
 	public static final String SELECT_JOUR_PAR_DATE_ET_LGU					= "SELECT j FROM Jour j WHERE j.date_jour = :date_jour AND j.lgu = :lgu";
 	public static final String SELECT_JOUR_PAR_DATE_ET_UTILISATEUR 			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE j.date_jour = :date_jour AND l.utilisateur = :utilisateur";
-	public static final String SELECT_JOUR_PAR_INTERVALLE_ET_UTILISATEUR 	= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE j.date_jour BETWEEN :date_debut AND :date_fin AND l.utilisateur = :utilisateur";
+	public static final String SELECT_JOUR_PAR_INTERVALLE_ET_UTILISATEUR 	= "SELECT DISTINCT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE (j.date_jour BETWEEN :date_debut AND :date_fin) AND l.utilisateur = :utilisateur";
 	public static final String SELECT_JEU_PAR_NOM 							= "SELECT j FROM Jeu j WHERE j.nom = :nom";
 	
 }

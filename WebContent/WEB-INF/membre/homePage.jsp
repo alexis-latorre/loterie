@@ -12,6 +12,7 @@
 	<ul>
 		<li><a href="<c:url value="/membre/afficherGrilles" />">Afficher mes grilles</a>
 		<li><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a>
+		<li><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a>
 	</ul>
 </body>
 </html>
