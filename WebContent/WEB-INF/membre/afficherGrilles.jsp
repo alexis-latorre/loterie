@@ -27,7 +27,7 @@
 						<a title="Supprimer cette grille" href="<c:url value="/membre/supprimerGrille"><c:param name="id" value="${grille.id}" /></c:url>">suppr.</a>
 						</c:if>
 					</p>
-					<h4>${grille.id} : ${fn:join(grille.numeros, ', ')} - ${fn:join(grille.etoiles, ', ')}</h4>
+					<h4><a title="Accéder aux détails de cette grille" href="<c:url value="/membre/afficherGrille"><c:param name="id" value="${grille.id}" /></c:url>">${fn:join(grille.numeros, ', ')} - ${fn:join(grille.etoiles, ', ')}</a></h4>
 				</div>
 			</c:forEach>
 			<p><a href="<c:url value="/membre/creerGrille" />">Ajouter une grille</a></p>

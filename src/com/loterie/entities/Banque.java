@@ -10,14 +10,16 @@ import javax.persistence.Table;
 import org.joda.time.DateTime;
 
 @Entity
-@Table(name = "portefeuille")
-public class Portefeuille {
+@Table(name = "banque")
+public class Banque {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "date_creation")
 	private String dateCreation;
 	private Double fonds;
+	private Double mises;
+	private Double gains;
 	
 	public Long getId() {
 		return id;
@@ -51,8 +53,27 @@ public class Portefeuille {
 		this.fonds += fonds;
 	}
 
-	public void retirerFonds(Double montant) {
-		this.fonds -= montant;
-		
+	public Double getMises() {
+		return mises;
+	}
+
+	public void ajouterMises(Double mises) {
+		this.mises += mises;
+	}
+
+	public void setMises(Double mises) {
+		this.mises = mises;
+	}
+
+	public void ajouterGains(Double gains) {
+		this.gains += gains;
+	}
+
+	public Double getGains() {
+		return gains;
+	}
+
+	public void setGains(Double gains) {
+		this.gains = gains;
 	}
 }

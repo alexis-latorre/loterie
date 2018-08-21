@@ -39,6 +39,6 @@
 	</tr>
 </c:forEach>
 </table>
-<label>Étoile + :<input type="checkbox" name="etoilePlus" id="input-etoilePlus" value="${etoilePlus}" <c:out value="${checked}" /> /></label><br />
+<label>Étoile + :<input type="checkbox" name="etoilePlus" id="input-etoilePlus" <c:out value="${checked}" /> /></label><br />
 <label>MyMillion : <input type="text" name="mymillion" id="input-mymillion" /></label><br />
 <br />

@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Loterie | Mon portefeuille</title>
 </head>
 <body>
@@ -11,18 +10,21 @@
 	<h3>Mon portefeuille</h3>
 	<c:choose>
 	<c:when test="${utilisateur.portefeuille != null}">
-	<h4><c:out value="Solde : ${utilisateur.portefeuille.fonds}"></c:out> &euro;</h4>
+		<c:set var="solde" value="${utilisateur.portefeuille.fonds}" />
 	</c:when>
 	<c:otherwise>
-		<p>Votre portefeuille n'est pas encore créé. Commencez à ajouter des fonds pour qu'il soit créé automatiquement.</p>
+		<c:set var="solde" value="0" />
 	</c:otherwise>
 	</c:choose>
+	<h4>Solde : <fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${solde}" type="currency"></fmt:formatNumber></h4>
+	<c:if test="${utilisateur.estModerateur()}">
 	<form action="<c:url value="/membre/ajouterFonds" />" method="post">
-		<label>Ajouter des fonds : <input type="text" name="fonds" id="input-fonds" /> &euro;</label><br />
+		<label>Ajouter des fonds : <input type="number" lang="en" lang="fr" step="0.5" name="fonds" id="input-fonds" /> &euro;</label><br />
 		<c:if test="${not empty erreurs}">
 			<c:out value="${erreurs.fonds}"></c:out><br />
 		</c:if>
 		<input type="submit" value="Confirmer" />		
 	</form>
+	</c:if>
 </body>
 </html>
