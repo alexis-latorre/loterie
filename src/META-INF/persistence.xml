@@ -8,6 +8,7 @@
 		<class>com.loterie.entities.Jour</class>
 		<class>com.loterie.entities.Jeu</class>
 		<class>com.loterie.entities.Portefeuille</class>
+		<class>com.loterie.entities.Banque</class>
         <properties>
             <property name="eclipselink.logging.level.sql" value="FINE"/>
             <property name="eclipselink.logging.parameters" value="true"/>

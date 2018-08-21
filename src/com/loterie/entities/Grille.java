@@ -29,6 +29,9 @@ public class Grille {
 	private Utilisateur utilisateur;
 	@JoinColumn(name = "fk_jeu_id")
 	private Jeu jeu;
+	@JoinColumn(name = "fk_banque_id")
+	private Banque banque;
+	private boolean publique;
 	@Transient
 	private boolean rejoindre;
 	
@@ -102,6 +105,22 @@ public class Grille {
 	
 	public void setJeu(Jeu jeu) {
 		this.jeu = jeu;
+	}
+
+	public Banque getBanque() {
+		return banque;
+	}
+
+	public void setBanque(Banque banque) {
+		this.banque = banque;
+	}
+
+	public boolean isPublique() {
+		return publique;
+	}
+
+	public void setPublique(boolean publique) {
+		this.publique = publique;
 	}
 
 	public boolean getRejoindre() {

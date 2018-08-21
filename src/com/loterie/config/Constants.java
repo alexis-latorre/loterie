@@ -54,10 +54,12 @@ public interface Constants {
 	public static final String URL_MEMBRE_PROFIL 							= "/membre/profil";
 	public static final String URL_MEMBRE_AFFICHER_GRILLES					= "/membre/afficherGrilles";
 	public static final String URL_MEMBRE_CREER_GRILLE						= "/membre/creerGrille";
+	public static final String URL_MEMBRE_AFFICHER_GRILLE					= "/membre/afficherGrille";
 	public static final String URL_MEMBRE_MODIFIER_GRILLE					= "/membre/editerGrille";
 	public static final String URL_MEMBRE_SUPPRIMER_GRILLE					= "/membre/supprimerGrille";
 	public static final String URL_MEMBRE_REJOINDRE_GRILLE					= "/membre/rejoindreGrille";
 	public static final String URL_MEMBRE_QUITTER_GRILLE					= "/membre/quitterGrille";
+	public static final String URL_MEMBRE_BANQUE_AJOUT						= "/membre/crediterGrille";
 	public static final String URL_MEMBRE_PORTEFEUILLE						= "/membre/monPortefeuille";
 	public static final String URL_MEMBRE_PORTEFEUILLE_AJOUT				= "/membre/ajouterFonds";
 	public static final String URL_ADMIN_ACCUEIL							= "/admin/accueil";
@@ -73,6 +75,7 @@ public interface Constants {
 	public static final String URN_MEMBRE_403 								= "/WEB-INF/membre/403.jsp";
 	public static final String URN_MEMBRE_ACCUEIL							= "/WEB-INF/membre/homePage.jsp";
 	public static final String URN_MEMBRE_AFFICHER_GRILLES					= "/WEB-INF/membre/afficherGrilles.jsp";
+	public static final String URN_MEMBRE_AFFICHER_GRILLE					= "/WEB-INF/membre/detailGrille.jsp";
 	public static final String URN_MEMBRE_CREER_GRILLE						= "/WEB-INF/membre/creerGrille.jsp";
 	public static final String URN_MEMBRE_MODIFIER_GRILLE					= "/WEB-INF/membre/modifierGrille.jsp";
 	public static final String URN_MEMBRE_PORTEFEUILLE						= "/WEB-INF/membre/afficherPortefeuille.jsp";
