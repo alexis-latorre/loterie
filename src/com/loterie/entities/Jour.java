@@ -46,7 +46,7 @@ public class Jour {
 		return lgu;
 	}
 	
-	public void setLgus(LienGrilleUtilisateur lgu) {
+	public void setLgu(LienGrilleUtilisateur lgu) {
 		this.lgu = lgu;
 	}
 	

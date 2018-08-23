@@ -256,4 +256,17 @@ public class Tools {
 		}
 		return retour;
 	}
+	
+	public static String getProchainJour(int idJour, DateTime dateDebut) {
+		int jourDebut = dateDebut.getDayOfWeek();
+		
+		if (idJour != jourDebut) {
+			if (idJour > jourDebut) {
+				dateDebut = dateDebut.plusDays(idJour - jourDebut);
+			} else {
+				dateDebut = dateDebut.plusDays(7 - (jourDebut - idJour));
+			}
+		}
+		return dateDebut.getYear() + "-" + padRight(dateDebut.getMonthOfYear(), 2) + "-" + padRight(dateDebut.getDayOfMonth(), 2);
+	}
 }

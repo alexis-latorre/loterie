@@ -1,5 +1,6 @@
 package com.loterie.dao;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateful;
@@ -55,14 +56,14 @@ public class LienGUDao {
 		em.remove(lienGU);
 	}
 
-	public LienGrilleUtilisateur trouverParGrille(Grille grille) {
-		LienGrilleUtilisateur liensGU = null;
+	public List<LienGrilleUtilisateur> trouverParGrille(Grille grille) {
+		List<LienGrilleUtilisateur> liensGU = null;
 		
 		try {
 			Query query = em.createQuery(Constants.SELECT_LIEN_GU_PAR_GRILLE);
 			query.setParameter("grille", grille);
 			
-			liensGU = (LienGrilleUtilisateur) query.getSingleResult();
+			liensGU = (List<LienGrilleUtilisateur>) query.getResultList();
 		} catch (NoResultException e) {
 			System.out.println("[WARNING]: Pas de lien grille-utilisateur trouve pour la grille '" + grille.getId() + "'.");
 		} catch (Exception e) {

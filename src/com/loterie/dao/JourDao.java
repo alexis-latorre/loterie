@@ -18,13 +18,17 @@ public class JourDao {
 	@PersistenceContext(unitName = "loterie_PU")
 	private EntityManager em;
 	
-	public Jour trouverParLGU(LienGrilleUtilisateur lgu) {
-		Jour jour = null;
+	public void enregistrerJour(Jour jour) {
+		em.persist(jour);
+	}
+	
+	public List<Jour> trouverParLGU(LienGrilleUtilisateur lgu) {
+		List<Jour> jour = null;
 		
 		try {
 			Query requete = em.createQuery(Constants.SELECT_JOUR_PAR_LGU);
 			requete.setParameter("lgu", lgu);
-			jour = (Jour) requete.getSingleResult();
+			jour = (List<Jour>) requete.getResultList();
 		} catch (Exception e) {
 			System.out.println("[WARNING]: Pas de jour trouvee pour le lien '" + lgu.getId() + "'.");
 		}
