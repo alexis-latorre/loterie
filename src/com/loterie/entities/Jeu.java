@@ -18,7 +18,9 @@ public class Jeu {
 	private Long tirageParSemaine;
 	@Column(name = "jour_de_tirage")
 	private String jourDeTirage;
-	
+	@Column(name = "heure_validation")
+	private String heureValidation;
+
 	public Long getId() {
 		return id;
 	}
@@ -57,5 +59,13 @@ public class Jeu {
 		} else {
 			this.jourDeTirage = String.join(",", joursDeTirage);
 		}
+	}
+	
+	public String getHeureValidation() {
+		return heureValidation;
+	}
+
+	public void setHeureValidation(String heureValidation) {
+		this.heureValidation = heureValidation;
 	}
 }

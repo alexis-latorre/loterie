@@ -21,7 +21,19 @@
 			<c:out value="${erreurs.fonds}"></c:out><br />
 		</c:if>
 		<input type="submit" value="Confirmer" />	
-		</form> 
+		</form>
+		<br />
+		<form action='<c:url value="/membre/jouerGrille" />' method="post">
+			Jouer la grille pour 
+			<label><input type="radio" name="periode" id="input-periode" value="1j" /> 1 jour</label>
+			<label><input type="radio" name="periode" id="input-periode" value="1s" /> 1 semaine</label>
+			<label><input type="radio" name="periode" id="input-periode" value="2s" /> 2 semaines</label>
+			<label><input type="radio" name="periode" id="input-periode" value="3s" /> 3 semaines</label>
+			<label><input type="radio" name="periode" id="input-periode" value="4s" /> 4 semaines</label>
+			<label><input type="radio" name="periode" id="input-periode" value="5s" /> 5 semaines</label>
+			<br />
+			<input type="submit" value="Jouer" />
+		</form>
 	</c:if>
 </body>
 </html>

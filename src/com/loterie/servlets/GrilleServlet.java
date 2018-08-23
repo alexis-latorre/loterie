@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import com.loterie.config.Constants;
 import com.loterie.dao.BanqueDao;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JeuDao;
+import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.entities.Banque;
@@ -24,9 +26,8 @@ import com.loterie.entities.Grille;
 import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Portefeuille;
 import com.loterie.entities.Utilisateur;
-import com.loterie.forms.CreationBanqueForm;
 import com.loterie.forms.CreationGrilleForm;
-import com.loterie.forms.CreationPortefeuilleForm;
+import com.loterie.forms.JeuGrilleForm;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_MEMBRE_PROFIL,
@@ -37,7 +38,8 @@ import com.loterie.forms.CreationPortefeuilleForm;
 		Constants.URL_MEMBRE_SUPPRIMER_GRILLE,
 		Constants.URL_MEMBRE_REJOINDRE_GRILLE,
 		Constants.URL_MEMBRE_QUITTER_GRILLE,
-		Constants.URL_MEMBRE_BANQUE_AJOUT
+		Constants.URL_MEMBRE_BANQUE_AJOUT,
+		Constants.URL_MEMBRE_JOUER_GRILLE
 		})
 public class GrilleServlet extends HttpServlet {
 
@@ -55,6 +57,8 @@ public class GrilleServlet extends HttpServlet {
 	private BanqueDao banqueDao;
 	@EJB
 	private PortefeuilleDao portefeuilleDao;
+	@EJB
+	private JourDao jourDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -191,7 +195,7 @@ public class GrilleServlet extends HttpServlet {
 				} else if (uri.equals(Constants.URL_MEMBRE_QUITTER_GRILLE)) {
 					String id = req.getParameter("id");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
-					LienGrilleUtilisateur lienGU = lienGUDao.trouverParGrille(grille);
+					LienGrilleUtilisateur lienGU = lienGUDao.trouverParGrille(grille).get(0);
 					lienGUDao.supprimerLienGU(lienGU);
 
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
@@ -268,6 +272,17 @@ public class GrilleServlet extends HttpServlet {
 					} else {
 					}
 				}
+			}
+		} else if (uri.equals(Constants.URL_MEMBRE_JOUER_GRILLE)) {
+			cible = Constants.URN_MEMBRE_AFFICHER_GRILLE;
+			
+			JeuGrilleForm jgf = new JeuGrilleForm(lienGUDao, jourDao, req);
+			Map<String, String> erreurs = jgf.getErreurs();
+			
+			if (erreurs.isEmpty())  {
+				jgf.jouer();
+			} else {
+				req.setAttribute("erreurs", erreurs);
 			}
 		}
 		req.getServletContext().getRequestDispatcher(cible).forward(req, resp);
