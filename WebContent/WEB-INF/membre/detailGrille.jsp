@@ -8,7 +8,7 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/commun/header.jsp" />
-	<h3>Grille N° <c:out value="${grille.id}"></c:out></h3>
+	<h3>Grille N° <c:out value="${grille.id}"></c:out> (jouée jusqu'au <fmt:formatDate pattern="dd/MM/yyyy" value="${jour.date}" />)</h3>
 	<div>Numéros : <c:out value="${fn:join(grille.numeros, ', ')}"></c:out><br />
 	Étoiles : <c:out value="${fn:join(grille.etoiles, ', ')}"></c:out><br />
 	<c:if test="${grille.banque != null}">

@@ -23,6 +23,7 @@ import com.loterie.dao.LienGUDao;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.entities.Banque;
 import com.loterie.entities.Grille;
+import com.loterie.entities.Jour;
 import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Portefeuille;
 import com.loterie.entities.Utilisateur;
@@ -74,9 +75,11 @@ public class GrilleServlet extends HttpServlet {
 			if (strId != null) {
 				Long id = Long.valueOf(strId);
 				Grille grille = grilleDao.trouverParId(id);
+				Jour jour = jourDao.trouverDernierJourJoue(grille);
 				session.setAttribute("grille", grille);
 				req.setAttribute("utilisateur", utilisateur);
 				req.setAttribute("grille", grille);
+				req.setAttribute("jour", jour);
 			}
 		} else if (utilisateur != null) {
 			if (utilisateur.estMembre()) {
@@ -281,6 +284,8 @@ public class GrilleServlet extends HttpServlet {
 			
 			if (erreurs.isEmpty())  {
 				jgf.jouer();
+				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE);
+				return;
 			} else {
 				req.setAttribute("erreurs", erreurs);
 			}

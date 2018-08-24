@@ -1,5 +1,8 @@
 package com.loterie.entities;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.joda.time.DateTime;
 
@@ -16,11 +20,14 @@ public class Jour {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String date_jour;
+	@Column(name = "date_jour")
+	private String dateJour;
 	@ManyToOne(targetEntity = LienGrilleUtilisateur.class)
 	@JoinColumn(name = "fk_lien_gu_id")
 	private LienGrilleUtilisateur lgu;
 	private Long paye;
+	@Transient
+	private Date date = null;
 	
 	public Long getId() {
 		return id;
@@ -31,15 +38,15 @@ public class Jour {
 	}
 	
 	public String getDateJour() {
-		return date_jour;
+		return dateJour;
 	}
 	
-	public void setDateJour(String date_jour) {
-		this.date_jour = date_jour;
+	public void setDateJour(String dateJour) {
+		this.dateJour = dateJour;
 	}
 	
 	public void setDateJour(DateTime dt) {
-		this.date_jour = dt.getYear() + "-" + dt.getMonthOfYear() + "-" + dt.getDayOfMonth();
+		this.dateJour = dt.getYear() + "-" + dt.getMonthOfYear() + "-" + dt.getDayOfMonth();
 	}
 	
 	public LienGrilleUtilisateur getLgu() {
@@ -56,5 +63,20 @@ public class Jour {
 	
 	public void setPaye(boolean paye) {
 		this.paye = paye ? 1L : 0L;
+	}
+
+	public Date getDate() {
+		if (date == null) {
+			setDate(this.dateJour);
+		}
+		return date;
+	}
+	
+	private void setDate(String dateStr) {
+		String[] args = dateStr.split("-");
+		this.date = new DateTime()
+				.withYear(Integer.parseInt(args[0]))
+				.withMonthOfYear(Integer.parseInt(args[1]))
+				.withDayOfMonth(Integer.parseInt(args[2])).toDate();
 	}
 }
