@@ -10,8 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 
+import com.loterie.dao.BanqueDao;
+import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
+import com.loterie.entities.Banque;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jeu;
 import com.loterie.entities.Jour;
@@ -21,12 +24,14 @@ import com.loterie.tools.Tools;
 public class JeuGrilleForm {
 	private LienGUDao lguDao;
 	private JourDao jourDao;
+	private BanqueDao banqueDao;
 	private Map<String, String> erreurs;
 	private String periode;
 	private List<LienGrilleUtilisateur> lgus;
 	private Grille grille;
 	
-	public JeuGrilleForm(LienGUDao lguDao, JourDao jourDao, HttpServletRequest req) {
+	public JeuGrilleForm(LienGUDao lguDao, JourDao jourDao, BanqueDao banqueDao, HttpServletRequest req) {
+		this.banqueDao = banqueDao;
 		this.lguDao = lguDao;
 		this.jourDao = jourDao;
 		erreurs = new HashMap<>();
@@ -50,6 +55,7 @@ public class JeuGrilleForm {
 
 	public void jouer() {
 		Jeu jeu = grille.getJeu();
+		Banque banque = grille.getBanque();
 		int heureValidation = Integer.parseInt(jeu.getHeureValidation().split(":")[0]);
 		int minuteValidation = Integer.parseInt(jeu.getHeureValidation().split(":")[1]);
 		String[] jours = jeu.getJourDeTirage();
@@ -82,6 +88,10 @@ public class JeuGrilleForm {
 		if (typePeriode.equals("s")) {
 			nbPeriode *= jours.length;
 		}
+		Double prixTirage = jeu.getPrixTirage();
+		Double prix = 0D;
+		List<Jour> joursAjouer = new ArrayList<>();
+		
 		for (int i = 0; i < nbPeriode; i++) {
 			String prochainJour = Tools.getProchainJour(prochainJourDeJeu, dateValidation);
 			dateValidation = DateTime.parse(prochainJour);
@@ -110,9 +120,23 @@ public class JeuGrilleForm {
 					jour.setDateJour(prochainJour);
 					jour.setLgu(lgu);
 					jour.setPaye(false);
-					jourDao.enregistrerJour(jour);
+					joursAjouer.add(jour);
+					prix += prixTirage;
 				}
 			}
 		}
+		
+		if (prix <= grille.getBanque().getFonds()) {
+			banque.retirerFonds(prix);
+			banqueDao.maj(banque);
+			
+			for (Jour jour : joursAjouer) {
+				jourDao.enregistrerJour(jour);
+			}
+		}
+	}
+	
+	public Long getGrilleId() {
+		return grille.getId();
 	}
 }

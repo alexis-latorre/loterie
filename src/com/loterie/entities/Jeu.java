@@ -18,6 +18,8 @@ public class Jeu {
 	private Long tirageParSemaine;
 	@Column(name = "jour_de_tirage")
 	private String jourDeTirage;
+	@Column(name = "prix_par_tirage")
+	private Double prixTirage;
 	@Column(name = "heure_validation")
 	private String heureValidation;
 
@@ -61,6 +63,14 @@ public class Jeu {
 		}
 	}
 	
+	public Double getPrixTirage() {
+		return prixTirage;
+	}
+
+	public void setPrixTirage(Double prixTirage) {
+		this.prixTirage = prixTirage;
+	}
+
 	public String getHeureValidation() {
 		return heureValidation;
 	}

@@ -18,7 +18,7 @@
 						<c:when test="${not jour.paye}"><c:set var="paye" value=" class='error'" /></c:when>
 						<c:otherwise><c:set var="paye" value=" class='success'" /></c:otherwise>
 						</c:choose>
-						<div><c:out value="${grille.jeu.nom}"></c:out> <sup${paye}><c:out value="(${grille.id})"></c:out></sup></div>
+						<div><a ${paye} title="Accéder aux détails de cette grille" href="<c:url value="/membre/afficherGrille"><c:param name="id" value="${grille.id}" /></c:url>">${grille.jeu.nom}</a></div>
 						</c:forEach>
 					</c:if>
 				</div>
