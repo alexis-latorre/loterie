@@ -53,6 +53,11 @@ public class Banque {
 		this.fonds += fonds;
 	}
 
+	public void retirerFonds(Double montant) {
+		this.fonds -= montant;
+		
+	}
+
 	public Double getMises() {
 		return mises;
 	}

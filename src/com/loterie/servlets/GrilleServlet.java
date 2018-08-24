@@ -279,12 +279,12 @@ public class GrilleServlet extends HttpServlet {
 		} else if (uri.equals(Constants.URL_MEMBRE_JOUER_GRILLE)) {
 			cible = Constants.URN_MEMBRE_AFFICHER_GRILLE;
 			
-			JeuGrilleForm jgf = new JeuGrilleForm(lienGUDao, jourDao, req);
+			JeuGrilleForm jgf = new JeuGrilleForm(lienGUDao, jourDao, banqueDao, req);
 			Map<String, String> erreurs = jgf.getErreurs();
 			
 			if (erreurs.isEmpty())  {
 				jgf.jouer();
-				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE);
+				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + "?id=" + jgf.getGrilleId());
 				return;
 			} else {
 				req.setAttribute("erreurs", erreurs);
