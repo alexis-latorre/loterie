@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loterie | Créer une grille</title>
+<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
 <body>
 	<c:import url="/WEB-INF/commun/header.jsp" />
@@ -13,5 +14,6 @@
 		<c:import url="/WEB-INF/forms/grilleForm.jsp" />
 		<input type="submit" value="Créer la grille" />
 	</form>
+	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

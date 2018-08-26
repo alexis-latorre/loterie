@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loterie | Connexion</title>
+<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
 <body>
 	<c:import url="/WEB-INF/forms/loginForm.jsp"></c:import>
