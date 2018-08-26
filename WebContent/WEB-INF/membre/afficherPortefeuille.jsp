@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Loterie | Mon portefeuille</title>
+<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
 <body>
 	<c:import url="/WEB-INF/commun/header.jsp" />
@@ -26,5 +27,6 @@
 		<input type="submit" value="Confirmer" />		
 	</form>
 	</c:if>
+	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

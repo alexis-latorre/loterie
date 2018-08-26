@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loterie | Mes grilles</title>
+<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
 <body>
 	<c:import url="/WEB-INF/commun/header.jsp" />
@@ -37,5 +38,6 @@
 			<p><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a></p>
 		</c:otherwise>
 	</c:choose>
+	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

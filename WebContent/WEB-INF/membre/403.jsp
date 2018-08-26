@@ -5,10 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loterie | Erreur 403</title>
+<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
 <body>
 	<h1>OUPS !</h1>
 	<p>Vous essayez d'accéder à une page qui nécessite d'être connecté.</p>
 	<a href="<c:url value="/accueil" />">Retourner à l'accueil</a>
+	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

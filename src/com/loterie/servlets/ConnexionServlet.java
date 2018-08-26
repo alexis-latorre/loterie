@@ -22,7 +22,7 @@ import com.loterie.forms.ConnexionForm;
 import com.loterie.forms.RecuperationGrillesDuMoisForm;
 
 @WebServlet(urlPatterns = {
-		Constants.URL_ROOT,
+		//Constants.URL_ROOT,
 		Constants.URL_PUBLIC_ACCUEIL,
 		Constants.URL_PUBLIC_CONNEXION
 		})

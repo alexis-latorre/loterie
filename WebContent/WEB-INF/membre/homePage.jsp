@@ -3,6 +3,7 @@
 <html>
 <head>
   <title>Loterie | Mon profil</title>
+<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
 <body bgcolor="white">
 	<c:import url="/WEB-INF/commun/header.jsp" />
@@ -14,5 +15,6 @@
 		<li><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a>
 		<li><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a>
 	</ul>
+	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>
