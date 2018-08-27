@@ -5,20 +5,46 @@
 	<tr>
 	<c:forEach begin="0" end="6" step="1" varStatus="j">
 		<c:set var="jour" value="${mois.jours[(i.index * 7) + j.index]}"></c:set>
-		<td class="calendrier-case">
+		<c:choose>
+			<c:when test="${jour.numeroMois == mois.numero}">
+				<c:set var="moisCourant" value=" mois-courant"></c:set>
+				<c:choose>
+					<c:when test="${jour.numeroDansMois == mois.aujourdhui}">
+						<c:set var="aujourdhui" value=" aujourdhui"></c:set>
+					</c:when>
+					<c:otherwise>
+						<c:set var="aujourdhui" value=""></c:set>
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<c:set var="moisCourant" value=""></c:set>
+			</c:otherwise>
+		</c:choose>
+		<td class="well well-sm calendrier-case ${moisCourant}${aujourdhui}">
 			<div class="card">
 				<div class="calendrier-case-contenu">
 					<c:out value="${jour.nomCourt}"></c:out>
-					<br />
-					<c:out value="${jour.numeroDansMois}"></c:out>
+					<div class="calendrier-case-jour">
+						<c:out value="${jour.numeroDansMois}"></c:out>
+					</div>
 					<br />
 					<c:if test="${not empty jour.grilles}">
 						<c:forEach items="${jour.grilles}" var="grille">
 						<c:choose>
-						<c:when test="${not jour.paye}"><c:set var="paye" value=" class='error'" /></c:when>
-						<c:otherwise><c:set var="paye" value=" class='success'" /></c:otherwise>
+						<c:when test="${not grille.paye}">
+						<div>
+							<a class="text-danger" title="Accéder aux détails de cette grille" href="<c:url value="/membre/afficherGrille"><c:param name="id" value="${grille.id}" /></c:url>">${grille.nom}</a>
+							<span title="Non payée" class="text-danger glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</div>
+						</c:when>
+						<c:otherwise>
+						<div>
+							<a class="text-success" title="Accéder aux détails de cette grille" href="<c:url value="/membre/afficherGrille"><c:param name="id" value="${grille.id}" /></c:url>">${grille.nom}</a>
+							<span title="Payée" class="text-success glyphicon glyphicon-ok" aria-hidden="true"></span>
+						</div>
+						</c:otherwise>
 						</c:choose>
-						<div><a ${paye} title="Accéder aux détails de cette grille" href="<c:url value="/membre/afficherGrille"><c:param name="id" value="${grille.id}" /></c:url>">${grille.jeu.nom}</a></div>
 						</c:forEach>
 					</c:if>
 				</div>

@@ -7,11 +7,13 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 
+import com.loterie.entities.Grille;
 import com.loterie.entities.Jour;
 
 public class MoisHTML {
 	private int premierJour;
 	private int dernierJour;
+	private int aujourdhui;
 	private String premiereDate;
 	private String derniereDate;
 	private int numero;
@@ -21,6 +23,7 @@ public class MoisHTML {
 	public MoisHTML(DateTime dt) {
 		this.premierJour = dt.dayOfMonth().getMinimumValue();
 		this.dernierJour = dt.dayOfMonth().getMaximumValue();
+		this.setAujourdhui(dt.getDayOfMonth());
 		this.numero = dt.getMonthOfYear();
 		this.jours = new ArrayList<JourHTML>();
 		this.joursHTML = new HashMap<>();
@@ -78,6 +81,14 @@ public class MoisHTML {
 		this.dernierJour = dernierJour;
 	}
 
+	public int getAujourdhui() {
+		return aujourdhui;
+	}
+
+	public void setAujourdhui(int aujourdhui) {
+		this.aujourdhui = aujourdhui;
+	}
+
 	public String getPremiereDate() {
 		return premiereDate;
 	}
@@ -118,8 +129,10 @@ public class MoisHTML {
 	public void combinerJours(List<Jour> jours) {
 		for (Jour jour : jours) {
 			JourHTML jourHTML = joursHTML.get(jour.getDateJour()); 
-			jourHTML.addGrille(jour.getLgu().getGrille());
-			jourHTML.setPaye(jour.isPaye());
+			Grille grille = jour.getLgu().getGrille();
+			grille.setPaye(jour.isPaye());
+			jourHTML.addGrille(grille);
+			//jourHTML.setPaye(jour.isPaye());
 		}
 	}
 }

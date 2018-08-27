@@ -1,5 +1,5 @@
 <h1>MyLoterie</h1>
-<ul class="nav nav-fill">
+<ul class="nav nav-pills nav-justified">
 	<li class="nav-item">
 		<a class="nav-link" href="<c:url value="/accueil" />">Accueil</a>
 	</li>
@@ -8,13 +8,13 @@
 	</li>
 	<c:if test="${loggedIn == true}">
 		<li class="nav-item">
-		    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Membre</a>
-		    <div class="dropdown-menu">
-				<a class="dropdown-item" href="<c:url value="/membre/profil" />">Mon profil</a>
-				<a class="dropdown-item" href="<c:url value="/membre/afficherGrilles" />">Afficher mes grilles</a>
-				<a class="dropdown-item" href="<c:url value="/membre/creerGrille" />">Créer une grille</a>
-				<a class="dropdown-item" href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a>
-			</div>
+		    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Membre<span class="caret"></span></a>
+		    <ul class="dropdown-menu">
+				<li class="dropdown-item"><a href="<c:url value="/membre/profil" />">Mon profil</a></li>
+				<li class="dropdown-item"><a href="<c:url value="/membre/afficherGrilles" />">Afficher mes grilles</a></li>
+				<li class="dropdown-item"><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a></li>
+				<li class="dropdown-item"><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a></li>
+			</ul>
 		</li>
 		<c:if test="${utilisateur.niveau <= 0}">
 		<li class="nav-item">
