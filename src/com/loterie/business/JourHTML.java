@@ -14,6 +14,7 @@ public class JourHTML {
 	private int numeroDansSemaine;
 	private int numeroDansMois;
 	private int numeroDansAnnee;
+	private int numeroMois;
 	private String nomLong;
 	private String nomCourt;
 	private String initiale;
@@ -26,6 +27,7 @@ public class JourHTML {
 		int indiceJour = this.numeroDansSemaine - 1;
 		this.numeroDansMois = dt.getDayOfMonth();
 		this.numeroDansAnnee = dt.getDayOfYear();
+		this.numeroMois = dt.getMonthOfYear();
 		this.nomLong = Constants.JOURS_LONGS[indiceJour];
 		this.nomCourt = Constants.JOURS_COURTS[indiceJour];
 		this.initiale = Constants.JOURS_INITIALES[indiceJour];
@@ -54,6 +56,14 @@ public class JourHTML {
 
 	public void setNumeroDansAnnee(int numeroDansAnnee) {
 		this.numeroDansAnnee = numeroDansAnnee;
+	}
+
+	public int getNumeroMois() {
+		return numeroMois;
+	}
+
+	public void setNumeroMois(int numeroMois) {
+		this.numeroMois = numeroMois;
 	}
 
 	public String getNomLong() {

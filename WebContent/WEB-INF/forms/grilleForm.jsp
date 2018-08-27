@@ -1,3 +1,4 @@
+<label>Nom de la grille :<input type="text" name="nom" id="input-nom" <c:out value="${nom}" /> /></label><br />
 <h4>Choisir les numéros</h4>
 <table>
 <c:forEach items="${tableNumeros}" var="ligneNumeros">

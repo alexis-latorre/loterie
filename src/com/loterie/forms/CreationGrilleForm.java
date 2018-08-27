@@ -39,8 +39,19 @@ public class CreationGrilleForm {
 		CreationBanqueForm cbf = new CreationBanqueForm(this.banqueDao);
 		banque = cbf.getBanque();
 		
+		String nom = req.getParameter("nom");
 		List<String> numeros = new ArrayList<>();
 		List<String> etoiles = new ArrayList<>();
+		
+		if (nom != null) {
+			nom = nom.trim();
+			
+			if (nom.isEmpty()) {
+				nom = "Grille sans nom";
+			}
+		} else {
+			nom = "Grille sans nom";
+		}
 		
 		if (req.getParameterValues("numeros[]") != null) {
 			numeros = Arrays.asList(req.getParameterValues("numeros[]"));
@@ -56,6 +67,7 @@ public class CreationGrilleForm {
 				&& numeros.size() <= Constants.EUROMILLIONS_NUMEROS_SELECTION_MAX
 				&& etoiles.size() >= Constants.EUROMILLIONS_ETOILES_SELECTION_MIN
 				&& etoiles.size() <= Constants.EUROMILLIONS_ETOILES_SELECTION_MAX) {
+			grille.setNom(nom);
 			grille.setNumeros(numeros);
 			grille.setEtoiles(etoiles);
 			grille.setEtoilePlus(etoilePlus);
