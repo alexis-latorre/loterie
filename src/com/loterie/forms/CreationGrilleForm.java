@@ -26,7 +26,7 @@ public class CreationGrilleForm {
 	private Utilisateur utilisateur;
 	private Jeu jeu;
 	private Banque banque;
-	
+	private Grille grille;
 	
 	public CreationGrilleForm(GrilleDao grilleDao, JeuDao jeuDao, BanqueDao banqueDao, HttpServletRequest req) {
 		this.grilleDao = grilleDao;
@@ -76,6 +76,7 @@ public class CreationGrilleForm {
 			grille.setUtilisateur(utilisateur);
 			grille.setBanque(banque);
 			this.grilleDao.enregistrerGrille(grille);
+			this.grille = grille;
 		}
 	}
 	
@@ -85,5 +86,9 @@ public class CreationGrilleForm {
 
 	public void setErreurs(Map<String, String> erreurs) {
 		this.erreurs = erreurs;
+	}
+
+	public Grille getGrille() {
+		return grille;
 	}
 }

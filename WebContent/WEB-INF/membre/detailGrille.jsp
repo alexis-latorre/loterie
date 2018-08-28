@@ -33,6 +33,14 @@
 			<label><input type="radio" name="periode" id="input-periode" value="4s" /> 4 semaines</label>
 			<label><input type="radio" name="periode" id="input-periode" value="5s" /> 5 semaines</label>
 			<br />
+			<c:if test="${not empty erreurs}">
+				<c:if test="${not empty erreurs.format}">
+					<span class="text-danger">${erreurs.format}</span><br />
+				</c:if>
+				<c:if test="${not empty erreurs.grille}">
+					<span class="text-danger">${erreurs.grille}</span><br />
+				</c:if>
+			</c:if>
 			<input type="submit" value="Jouer" />
 		</form>
 	</c:if>

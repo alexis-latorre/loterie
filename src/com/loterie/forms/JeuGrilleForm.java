@@ -13,26 +13,31 @@ import org.joda.time.DateTime;
 import com.loterie.dao.BanqueDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
+import com.loterie.dao.PortefeuilleDao;
 import com.loterie.entities.Banque;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jeu;
 import com.loterie.entities.Jour;
 import com.loterie.entities.LienGrilleUtilisateur;
+import com.loterie.entities.Portefeuille;
+import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;
 
 public class JeuGrilleForm {
 	private LienGUDao lguDao;
 	private JourDao jourDao;
 	private BanqueDao banqueDao;
+	private PortefeuilleDao portefeuilleDao;
 	private Map<String, String> erreurs;
 	private String periode;
 	private List<LienGrilleUtilisateur> lgus;
 	private Grille grille;
 	
-	public JeuGrilleForm(LienGUDao lguDao, JourDao jourDao, BanqueDao banqueDao, HttpServletRequest req) {
+	public JeuGrilleForm(LienGUDao lguDao, JourDao jourDao, BanqueDao banqueDao, PortefeuilleDao portefeuilleDao, HttpServletRequest req) {
 		this.banqueDao = banqueDao;
 		this.lguDao = lguDao;
 		this.jourDao = jourDao;
+		this.portefeuilleDao = portefeuilleDao;
 		erreurs = new HashMap<>();
 		periode = req.getParameter("periode");
 		HttpSession session = req.getSession();
@@ -71,25 +76,30 @@ public class JeuGrilleForm {
 			if (Integer.parseInt(jours[i]) >= ajd.getDayOfWeek()) {
 				prochainJourDeJeu = Integer.parseInt(jours[i]);
 				idJour = i;
+				break;
 			}
 		}
 		int nbPeriode = Integer.parseInt(periode.substring(0, 1));
 		String typePeriode = periode.substring(1);
-		System.out.println(periode);
-		System.out.println(periode.substring(0, 1));
-		System.out.println(periode.substring(1));
 		DateTime maintenant = new DateTime();
-		
+
 		if (maintenant.isAfter(dateValidation)) {
 			dateValidation = dateValidation.plusDays(1);
+		} else {
+			dateValidation = maintenant;
 		}
 		
 		if (typePeriode.equals("s")) {
 			nbPeriode *= jours.length;
 		}
+		List<Jour> joursAjouer = new ArrayList<>();		
+		List<Utilisateur> joueurs = new ArrayList<>();
 		Double prixTirage = jeu.getPrixTirage();
 		Double prix = 0D;
-		List<Jour> joursAjouer = new ArrayList<>();
+		
+		System.out.println("On joue pour " + nbPeriode + " periodes");
+		System.out.println(lgus.size() + " LGUS ont ete trouves");
+		System.out.println(joueurs.size());
 		
 		for (int i = 0; i < nbPeriode; i++) {
 			String prochainJour = Tools.getProchainJour(prochainJourDeJeu, dateValidation);
@@ -103,6 +113,11 @@ public class JeuGrilleForm {
 			
 			for (LienGrilleUtilisateur lgu : lgus) {
 				List<Jour> joursLGU = jourDao.trouverParLGU(lgu);
+				Utilisateur joueur = lgu.getUtilisateur();
+				
+				if (!joueurs.contains(joueur)) {
+					joueurs.add(joueur);
+				}
 				List<String> datesJouees = new ArrayList<>();
 				
 				for (Jour j : joursLGU) {
@@ -118,14 +133,23 @@ public class JeuGrilleForm {
 					Jour jour = new Jour();
 					jour.setDateJour(prochainJour);
 					jour.setLgu(lgu);
-					jour.setPaye(false);
+					jour.setPaye(true);
 					joursAjouer.add(jour);
 					prix += prixTirage;
 				}
 			}
 		}
+		Double prixParJoueur = prix / joueurs.size();
 		
-		if (prix <= grille.getBanque().getFonds()) {
+		for (Utilisateur joueur : joueurs) {
+			Portefeuille portefeuille = joueur.getPortefeuille();
+			portefeuille.retirerFonds(prixParJoueur);
+			portefeuilleDao.maj(portefeuille);
+			banque.ajouterFonds(prixParJoueur);
+			banqueDao.maj(banque);
+		}
+		
+		if (prix <= banque.getFonds()) {
 			banque.retirerFonds(prix);
 			banqueDao.maj(banque);
 			

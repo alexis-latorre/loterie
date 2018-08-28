@@ -28,11 +28,13 @@ public class GestionMdpServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("debug", Constants.DEBUG);
 		req.getServletContext().getRequestDispatcher(Constants.URN_CREER_MDP).forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("debug", Constants.DEBUG);
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		String mdp = req.getParameter("motDePasse");
