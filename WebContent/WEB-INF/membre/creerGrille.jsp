@@ -10,10 +10,21 @@
 <body>
 	<c:import url="/WEB-INF/commun/header.jsp" />
 	<h3>Ajouter une nouvelle grille</h3>
-	<form action="<c:url value="/membre/creerGrille" />" method="post">
+	<form id="form-nouvelleGrille" action="<c:url value="/membre/creerGrille" />" method="post">
 		<c:import url="/WEB-INF/forms/grilleForm.jsp" />
-		<input type="submit" value="Créer la grille" />
+		<c:import url="/WEB-INF/forms/choisirParmiMembresForm.jsp" />
+		<input type="button" onclick="validerJoueurs()" value="Créer la grille" />
+		<!--input type="submit" value="Créer la grille" /-->
 	</form>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
+	<script type="text/javascript">
+		function validerJoueurs() {
+			$('#input-joueurs').children().each(function() {
+				$(this).attr('selected', 'selected');
+			});
+			
+			$('#form-nouvelleGrille').submit();
+		}
+	</script>
 </body>
 </html>

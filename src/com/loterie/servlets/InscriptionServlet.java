@@ -26,11 +26,13 @@ public class InscriptionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("debug", Constants.DEBUG);
 		req.getServletContext().getRequestDispatcher(Constants.URN_INSCRIPTION).forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("debug", Constants.DEBUG);
 		CreationUtilisateurForm cuf = new CreationUtilisateurForm(utilisateurDao, req);
 		Map<String, String> erreurs = cuf.getErreurs();
 		

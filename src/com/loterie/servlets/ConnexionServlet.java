@@ -41,6 +41,7 @@ public class ConnexionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("debug", Constants.DEBUG);
 		HttpSession session = req.getSession();
 		boolean loggedIn = false;
 
@@ -65,6 +66,7 @@ public class ConnexionServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("debug", Constants.DEBUG);
 		String cible = Constants.URN_ACCUEIL;
 		HttpSession session = req.getSession();
 		ConnexionForm connexionForm = new ConnexionForm(utilisateurDao, req);

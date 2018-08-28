@@ -24,6 +24,7 @@ public class AdministrationServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("debug", Constants.DEBUG);
 		// Si l'utilisateur n'a pas de droit d'aministration, il sera redirigé vers la page d'erreur 403
 		String cible = Constants.URN_ADMIN_403;
 		HttpSession session = req.getSession();

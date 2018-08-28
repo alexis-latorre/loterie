@@ -5,6 +5,7 @@ public interface Constants {
 	 * Constantes d'application
 	 */
 	public static final String CONTEXTE 									= "/loterie";
+	public static final boolean DEBUG										= true;
 	public static final String LETTRES_MAJ 									= "abcdefghijklmnopqrstuvwxyz";
 	public static final String LETTRES_MIN 									= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public static final String CHIFFRES 									= "0123456789";
@@ -87,9 +88,11 @@ public interface Constants {
 	/**
 	 * Requêtes SQL
 	 */
+	public static final String SELECT_UTILISATEUR_PAR_ID 					= "SELECT u FROM Utilisateur u WHERE u.id = :id";
 	public static final String SELECT_UTILISATEUR_PAR_NOM 					= "SELECT u FROM Utilisateur u WHERE u.pseudo = :pseudo";
 	public static final String SELECT_UTILISATEUR_PAR_NOM_PRENOM 			= "SELECT u FROM Utilisateur u WHERE u.nom = :nom AND u.prenom = :prenom";
 	public static final String SELECT_UTILISATEUR_PAR_EMAIL 				= "SELECT u FROM Utilisateur u WHERE u.email = :email";
+	public static final String SELECT_UTILISATEURS_PAR_NIVEAU_SUP 			= "SELECT u FROM Utilisateur u WHERE u.niveau <= :niveau";
 	public static final String SELECT_GRILLES_PAR_CREATEUR 					= "SELECT g FROM Grille g JOIN g.utilisateur u WHERE u = :utilisateur";
 	public static final String SELECT_GRILLES_PAR_UTILISATEUR 				= "SELECT l.grille FROM LienGrilleUtilisateur l WHERE l.utilisateur = :utilisateur";
 	public static final String SELECT_GRILLES_PAR_DATE_ET_UTILISATEUR 		= "SELECT l.grille FROM LienGrilleUtilisateur l, Jour j WHERE l.utilisateur = :utilisateur AND j.dateJour = :dateJour";
@@ -102,7 +105,7 @@ public interface Constants {
 	public static final String SELECT_JOUR_PAR_LGU 							= "SELECT j FROM Jour j WHERE j.lgu = :lgu";
 	public static final String SELECT_JOUR_PAR_DATE_ET_LGU 					= "SELECT j FROM Jour j WHERE j.dateJour = :dateJour AND j.lgu = :lgu";
 	public static final String SELECT_JOUR_PAR_DATE_ET_UTILISATEUR 			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE j.dateJour = :dateJour AND l.utilisateur = :utilisateur";
-	public static final String SELECT_JOUR_PAR_INTERVALLE_ET_UTILISATEUR 	= "SELECT DISTINCT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE (j.dateJour BETWEEN :date_debut AND :date_fin) AND l.utilisateur = :utilisateur";
+	public static final String SELECT_JOUR_PAR_INTERVALLE_ET_UTILISATEUR 	= "SELECT DISTINCT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE (j.dateJour BETWEEN :date_debut AND :date_fin) AND l.utilisateur = :utilisateur AND j.lgu = l";
 	public static final String SELECT_JOUR_DERNIER_JOUE_PAR_GRILLE			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l JOIN Grille g WHERE l.grille = :grille ORDER BY j.dateJour DESC";
 	public static final String SELECT_JEU_PAR_NOM 							= "SELECT j FROM Jeu j WHERE j.nom = :nom";
 

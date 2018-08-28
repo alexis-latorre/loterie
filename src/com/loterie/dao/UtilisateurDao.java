@@ -3,6 +3,8 @@ import com.loterie.config.Constants;
 
 import static com.loterie.tools.Tools.*;
 
+import java.util.List;
+
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -111,8 +113,42 @@ public class UtilisateurDao {
 		
 		return utilisateur;
 	}
+	
+	public List<Utilisateur> trouverParRoleMinimum(Long niveau) {
+		List<Utilisateur> utilisateurs = null;
+		
+		try {
+			Query query = em.createQuery(Constants.SELECT_UTILISATEURS_PAR_NIVEAU_SUP);
+			query.setParameter("niveau", niveau);
+			
+			utilisateurs = (List<Utilisateur>) query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return utilisateurs;
+	}
 
 	public void maj(Utilisateur utilisateur) {
 		em.merge(utilisateur);
+	}
+
+	public Utilisateur trouverParId(Long id) {
+		Utilisateur utilisateur = null;
+		
+		try {
+			Query query = em.createQuery(Constants.SELECT_UTILISATEUR_PAR_ID);
+			query.setParameter("id", id);
+			
+			utilisateur = (Utilisateur) query.getSingleResult();
+			em.refresh(utilisateur);
+		} catch (NoResultException e) {
+			System.out.println("[WARNING]: No user found with id '" + id + "'.");
+		} catch (Exception e) {
+			//e.printStackTrace();
+			//ajouterErreur("mdpInvalide", ERR_MDP_INVALIDE);
+		}
+		
+		return utilisateur;
 	}
 }

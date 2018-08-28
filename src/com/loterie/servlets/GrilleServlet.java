@@ -21,6 +21,7 @@ import com.loterie.dao.JeuDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.dao.PortefeuilleDao;
+import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Banque;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jour;
@@ -60,9 +61,12 @@ public class GrilleServlet extends HttpServlet {
 	private PortefeuilleDao portefeuilleDao;
 	@EJB
 	private JourDao jourDao;
+	@EJB
+	private UtilisateurDao utilisateurDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("debug", Constants.DEBUG);
 		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		String cible = Constants.URN_MEMBRE_403;
 		HttpSession session = req.getSession();
@@ -106,6 +110,8 @@ public class GrilleServlet extends HttpServlet {
 				} else if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
 					int nbNumeros = 0;
 					List<List<Integer>> tableNumeros = new ArrayList<List<Integer>>();
+					List<Utilisateur> utilisateurs = utilisateurDao.trouverParRoleMinimum(Constants.UTILISATEUR_ROLE_MEMBRE);
+					req.setAttribute("utilisateurs", utilisateurs);
 					
 					for (int i = 0; i < Constants.EUROMILLIONS_NUMEROS_NB_LIGNES; i++) {
 						List<Integer> ligne = new ArrayList<Integer>();
@@ -213,29 +219,58 @@ public class GrilleServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("debug", Constants.DEBUG);
 		String cible = Constants.URN_MEMBRE_AFFICHER_GRILLES;
 		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		HttpSession session = req.getSession();
-		session.getAttribute("utilisateur");
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		jeuDao.trouverParNom(Constants.EUROMILLIONS_NOM);
 		req.getParameter("etoilePlus");
 		//boolean etoilePlus = etoilePlusStr != null && Long.valueOf(etoilePlusStr) == 1L;
 		String myMillion = req.getParameter("myMillion");
 		
 		if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
-			new CreationGrilleForm(grilleDao, jeuDao, banqueDao, req);
+			CreationGrilleForm cgf = new CreationGrilleForm(grilleDao, jeuDao, banqueDao, req);
+			
+			if (cgf.getErreurs().isEmpty()) {
+				List<String> joueurs = new ArrayList<>();
+				
+				if (req.getParameterValues("joueurs[]") != null) {
+					joueurs = Arrays.asList(req.getParameterValues("joueurs[]"));
+				}
+				
+				for (String joueurStr : joueurs) {
+					Utilisateur joueur = utilisateurDao.trouverParId(Long.valueOf(joueurStr));
+					LienGrilleUtilisateur lienGU = new LienGrilleUtilisateur(); 
+					lienGU.setUtilisateur(joueur);
+					lienGU.setGrille(cgf.getGrille());
+					lienGUDao.enregistrerLienGrilleUtilisateur(lienGU);
+				}
+			}
 			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;
 		} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 			String id = req.getParameter("id");
+			String nom = req.getParameter("nom");
 			List<String> numeros = Arrays.asList(req.getParameterValues("numeros[]"));
 			List<String> etoiles = Arrays.asList(req.getParameterValues("etoiles[]"));
 			Grille grille = grilleDao.trouverParId(Long.valueOf(id));
+			
+			if (nom != null) {
+				nom = nom.trim();
+				
+				if (nom.isEmpty()) {
+					nom = "Grille sans nom";
+				}
+			} else {
+				nom = "Grille sans nom";
+			}
 
 			if (numeros.size() >= Constants.EUROMILLIONS_NUMEROS_SELECTION_MIN 
 					&& numeros.size() <= Constants.EUROMILLIONS_NUMEROS_SELECTION_MAX
 					&& etoiles.size() >= Constants.EUROMILLIONS_ETOILES_SELECTION_MIN
 					&& etoiles.size() <= Constants.EUROMILLIONS_ETOILES_SELECTION_MAX) {
+				grille.setNom(nom);
 				grille.setNumeros(numeros);
 				grille.setEtoiles(etoiles);
 				grille.setEtoilePlus(false);
@@ -251,7 +286,6 @@ public class GrilleServlet extends HttpServlet {
 			if (session.getAttribute("loggedIn") != null) {
 				loggedIn = (boolean) session.getAttribute("loggedIn");
 			}
-			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 			
 			if (loggedIn && utilisateur != null && utilisateur.estModerateur()) {
 				cible = Constants.URN_MEMBRE_AFFICHER_GRILLE;
@@ -259,7 +293,7 @@ public class GrilleServlet extends HttpServlet {
 				Banque banque = grille.getBanque();
 				Portefeuille portefeuille = utilisateur.getPortefeuille();
 				
-				if (grille != null && fonds != null) {
+				if (grille != null && fonds != null && !fonds.isEmpty()) {
 					Double montant = Double.valueOf(fonds);
 					
 					if (portefeuille.getFonds() >= montant) { 
@@ -279,15 +313,17 @@ public class GrilleServlet extends HttpServlet {
 		} else if (uri.equals(Constants.URL_MEMBRE_JOUER_GRILLE)) {
 			cible = Constants.URN_MEMBRE_AFFICHER_GRILLE;
 			
-			JeuGrilleForm jgf = new JeuGrilleForm(lienGUDao, jourDao, banqueDao, req);
+			JeuGrilleForm jgf = new JeuGrilleForm(lienGUDao, jourDao, banqueDao, portefeuilleDao, req);
 			Map<String, String> erreurs = jgf.getErreurs();
+			req.setAttribute("erreurs", erreurs);
 			
 			if (erreurs.isEmpty())  {
 				jgf.jouer();
+				Utilisateur joueur = utilisateurDao.trouverParPseudo(utilisateur.getPseudo());
+				session.removeAttribute("utilisateur");
+				session.setAttribute("utilisateur", joueur);
 				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + "?id=" + jgf.getGrilleId());
 				return;
-			} else {
-				req.setAttribute("erreurs", erreurs);
 			}
 		}
 		req.getServletContext().getRequestDispatcher(cible).forward(req, resp);
