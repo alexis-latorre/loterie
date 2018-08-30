@@ -313,7 +313,7 @@ public class GrilleServlet extends HttpServlet {
 		} else if (uri.equals(Constants.URL_MEMBRE_JOUER_GRILLE)) {
 			cible = Constants.URN_MEMBRE_AFFICHER_GRILLE;
 			
-			JeuGrilleForm jgf = new JeuGrilleForm(lienGUDao, jourDao, banqueDao, portefeuilleDao, req);
+			JeuGrilleForm jgf = new JeuGrilleForm(lienGUDao, jourDao, banqueDao, portefeuilleDao, utilisateurDao, req);
 			Map<String, String> erreurs = jgf.getErreurs();
 			req.setAttribute("erreurs", erreurs);
 			
