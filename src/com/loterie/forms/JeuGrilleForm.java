@@ -14,6 +14,7 @@ import com.loterie.dao.BanqueDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.dao.PortefeuilleDao;
+import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Banque;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jeu;
@@ -28,16 +29,18 @@ public class JeuGrilleForm {
 	private JourDao jourDao;
 	private BanqueDao banqueDao;
 	private PortefeuilleDao portefeuilleDao;
+	private UtilisateurDao utilisateurDao;
 	private Map<String, String> erreurs;
 	private String periode;
 	private List<LienGrilleUtilisateur> lgus;
 	private Grille grille;
 	
-	public JeuGrilleForm(LienGUDao lguDao, JourDao jourDao, BanqueDao banqueDao, PortefeuilleDao portefeuilleDao, HttpServletRequest req) {
+	public JeuGrilleForm(LienGUDao lguDao, JourDao jourDao, BanqueDao banqueDao, PortefeuilleDao portefeuilleDao, UtilisateurDao utilisateurDao, HttpServletRequest req) {
 		this.banqueDao = banqueDao;
 		this.lguDao = lguDao;
 		this.jourDao = jourDao;
 		this.portefeuilleDao = portefeuilleDao;
+		this.utilisateurDao = utilisateurDao;
 		erreurs = new HashMap<>();
 		periode = req.getParameter("periode");
 		HttpSession session = req.getSession();
@@ -96,10 +99,7 @@ public class JeuGrilleForm {
 		List<Utilisateur> joueurs = new ArrayList<>();
 		Double prixTirage = jeu.getPrixTirage();
 		Double prix = 0D;
-		
-		System.out.println("On joue pour " + nbPeriode + " periodes");
-		System.out.println(lgus.size() + " LGUS ont ete trouves");
-		System.out.println(joueurs.size());
+		List<String> datesTotalesJouees = new ArrayList<>();
 		
 		for (int i = 0; i < nbPeriode; i++) {
 			String prochainJour = Tools.getProchainJour(prochainJourDeJeu, dateValidation);
@@ -128,21 +128,30 @@ public class JeuGrilleForm {
 				if (joursLGU != null) {
 					jourDejaJoue = datesJouees.contains(prochainJour);					
 				}
-
+				
 				if (!jourDejaJoue) {
 					Jour jour = new Jour();
 					jour.setDateJour(prochainJour);
 					jour.setLgu(lgu);
 					jour.setPaye(true);
 					joursAjouer.add(jour);
-					prix += prixTirage;
+					
+					if (!datesTotalesJouees.contains(prochainJour)) {
+						datesTotalesJouees.add(prochainJour);
+					}
 				}
 			}
 		}
+		prix = prixTirage * datesTotalesJouees.size();
 		Double prixParJoueur = prix / joueurs.size();
 		
-		for (Utilisateur joueur : joueurs) {
+		for (Utilisateur joueur : joueurs) {			
 			Portefeuille portefeuille = joueur.getPortefeuille();
+
+			if (portefeuille == null) {
+				CreationPortefeuilleForm cpf = new CreationPortefeuilleForm(portefeuilleDao, utilisateurDao, joueur); 
+				portefeuille = cpf.getPortefeuille();
+			}
 			portefeuille.retirerFonds(prixParJoueur);
 			portefeuilleDao.maj(portefeuille);
 			banque.ajouterFonds(prixParJoueur);

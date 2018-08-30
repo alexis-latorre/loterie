@@ -20,7 +20,7 @@
 	<h4>Solde : <fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${solde}" type="currency"></fmt:formatNumber></h4>
 	<c:if test="${utilisateur.estModerateur()}">
 	<form action="<c:url value="/membre/ajouterFonds" />" method="post">
-		<label>Ajouter des fonds : <input type="number" lang="en" lang="fr" step="0.5" name="fonds" id="input-fonds" /> &euro;</label><br />
+		<label>Ajouter des fonds : <input type="number" lang="en" lang="fr" step="0.01" name="fonds" id="input-fonds" /> &euro;</label><br />
 		<c:if test="${not empty erreurs}">
 			<c:out value="${erreurs.fonds}"></c:out><br />
 		</c:if>

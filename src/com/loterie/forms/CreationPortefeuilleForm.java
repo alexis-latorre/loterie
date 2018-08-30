@@ -30,15 +30,26 @@ public class CreationPortefeuilleForm {
 		erreurs = new HashMap<>();
 		
 		if (portefeuille == null) {
-			portefeuille = new Portefeuille();
-			portefeuille.setDateCreation(new DateTime());
-			portefeuille.setFonds(0D);
-			this.portefeuilleDao.creerPortefeuille(portefeuille);
-			utilisateur.setPortefeuille(portefeuille);
-			this.utilisateurDao.maj(utilisateur);
+			creerPortefeuille();
 		}
 	}
 	
+	public CreationPortefeuilleForm(PortefeuilleDao portefeuilleDao, UtilisateurDao utilisateurDao, Utilisateur utilisateur) {
+		this.portefeuilleDao = portefeuilleDao;
+		this.utilisateurDao = utilisateurDao;
+		this.utilisateur = utilisateur;
+		creerPortefeuille();
+	}
+	
+	private void creerPortefeuille() {
+		portefeuille = new Portefeuille();
+		portefeuille.setDateCreation(new DateTime());
+		portefeuille.setFonds(0D);
+		this.portefeuilleDao.creerPortefeuille(portefeuille);
+		utilisateur.setPortefeuille(portefeuille);
+		this.utilisateurDao.maj(utilisateur);
+	}
+
 	public void ajouterFonds(String strFonds) {
 		Double fonds = 0D;
 		try {
@@ -52,5 +63,9 @@ public class CreationPortefeuilleForm {
 
 	public Map<String, String> getErreurs() {
 		return erreurs;
+	}
+
+	public Portefeuille getPortefeuille() {
+		return portefeuille;
 	}
 }

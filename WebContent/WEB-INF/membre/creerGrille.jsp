@@ -17,14 +17,6 @@
 		<!--input type="submit" value="Créer la grille" /-->
 	</form>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
-	<script type="text/javascript">
-		function validerJoueurs() {
-			$('#input-joueurs').children().each(function() {
-				$(this).attr('selected', 'selected');
-			});
-			
-			$('#form-nouvelleGrille').submit();
-		}
-	</script>
+	<c:import url="/WEB-INF/js/calendrier.js.jsp" />
 </body>
 </html>
