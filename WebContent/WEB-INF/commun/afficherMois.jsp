@@ -1,6 +1,18 @@
+<h2 style="text-align: center;">
+	<a href='<c:url value="/accueil">
+		<c:param name="mois" value="${mois.moisPrecedent.monthOfYear}"></c:param>
+		<c:param name="annee" value="${mois.moisPrecedent.year}"></c:param>
+	</c:url>'><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span></a>
+	<span style="display: inline-block; width: 300px">${mois.nom} ${mois.annee}</span>
+	<a href='<c:url value="/accueil">
+		<c:param name="mois" value="${mois.moisSuivant.monthOfYear}"></c:param>
+		<c:param name="annee" value="${mois.moisSuivant.year}"></c:param>
+	</c:url>'><span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></a>
+</h2>
 <table class="calendrier">
 <c:set var="nbLignes" value="${fn:length(mois.jours) / 7}" />
 <c:set var="ligneCourante" value="0"></c:set>
+<c:set var="aujourdhui" value=""></c:set>
 <c:forEach begin="0" end="${nbLignes - 1}" step="1" varStatus="i">
 	<tr>
 	<c:forEach begin="0" end="6" step="1" varStatus="j">
@@ -19,6 +31,7 @@
 			</c:when>
 			<c:otherwise>
 				<c:set var="moisCourant" value=""></c:set>
+				<c:set var="aujourdhui" value=""></c:set>
 			</c:otherwise>
 		</c:choose>
 		<td class="well well-sm calendrier-case ${moisCourant}${aujourdhui}">

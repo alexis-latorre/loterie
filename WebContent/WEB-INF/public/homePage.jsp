@@ -29,7 +29,7 @@
 			</form>
 			</c:when>
 			<c:otherwise>
-				<c:import url="/WEB-INF/commun/afficherSemaineCourante.jsp" />
+				<c:import url="/WEB-INF/commun/afficherMois.jsp" />
 			</c:otherwise>
 		</c:choose>
 	</div>

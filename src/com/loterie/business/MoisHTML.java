@@ -3,6 +3,7 @@ package com.loterie.business;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.joda.time.DateTime;
@@ -19,6 +20,10 @@ public class MoisHTML {
 	private int numero;
 	private List<JourHTML> jours;
 	private Map<String, JourHTML> joursHTML;
+	private String nom;
+	private int annee;
+	private DateTime moisPrecedent;
+	private DateTime moisSuivant;
 	
 	public MoisHTML(DateTime dt) {
 		this.premierJour = dt.dayOfMonth().getMinimumValue();
@@ -27,6 +32,10 @@ public class MoisHTML {
 		this.numero = dt.getMonthOfYear();
 		this.jours = new ArrayList<JourHTML>();
 		this.joursHTML = new HashMap<>();
+		this.nom = dt.monthOfYear().getAsText(Locale.FRANCE);
+		this.annee = dt.getYear();
+		this.moisPrecedent = dt.minusMonths(1);
+		this.moisSuivant = dt.plusMonths(1);
 
 		DateTime pj = new DateTime(dt.getYear(), dt.getMonthOfYear(), this.premierJour, 0, 0, 0);
 		DateTime dj = new DateTime(dt.getYear(), dt.getMonthOfYear(), this.dernierJour, 0, 0, 0);
@@ -44,6 +53,9 @@ public class MoisHTML {
 					premiereDate = jour.getDateJour();
 				}
 			}
+		} else {
+			JourHTML jour = new JourHTML(pj);
+			premiereDate = jour.getDateJour();
 		}
 		
 		for (int i = 0; i < dernierJour; i++) {
@@ -62,6 +74,9 @@ public class MoisHTML {
 					derniereDate = jour.getDateJour();
 				}
 			}
+		} else {
+			JourHTML jour = new JourHTML(dj);
+			derniereDate = jour.getDateJour();
 		}
 	}
 	
@@ -124,6 +139,38 @@ public class MoisHTML {
 
 	public Map<String, JourHTML> getJoursHTML() {
 		return joursHTML;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public int getAnnee() {
+		return annee;
+	}
+
+	public void setAnnee(int annee) {
+		this.annee = annee;
+	}
+
+	public DateTime getMoisPrecedent() {
+		return moisPrecedent;
+	}
+
+	public void setMoisPrecedent(DateTime moisPrecedent) {
+		this.moisPrecedent = moisPrecedent;
+	}
+
+	public DateTime getMoisSuivant() {
+		return moisSuivant;
+	}
+
+	public void setMoisSuivant(DateTime moisSuivant) {
+		this.moisSuivant = moisSuivant;
 	}
 
 	public void combinerJours(List<Jour> jours) {
