@@ -53,8 +53,19 @@ public class ConnexionServlet extends HttpServlet {
 		// Si l'utilisateur est authentifié, le calendrier est affiché en page d'accueil
 		if (loggedIn) {
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+			DateTime moisSurveille = new DateTime();
+			
+			try {
+				int mois = Integer.valueOf(req.getParameter("mois"));
+				int annee = Integer.valueOf(req.getParameter("annee"));
+				
+				if (mois > 0 && mois < 13) {
+					moisSurveille = new DateTime().withMonthOfYear(mois).withYear(annee);
+				}
+			} catch (NumberFormatException e) {
+			}
 			// Récupère les grilles du mois pour lequel l'utilisateur participe ou celles qu'il a créées
-			RecuperationGrillesDuMoisForm grillesDuMoisForm = new RecuperationGrillesDuMoisForm(new DateTime(), 
+			RecuperationGrillesDuMoisForm grillesDuMoisForm = new RecuperationGrillesDuMoisForm(moisSurveille, 
 					utilisateur, jourDao);
 			req.setAttribute("mois", grillesDuMoisForm.getMois());
 		}
