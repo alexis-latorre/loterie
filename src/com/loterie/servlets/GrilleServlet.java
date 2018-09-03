@@ -66,7 +66,6 @@ public class GrilleServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setAttribute("debug", Constants.DEBUG);
 		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		String cible = Constants.URN_MEMBRE_403;
 		HttpSession session = req.getSession();
@@ -148,7 +147,7 @@ public class GrilleServlet extends HttpServlet {
 				} else if (uri.equals(Constants.URL_MEMBRE_SUPPRIMER_GRILLE)) {
 					String id = req.getParameter("id");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
-					grilleDao.supprimerGrille(grille);
+					grilleDao.supprimer(grille);
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 				} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
@@ -219,7 +218,6 @@ public class GrilleServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setAttribute("debug", Constants.DEBUG);
 		String cible = Constants.URN_MEMBRE_AFFICHER_GRILLES;
 		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		HttpSession session = req.getSession();
@@ -275,7 +273,7 @@ public class GrilleServlet extends HttpServlet {
 				grille.setEtoiles(etoiles);
 				grille.setEtoilePlus(false);
 				grille.setMyMillion(myMillion);
-				grilleDao.modifierGrille(grille);
+				grilleDao.maj(grille);
 			}
 			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;

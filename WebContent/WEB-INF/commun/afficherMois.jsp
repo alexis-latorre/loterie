@@ -12,16 +12,16 @@
 <table class="calendrier">
 <c:set var="nbLignes" value="${fn:length(mois.jours) / 7}" />
 <c:set var="ligneCourante" value="0"></c:set>
-<c:set var="aujourdhui" value=""></c:set>
 <c:forEach begin="0" end="${nbLignes - 1}" step="1" varStatus="i">
 	<tr>
 	<c:forEach begin="0" end="6" step="1" varStatus="j">
 		<c:set var="jour" value="${mois.jours[(i.index * 7) + j.index]}"></c:set>
+		<c:set var="aujourdhui" value=""></c:set>
 		<c:choose>
 			<c:when test="${jour.numeroMois == mois.numero}">
 				<c:set var="moisCourant" value=" mois-courant"></c:set>
 				<c:choose>
-					<c:when test="${jour.numeroDansMois == mois.aujourdhui}">
+					<c:when test="${anneeAjd and moisAjd and jour.numeroDansMois == mois.aujourdhui}">
 						<c:set var="aujourdhui" value=" aujourdhui"></c:set>
 					</c:when>
 					<c:otherwise>

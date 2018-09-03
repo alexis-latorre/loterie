@@ -75,7 +75,7 @@ public class CreationGrilleForm {
 			grille.setJeu(jeu);
 			grille.setUtilisateur(utilisateur);
 			grille.setBanque(banque);
-			this.grilleDao.enregistrerGrille(grille);
+			this.grilleDao.creer(grille);
 			this.grille = grille;
 		}
 	}

@@ -1,6 +1,12 @@
 package com.loterie.tools;
 
 import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 import org.joda.time.DateTime;
 import com.google.common.hash.Hashing;
@@ -134,7 +140,7 @@ public class Tools {
 	 * <pre>public static {@link java.lang.String String} encoderSHA256({@link java.lang.String String} chaine)</pre>
 	 * Encode la chaîne de caractères au format sha256
 	 * 
-	 * @param chaine la chaîne de caractères à encoder
+	 * @param chaine - la chaîne de caractères à encoder
 	 * @return la chaîne encodée en sha256
 	 */
 	public static String encoderSHA256(String chaine) {
@@ -268,5 +274,44 @@ public class Tools {
 			}
 		}
 		return dateDebut.getYear() + "-" + padRight(dateDebut.getMonthOfYear(), 2) + "-" + padRight(dateDebut.getDayOfMonth(), 2);
+	}
+	
+	public static Object executerRequete(String reqStr, Map<String, Object> params, EntityManager em, boolean multiple, String source) {
+		Object resultat = null;
+		List<Object> resultats = null;
+		
+		try {
+			// La requête est créée dans l'EntityManager
+			Query query = em.createQuery(reqStr);
+			
+			// Tous les paramètres sont ajoutées à la requête
+			for (Map.Entry<String, Object> entree : params.entrySet()) {
+				query.setParameter(entree.getKey(), entree.getValue());
+			}
+			
+			if (multiple) {
+				// La liste des résultats est stockée dans l'objet de retour
+				resultats = query.getResultList();
+				
+				if (!(resultats.size() > 0)) {
+					throw new NoResultException();
+				}
+				return resultats;
+			} else {
+				// Le résultat unique est stocké dans l'objet de retour
+				resultat = query.getSingleResult();
+				
+				if (resultat == null) {
+					throw new NoResultException();
+				}
+				return resultat;
+			}
+		} catch (NoResultException e) {
+			System.out.printf(Messages.A_RESULTAT_VIDE, source);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

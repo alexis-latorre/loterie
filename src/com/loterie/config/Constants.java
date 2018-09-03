@@ -5,7 +5,6 @@ public interface Constants {
 	 * Constantes d'application
 	 */
 	public static final String CONTEXTE 									= "/loterie";
-	public static final boolean DEBUG										= true;
 	public static final String LETTRES_MAJ 									= "abcdefghijklmnopqrstuvwxyz";
 	public static final String LETTRES_MIN 									= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public static final String CHIFFRES 									= "0123456789";

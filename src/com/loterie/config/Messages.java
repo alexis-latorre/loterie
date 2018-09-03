@@ -11,7 +11,8 @@ public interface Messages {
 	/**
 	 * Messages de la console
 	 */
-	public static final String E_COMPARER_CHAINES_NULL				= "[ERROR]: Tools.comparerChainesNonNull : La comparaison a échoué car s1 est null";
-	public static final String E_COMPARER_CHAINES_DIFFERENT			= "[ERROR]: Tools.comparerChainesNonNull : La comparaison a échoué car s2 est différent de s1";
-	public static final String E_INTEGRITE_ETAPE_MANQUEE			= "[ERROR]: Tools.motDePasseValide : Le mot de passe ne respecte pas l'étape %s";
+	public static final String A_RESULTAT_VIDE						= "[AVERT.] : %s : Aucun élément n'a été trouvé en base de données.";
+	public static final String E_COMPARER_CHAINES_NULL				= "[ERREUR] : Tools.comparerChainesNonNull : La comparaison a échoué car s1 est null";
+	public static final String E_COMPARER_CHAINES_DIFFERENT			= "[ERREUR] : Tools.comparerChainesNonNull : La comparaison a échoué car s2 est différent de s1";
+	public static final String E_INTEGRITE_ETAPE_MANQUEE			= "[ERREUR] : Tools.motDePasseValide : Le mot de passe ne respecte pas l'étape %s";
 }
