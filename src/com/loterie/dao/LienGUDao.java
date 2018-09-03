@@ -29,7 +29,7 @@ public class LienGUDao extends LoterieDao {
 	public List<LienGrilleUtilisateur> trouverParGrille(Grille grille) {
 		params.clear();
 		params.put("grille", grille);
-		return (List<LienGrilleUtilisateur>) super.resultats(Constants.SELECT_LIEN_GU_PAR_GRILLE, params, 
+		return (List<LienGrilleUtilisateur>) super.resultats(Constants.SELECT_LIEN_GU_PAR_GRILLE, params,
 				"trouverParGrille");
 	}
 }
