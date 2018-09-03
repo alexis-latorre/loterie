@@ -196,7 +196,7 @@ public class GrilleServlet extends HttpServlet {
 
 					lienGU.setUtilisateur(utilisateur);
 					lienGU.setGrille(grille);
-					lienGUDao.enregistrerLienGrilleUtilisateur(lienGU);
+					lienGUDao.creer(lienGU);
 
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
@@ -204,7 +204,7 @@ public class GrilleServlet extends HttpServlet {
 					String id = req.getParameter("id");
 					Grille grille = grilleDao.trouverParId(Long.valueOf(id));
 					LienGrilleUtilisateur lienGU = lienGUDao.trouverParGrille(grille).get(0);
-					lienGUDao.supprimerLienGU(lienGU);
+					lienGUDao.supprimer(lienGU);
 
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
@@ -242,7 +242,7 @@ public class GrilleServlet extends HttpServlet {
 					LienGrilleUtilisateur lienGU = new LienGrilleUtilisateur(); 
 					lienGU.setUtilisateur(joueur);
 					lienGU.setGrille(cgf.getGrille());
-					lienGUDao.enregistrerLienGrilleUtilisateur(lienGU);
+					lienGUDao.creer(lienGU);
 				}
 			}
 			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);

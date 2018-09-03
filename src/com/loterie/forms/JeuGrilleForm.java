@@ -163,7 +163,7 @@ public class JeuGrilleForm {
 			banqueDao.maj(banque);
 			
 			for (Jour jour : joursAjouer) {
-				jourDao.enregistrerJour(jour);
+				jourDao.creer(jour);
 			}
 		}
 	}

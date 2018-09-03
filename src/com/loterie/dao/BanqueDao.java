@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 import com.loterie.entities.Banque;
 
 @Stateful
-public class BanqueDao {
+public class BanqueDao extends LoterieDao {
 	@PersistenceContext(name = "loterie_PU")
 	private EntityManager em;
 	
@@ -18,8 +18,8 @@ public class BanqueDao {
 	 * 
 	 * @param banque - entité à créer en BDD
 	 */
-	public void creerBanque(Banque banque) {
-		em.persist(banque);
+	public void creer(Banque banque) {
+		super.creer(banque);
 	}
 	
 	/**
@@ -30,6 +30,6 @@ public class BanqueDao {
 	 * @param banque - entité à mettre à jour
 	 */
 	public void maj(Banque banque) {
-		em.merge(banque);
+		super.maj(banque);
 	}
 }

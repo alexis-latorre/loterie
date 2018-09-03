@@ -223,13 +223,15 @@ public class MoisHTML {
 	 * @param jours - entités récupérées de la BDD
 	 */
 	public void combinerJours(List<Jour> jours) {
-		for (Jour jour : jours) {
-			// Le jour venant de la BDD est lié à son objet métier par sa date
-			JourHTML jourHTML = trouverJourParDate(jour.getDateJour()); 
-			Grille grille = jour.getLgu().getGrille();
-			grille.setPaye(jour.isPaye());
-			// La grille du jour est ajoutée à l'objet métier pour affichage
-			jourHTML.addGrille(grille);
+		if (jours != null) {
+			for (Jour jour : jours) {
+				// Le jour venant de la BDD est lié à son objet métier par sa date
+				JourHTML jourHTML = trouverJourParDate(jour.getDateJour()); 
+				Grille grille = jour.getLgu().getGrille();
+				grille.setPaye(jour.isPaye());
+				// La grille du jour est ajoutée à l'objet métier pour affichage
+				jourHTML.addGrille(grille);
+			}
 		}
 	}
 }

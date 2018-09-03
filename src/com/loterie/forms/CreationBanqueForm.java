@@ -23,7 +23,7 @@ public class CreationBanqueForm {
 		banque.setMises(0D);
 		banque.setGains(0D);
 		
-		this.banqueDao.creerBanque(banque);
+		this.banqueDao.creer(banque);
 	}
 	
 	public Banque getBanque() {

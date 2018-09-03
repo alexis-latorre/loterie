@@ -3,24 +3,58 @@ import com.loterie.config.Constants;
 
 import static com.loterie.tools.Tools.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateful;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;
 
 @Stateful
-public class UtilisateurDao {	
-	@PersistenceContext(name = "loterie_PU")
-	private EntityManager em;
+public class UtilisateurDao extends LoterieDao {
+	private Map<String, Object> params = new HashMap<String, Object>();
 	
-	public void enregistrerUtilisateur(Utilisateur utilisateur) {
-		em.persist(utilisateur);
+	public void creer(Utilisateur utilisateur) {
+		super.creer(utilisateur);
+	}
+
+	public void maj(Utilisateur utilisateur) {
+		super.maj(utilisateur);
+	}
+
+	public Utilisateur trouverParId(Long id) {
+		params.clear();
+		params.put("id", id);
+		return (Utilisateur) super.resultat(Constants.SELECT_UTILISATEUR_PAR_ID, params, 
+				"trouverParId");
+	}
+
+	public Utilisateur trouverParPseudo(String pseudo) {
+		params.clear();
+		params.put("pseudo", pseudo);
+		return (Utilisateur) super.resultat(Constants.SELECT_UTILISATEUR_PAR_NOM, params, "trouverParPseudo");
+	}
+
+	public Utilisateur trouverParNomEtPrenom(String nom, String prenom) {
+		params.clear();
+		params.put("nom", nom);
+		params.put("prenom", prenom);
+		return (Utilisateur) super.resultat(Constants.SELECT_UTILISATEUR_PAR_NOM_PRENOM, params, 
+				"trouverParNomEtPrenom");
+	}
+
+	public Utilisateur trouverParEmail(String email) {
+		params.clear();
+		params.put("email", email);
+		return (Utilisateur) super.resultat(Constants.SELECT_UTILISATEUR_PAR_EMAIL, params, "trouverParEmail");
+	}
+	
+	public List<Utilisateur> trouverParRoleMinimum(Long niveau) {
+		params.clear();
+		params.put("niveau", niveau);
+		return (List<Utilisateur>) super.resultat(Constants.SELECT_UTILISATEURS_PAR_NIVEAU_SUP, params, 
+				"trouverParRoleMinimum");
 	}
 	
 	public void changerMotDePasse(Utilisateur utilisateur, String mdp, String mdpc) {		
@@ -33,7 +67,8 @@ public class UtilisateurDao {
 		};
 		
 		if (listeControles.length != listeParametres.length) {
-			System.out.println("[ERROR]: UtilisateurDao.changerMotDePasse(): La liste de paramètres doit contenir le même nombre que la liste de contrôles.");
+			System.out.println("[ERROR]: UtilisateurDao.changerMotDePasse(): La liste de paramètres doit contenir "
+					+ "le même nombre que la liste de contrôles.");
 			return;
 		}
 
@@ -47,7 +82,8 @@ public class UtilisateurDao {
 	}
 	
 	public void changerGrainDeSel(Utilisateur utilisateur, String mdp) {
-		String grainDeSel = chaineAleatoire((int) Math.round(Math.random() * Constants.VARIABILITE_SEL) + Constants.SEL_TAILLE_MIN, true, true, false);
+		String grainDeSel = chaineAleatoire((int) Math.round(Math.random() * Constants.VARIABILITE_SEL) + 
+				Constants.SEL_TAILLE_MIN, true, true, false);
 		String sha256mdp = encoderSHA256(mdp + grainDeSel);
 		utilisateur.setGrainDeSel(grainDeSel);
 		utilisateur.setMotDePasse(sha256mdp);
@@ -62,93 +98,5 @@ public class UtilisateurDao {
 		boolean valide = sha256mdp.equals(mdp256);
 		
 		return valide;
-	}
-
-	public Utilisateur trouverParPseudo(String pseudo) {
-		Utilisateur utilisateur = null;
-		
-		try {
-			Query query = em.createQuery(Constants.SELECT_UTILISATEUR_PAR_NOM);
-			query.setParameter("pseudo", pseudo);
-			
-			utilisateur = (Utilisateur) query.getSingleResult();
-			em.refresh(utilisateur);
-		} catch (NoResultException e) {
-			System.out.println("[WARNING]: No user found with pseudo '" + pseudo + "'.");
-		} catch (Exception e) {
-			//e.printStackTrace();
-			//ajouterErreur("mdpInvalide", ERR_MDP_INVALIDE);
-		}
-		
-		return utilisateur;
-	}
-
-	public Utilisateur trouverParNomEtPrenom(String nom, String prenom) {
-		Utilisateur utilisateur = null;
-		
-		try {
-			Query query = em.createQuery(Constants.SELECT_UTILISATEUR_PAR_NOM_PRENOM);
-			query.setParameter("nom", nom);
-			query.setParameter("prenom", prenom);
-			
-			utilisateur = (Utilisateur) query.getSingleResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return utilisateur;
-	}
-
-	public Utilisateur trouverParEmail(String email) {
-		Utilisateur utilisateur = null;
-		
-		try {
-			Query query = em.createQuery(Constants.SELECT_UTILISATEUR_PAR_EMAIL);
-			query.setParameter("email", email);
-
-			utilisateur = (Utilisateur) query.getSingleResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return utilisateur;
-	}
-	
-	public List<Utilisateur> trouverParRoleMinimum(Long niveau) {
-		List<Utilisateur> utilisateurs = null;
-		
-		try {
-			Query query = em.createQuery(Constants.SELECT_UTILISATEURS_PAR_NIVEAU_SUP);
-			query.setParameter("niveau", niveau);
-			
-			utilisateurs = (List<Utilisateur>) query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return utilisateurs;
-	}
-
-	public void maj(Utilisateur utilisateur) {
-		em.merge(utilisateur);
-	}
-
-	public Utilisateur trouverParId(Long id) {
-		Utilisateur utilisateur = null;
-		
-		try {
-			Query query = em.createQuery(Constants.SELECT_UTILISATEUR_PAR_ID);
-			query.setParameter("id", id);
-			
-			utilisateur = (Utilisateur) query.getSingleResult();
-			em.refresh(utilisateur);
-		} catch (NoResultException e) {
-			System.out.println("[WARNING]: No user found with id '" + id + "'.");
-		} catch (Exception e) {
-			//e.printStackTrace();
-			//ajouterErreur("mdpInvalide", ERR_MDP_INVALIDE);
-		}
-		
-		return utilisateur;
 	}
 }

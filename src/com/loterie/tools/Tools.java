@@ -299,7 +299,8 @@ public class Tools {
 				return resultats;
 			} else {
 				// Le résultat unique est stocké dans l'objet de retour
-				resultat = query.getSingleResult();
+				//resultat = query.getSingleResult();
+				resultat = query.getResultList().get(0);
 				
 				if (resultat == null) {
 					throw new NoResultException();

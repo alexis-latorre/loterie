@@ -62,7 +62,7 @@ public class CreationUtilisateurForm {
 	}
 
 	public void creerUtilisateur() {
-		utilisateurDao.enregistrerUtilisateur(utilisateur);
+		utilisateurDao.creer(utilisateur);
 	}
 	
 	private void validerPseudo(String pseudo) {
