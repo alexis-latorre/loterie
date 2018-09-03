@@ -4,18 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateful;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import com.loterie.config.Constants;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Utilisateur;
-import com.loterie.tools.Tools;
 
 @Stateful
-public class GrilleDao {
-	
-	@PersistenceContext(name = "loterie_PU")
-	private EntityManager em;
+public class GrilleDao extends LoterieDao {
 	private Map<String, Object> params = new HashMap<String, Object>();
 	
 	/**
@@ -26,7 +20,7 @@ public class GrilleDao {
 	 * @param grille - entité à créer en BDD
 	 */
 	public void creer(Grille grille) {
-		em.persist(grille);
+		super.creer(grille);
 	}
 	
 	/**
@@ -37,7 +31,7 @@ public class GrilleDao {
 	 * @param grille - entité à mettre à jour
 	 */
 	public void maj(Grille grille) {
-		em.merge(grille);
+		super.maj(grille);
 	}
 	
 	/**
@@ -48,41 +42,7 @@ public class GrilleDao {
 	 * @param grille - entité à supprimer
 	 */
 	public void supprimer(Grille grille) {
-		// Si l'Entity Manager ne pilote pas la grille, elle y est ajoutée avant
-		if (!em.contains(grille)) {
-			grille = em.merge(grille);
-		}
-		em.remove(grille);
-	}
-	
-	/**
-	 * <b><i>resultat</i></b><br />
-	 * <pre>public {@link com.loterie.entities.Grille Grille} resultat({@link java.lang.String String} reqStr, {@link java.util.Map Map}<{@link java.lang.String String}, {@link java.lang.Object Object}> params, {@link java.lang.String String} source)</pre>
-	 * Retourne un résultat unique de la requête passé en paramètre pour ses options renseignées 
-	 * 
-	 * @param reqStr - requête SQL à exécuter
-	 * @param params - paramètres à attacher à la requête
-	 * @param source - nom de la méthode appelant la requête
-	 * 
-	 * @return le résultat de la requête
-	 */
-	private Grille resultat(String reqStr, Map<String, Object> params, String source) {
-		return (Grille) Tools.executerRequete(reqStr, params, em, false, this.getClass().getName() + "." + source);
-	}
-	
-	/**
-	 * <b><i>resultats</i></b><br />
-	 * <pre>public {@link java.util.List List}<{@link com.loterie.entities.Grille Grille}> resultats({@link java.lang.String String} reqStr, {@link java.util.Map Map}<{@link java.lang.String String}, {@link java.lang.Object Object}> params, {@link java.lang.String String} source)</pre>
-	 * Retourne la liste des résultats de la requête passé en paramètre pour ses options renseignées 
-	 * 
-	 * @param reqStr - requête SQL à exécuter
-	 * @param params - paramètres à attacher à la requête
-	 * @param source - nom de la méthode appelant la requête
-	 * 
-	 * @return la liste des résultats de la requête
-	 */
-	private List<Grille> resultats(String reqStr, Map<String, Object> params, String source) {		
-		return (List<Grille>) Tools.executerRequete(reqStr, params, em, true, this.getClass().getName() + "." + source);
+		super.supprimer(grille);
 	}
 	
 	/**
@@ -98,7 +58,7 @@ public class GrilleDao {
 		params.clear();
 		params.put("id", id);
 		
-		return resultat(Constants.SELECT_GRILLE_PAR_ID, params, "trouverParId");
+		return (Grille) super.resultat(Constants.SELECT_GRILLE_PAR_ID, params, "trouverParId");
 	}
 	
 	/**
@@ -114,7 +74,7 @@ public class GrilleDao {
 		params.clear();
 		params.put("utilisateur", utilisateur);
 		
-		return resultats(Constants.SELECT_GRILLES_PAR_CREATEUR, params, "trouverParCreateur");
+		return (List<Grille>) super.resultats(Constants.SELECT_GRILLES_PAR_CREATEUR, params, "trouverParCreateur");
 	}
 	
 	/**
@@ -130,7 +90,8 @@ public class GrilleDao {
 		params.clear();
 		params.put("utilisateur", utilisateur);
 		
-		return resultats(Constants.SELECT_GRILLES_PAR_UTILISATEUR, params, "trouverParUtilisateur");
+		return (List<Grille>) super.resultats(Constants.SELECT_GRILLES_PAR_UTILISATEUR, params, 
+				"trouverParUtilisateur");
 	}
 	
 	/**
@@ -148,7 +109,8 @@ public class GrilleDao {
 		params.put("utilisateur", utilisateur);
 		params.put("date_jour", date_jour);
 		
-		return resultats(Constants.SELECT_GRILLES_PAR_DATE_ET_UTILISATEUR, params, "trouverParJourEtUtilisateur");
+		return (List<Grille>) super.resultats(Constants.SELECT_GRILLES_PAR_DATE_ET_UTILISATEUR, params, 
+				"trouverParJourEtUtilisateur");
 	}
 	
 	/**
@@ -168,6 +130,7 @@ public class GrilleDao {
 		params.put("date_debut", date_debut);
 		params.put("date_fin", date_fin);
 		
-		return resultats(Constants.SELECT_GRILLES_PAR_INTERVALLE_ET_UTILISATEUR, params, "trouverParIntervalleEtUtilisateur");
+		return (List<Grille>) super.resultats(Constants.SELECT_GRILLES_PAR_INTERVALLE_ET_UTILISATEUR, params, 
+				"trouverParIntervalleEtUtilisateur");
 	}
 }

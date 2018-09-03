@@ -45,7 +45,7 @@ public class CreationPortefeuilleForm {
 		portefeuille = new Portefeuille();
 		portefeuille.setDateCreation(new DateTime());
 		portefeuille.setFonds(0D);
-		this.portefeuilleDao.creerPortefeuille(portefeuille);
+		this.portefeuilleDao.creer(portefeuille);
 		utilisateur.setPortefeuille(portefeuille);
 		this.utilisateurDao.maj(utilisateur);
 	}
