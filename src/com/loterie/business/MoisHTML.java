@@ -10,7 +10,8 @@ import com.loterie.entities.Jour;
 
 public class MoisHTML {
 	private int dernierJour;
-	private int aujourdhui;
+	private int numJour;
+	private DateTime aujourdhui;
 	private String premiereDate;
 	private String derniereDate;
 	private int numero;
@@ -19,6 +20,8 @@ public class MoisHTML {
 	private int annee;
 	private DateTime moisPrecedent;
 	private DateTime moisSuivant;
+	private boolean anneeAjd;
+	private boolean moisAjd;
 	
 	/**
 	 * <b><i>MoisHTML</i></b><br />
@@ -29,14 +32,17 @@ public class MoisHTML {
 	 * @return l'objet construit
 	 */
 	public MoisHTML(DateTime dt) {
+		aujourdhui = new DateTime();
 		this.dernierJour = dt.dayOfMonth().getMaximumValue();
-		this.aujourdhui = dt.getDayOfMonth();
+		this.numJour = dt.getDayOfMonth();
 		this.numero = dt.getMonthOfYear();
 		this.jours = new ArrayList<JourHTML>();
 		this.nom = dt.monthOfYear().getAsText(Locale.FRANCE);
 		this.annee = dt.getYear();
 		this.moisPrecedent = dt.minusMonths(1);
 		this.moisSuivant = dt.plusMonths(1);
+		anneeAjd = aujourdhui.getYear() == dt.getYear();
+		moisAjd = aujourdhui.getMonthOfYear() == dt.getMonthOfYear();
 
 		DateTime pj = new DateTime(dt.getYear(), dt.getMonthOfYear(), 1, 0, 0, 0);
 		DateTime dj = new DateTime(dt.getYear(), dt.getMonthOfYear(), this.dernierJour, 0, 0, 0);
@@ -107,7 +113,7 @@ public class MoisHTML {
 	 * @return le numéro du jour actuel
 	 */
 	public int getAujourdhui() {
-		return aujourdhui;
+		return numJour;
 	}
 	
 	/**
@@ -213,6 +219,28 @@ public class MoisHTML {
 	 */
 	public DateTime getMoisSuivant() {
 		return moisSuivant;
+	}
+	
+	/**
+	 * <b><i>isAnneeAjd</i></b><br />
+	 * <pre>public {@link java.lang.Boolean boolean} isAnneeAjd()</pre>
+	 * Indique si l'année de l'objet correspond à l'année en cours
+	 * 
+	 * @return vrai si l'année de l'objet correspond à l'année en cours
+	 */
+	public boolean isAnneeAjd() {
+		return anneeAjd;
+	}
+
+	/**
+	 * <b><i>isMoisAjd</i></b><br />
+	 * <pre>public {@link java.lang.Boolean boolean} isMoisAjd()</pre>
+	 * Indique si le mois de l'objet correspond au mois en cours
+	 * 
+	 * @return vrai si le mois de l'objet correspond au mois en cours
+	 */
+	public boolean isMoisAjd() {
+		return moisAjd;
 	}
 	
 	/**

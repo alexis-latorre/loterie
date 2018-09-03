@@ -12,15 +12,15 @@ public interface Constants {
 	public static final int MDP_TAILLE_MIN 									= 8;
 	public static final int SEL_TAILLE_MIN 									= 8;
 	public static final int VARIABILITE_SEL 								= 8;
-	public static final String[] JOURS_LONGS 								= { "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche" };
-	public static final String[] JOURS_COURTS 								= { "lun", "mar", "mer", "jeu", "ven", "sam", "dim" };
-	public static final String[] JOURS_INITIALES 							= { "l", "ma", "me", "j", "v", "s", "d" };
+	public static final String[] JOURS_LONGS 								= {"lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"};
+	public static final String[] JOURS_COURTS 								= {"lun", "mar", "mer", "jeu", "ven", "sam", "dim"};
+	public static final String[] JOURS_INITIALES 							= {"l", "ma", "me", "j", "v", "s", "d"};
 
 	/**
 	 * Constantes Euromillions
 	 */
 	public static final String EUROMILLIONS_NOM 							= "Euromillions";
-	public static final String[] EUROMILLIONS_JOURS_TIRAGE 					= { "2", "5" };
+	public static final String[] EUROMILLIONS_JOURS_TIRAGE 					= {"2", "5"};
 	public static final int EUROMILLIONS_NUMEROS 							= 50;
 	public static final int EUROMILLIONS_ETOILES 							= 12;
 	public static final int EUROMILLIONS_NUMEROS_SELECTION_MIN 				= 5;
@@ -45,6 +45,7 @@ public interface Constants {
 	 */
 	public static final String URL_ROOT 									= "/";
 	public static final String URL_PUBLIC_ACCUEIL 							= "/accueil";
+	public static final String URL_PUBLIC_INSCRIPTION 						= "/inscription";
 	public static final String URL_PUBLIC_CONNEXION 						= "/connexion";
 	public static final String URL_PUBLIC_DECONNEXION 						= "/deconnexion";
 

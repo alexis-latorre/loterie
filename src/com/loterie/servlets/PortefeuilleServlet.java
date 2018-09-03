@@ -14,17 +14,13 @@ import com.loterie.config.Constants;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
-import com.loterie.forms.CreationPortefeuilleForm;
+import com.loterie.forms.PortefeuilleCreationForm;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_MEMBRE_PORTEFEUILLE,
 		Constants.URL_MEMBRE_PORTEFEUILLE_AJOUT
 })
 public class PortefeuilleServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7L;
 	@EJB
 	private PortefeuilleDao portefeuilleDao;
@@ -37,11 +33,13 @@ public class PortefeuilleServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		boolean loggedIn = false;
 		
+		// L'information de connexion de l'utilisateur est mise à jour
 		if (session.getAttribute("loggedIn") != null) {
 			loggedIn = (boolean) session.getAttribute("loggedIn");
 		}
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		
+		// Pour consulter son portefeuille, l'utilisateur doit être authentifié et au minimum de niveau membre
 		if (loggedIn && utilisateur != null) {
 			cible = Constants.URN_MEMBRE_PORTEFEUILLE;
 			req.setAttribute("utilisateur", utilisateur);
@@ -61,10 +59,11 @@ public class PortefeuilleServlet extends HttpServlet {
 			loggedIn = (boolean) session.getAttribute("loggedIn");
 		}
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-		
+
+		// Pour créer son portefeuille, l'utilisateur doit être authentifié et au minimum de niveau membre
 		if (loggedIn && utilisateur != null) {
 			cible = Constants.URN_MEMBRE_PORTEFEUILLE;
-			CreationPortefeuilleForm cpf = new CreationPortefeuilleForm(portefeuilleDao, utilisateurDao, req);
+			PortefeuilleCreationForm cpf = new PortefeuilleCreationForm(portefeuilleDao, utilisateurDao, req);
 			cpf.ajouterFonds(fonds);
 			
 			req.setAttribute("erreurs", cpf.getErreurs());

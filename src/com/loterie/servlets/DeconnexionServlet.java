@@ -17,10 +17,6 @@ import com.loterie.dao.UtilisateurDao;
 		Constants.URL_PUBLIC_DECONNEXION
 		})
 public class DeconnexionServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3L;
 	@EJB
 	private UtilisateurDao utilisateurDao;

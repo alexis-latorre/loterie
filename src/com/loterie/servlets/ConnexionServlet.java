@@ -12,14 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.joda.time.DateTime;
-
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
-import com.loterie.forms.ConnexionForm;
-import com.loterie.forms.RecuperationGrillesDuMoisForm;
+import com.loterie.forms.UtilisateurConnexionForm;
+import com.loterie.forms.GrilleRecuperationDuMoisForm;
 
 @WebServlet(urlPatterns = {
 		//Constants.URL_ROOT,
@@ -27,10 +25,6 @@ import com.loterie.forms.RecuperationGrillesDuMoisForm;
 		Constants.URL_PUBLIC_CONNEXION
 		})
 public class ConnexionServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private UtilisateurDao utilisateurDao;
@@ -51,25 +45,13 @@ public class ConnexionServlet extends HttpServlet {
 		
 		// Si l'utilisateur est authentifié, le calendrier est affiché en page d'accueil
 		if (loggedIn) {
-			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-			DateTime aujourdhui = new DateTime();
-			DateTime moisSurveille = new DateTime();
-			
-			try {
-				int mois = Integer.valueOf(req.getParameter("mois"));
-				int annee = Integer.valueOf(req.getParameter("annee"));
-				
-				if (mois > 0 && mois < 13) {
-					moisSurveille = new DateTime().withMonthOfYear(mois).withYear(annee);
-				}
-			} catch (NumberFormatException e) {
-			}
+			// L'utilisateur n'est récupéré que s'il est authentifié, pas besoin de le récupérer avant
+			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");			
 			// Récupère les grilles du mois pour lequel l'utilisateur participe ou celles qu'il a créées
-			RecuperationGrillesDuMoisForm grillesDuMoisForm = new RecuperationGrillesDuMoisForm(moisSurveille, 
-					utilisateur, jourDao);
-			req.setAttribute("anneeAjd", aujourdhui.getYear() == moisSurveille.getYear());
-			req.setAttribute("moisAjd", aujourdhui.getMonthOfYear() == moisSurveille.getMonthOfYear());
-			req.setAttribute("mois", grillesDuMoisForm.getMois());
+			GrilleRecuperationDuMoisForm gdmf = new GrilleRecuperationDuMoisForm(jourDao, utilisateur, req);
+			req.setAttribute("mois", gdmf.getMois());
+			req.setAttribute("anneeAjd", gdmf.getMois().isAnneeAjd());
+			req.setAttribute("moisAjd", gdmf.getMois().isMoisAjd());
 		}
 		// Transmet l'information de connexion à la page JSP
 		req.setAttribute("loggedIn", loggedIn);
@@ -81,9 +63,9 @@ public class ConnexionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String cible = Constants.URN_ACCUEIL;
 		HttpSession session = req.getSession();
-		ConnexionForm connexionForm = new ConnexionForm(utilisateurDao, req);
-		Utilisateur utilisateur = connexionForm.getUtilisateur();
-		Map<String, String> erreurs = connexionForm.getErreurs();
+		UtilisateurConnexionForm ucf = new UtilisateurConnexionForm(utilisateurDao, req);
+		Utilisateur utilisateur = ucf.getUtilisateur();
+		Map<String, String> erreurs = ucf.getErreurs();
 		boolean connexionOK = erreurs.isEmpty();
 		
 		/* Les actions de type POST ne peuvent être effectuées que si l'utilisateur est authentifié, sinon il est

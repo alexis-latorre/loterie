@@ -16,10 +16,6 @@ import com.loterie.entities.Utilisateur;
 		Constants.URL_ADMIN_ACCUEIL
 		})
 public class AdministrationServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5L;
 
 	@Override

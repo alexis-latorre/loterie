@@ -12,14 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.loterie.dao.UtilisateurDao;
-import com.loterie.forms.CreationUtilisateurForm;
+import com.loterie.forms.UtilisateurCreationForm;
 
-@WebServlet(urlPatterns = {"/inscription"})
+@WebServlet(urlPatterns = {
+		Constants.URL_PUBLIC_INSCRIPTION
+	})
 public class InscriptionServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID 		= 4L;
 	@EJB
 	private UtilisateurDao utilisateurDao;
@@ -31,7 +29,7 @@ public class InscriptionServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		CreationUtilisateurForm cuf = new CreationUtilisateurForm(utilisateurDao, req);
+		UtilisateurCreationForm cuf = new UtilisateurCreationForm(utilisateurDao, req);
 		Map<String, String> erreurs = cuf.getErreurs();
 		
 		// Si aucune erreur n'est décelée, l'utilisateur est inscrit en base

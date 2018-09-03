@@ -47,8 +47,8 @@ public class GrilleDao extends LoterieDao {
 	
 	/**
 	 * <b><i>trouverParId</i></b><br />
-	 * <pre>public {@link com.loterie.entities.Grille Grille} trouverParCreateur({@link java.lang.Long Long} id)</pre>
-	 * Retourne la grille Qui correspond à l'id renseigné
+	 * <pre>public {@link com.loterie.entities.Grille Grille} trouverParId({@link java.lang.Long Long} id)</pre>
+	 * Retourne la grille qui correspond à l'id renseigné
 	 * 
 	 * @param id - id de la grille à récupérer en BDD
 	 * 

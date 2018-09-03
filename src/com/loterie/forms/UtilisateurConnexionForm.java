@@ -9,12 +9,12 @@ import com.loterie.config.Messages;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 
-public class ConnexionForm {
+public class UtilisateurConnexionForm {
 	private Utilisateur utilisateur;
 	private Map<String, String> erreurs;
 	private UtilisateurDao utilisateurDao;
 	
-	public ConnexionForm(UtilisateurDao utilisateurDao, HttpServletRequest req) {
+	public UtilisateurConnexionForm(UtilisateurDao utilisateurDao, HttpServletRequest req) {
 		this.utilisateur = null;
 		this.utilisateurDao = utilisateurDao;
 		this.erreurs = new HashMap<>();
