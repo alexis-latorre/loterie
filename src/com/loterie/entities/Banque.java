@@ -55,7 +55,6 @@ public class Banque {
 
 	public void retirerFonds(Double montant) {
 		this.fonds -= montant;
-		
 	}
 
 	public Double getMises() {

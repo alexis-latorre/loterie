@@ -8,7 +8,11 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/commun/header.jsp" />
-	<h3>Grille N° <c:out value="${grille.id}"></c:out> (jouée jusqu'au <fmt:formatDate pattern="dd/MM/yyyy" value="${jour.date}" />)</h3>
+	<c:choose>
+	<c:when test="${empty erreurs}">
+	<h3>Grille N° <c:out value="${grille.id}"></c:out>
+	<c:if test="${not empty jour.date}"> (jouée jusqu'au <fmt:formatDate pattern="dd/MM/yyyy" value="${jour.date}" />)</c:if>
+	</h3>
 	<div>Numéros : <c:out value="${fn:join(grille.numeros, ', ')}"></c:out><br />
 	Étoiles : <c:out value="${fn:join(grille.etoiles, ', ')}"></c:out><br />
 	<c:if test="${grille.banque != null}">
@@ -44,6 +48,14 @@
 			<input type="submit" value="Jouer" />
 		</form>
 	</c:if>
+	</c:when>
+	<c:otherwise>
+		<c:if test="${not empty erreurs.grille}">
+		<h3>Grille introuvable</h3>
+		<span class="danger text-danger"><c:out value="${erreurs.grille}"></c:out></span>
+		</c:if>
+	</c:otherwise>
+	</c:choose>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

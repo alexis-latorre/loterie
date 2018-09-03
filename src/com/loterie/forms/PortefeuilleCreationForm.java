@@ -14,14 +14,14 @@ import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Portefeuille;
 import com.loterie.entities.Utilisateur;
 
-public class CreationPortefeuilleForm {
+public class PortefeuilleCreationForm {
 	private PortefeuilleDao portefeuilleDao;
 	private UtilisateurDao utilisateurDao;
 	private Utilisateur utilisateur;
 	private Portefeuille portefeuille;
 	private Map<String, String> erreurs;
 	
-	public CreationPortefeuilleForm(PortefeuilleDao portefeuilleDao, UtilisateurDao utilisateurDao, HttpServletRequest req) {
+	public PortefeuilleCreationForm(PortefeuilleDao portefeuilleDao, UtilisateurDao utilisateurDao, HttpServletRequest req) {
 		this.portefeuilleDao = portefeuilleDao;
 		this.utilisateurDao = utilisateurDao;
 		HttpSession session = req.getSession();
@@ -34,7 +34,7 @@ public class CreationPortefeuilleForm {
 		}
 	}
 	
-	public CreationPortefeuilleForm(PortefeuilleDao portefeuilleDao, UtilisateurDao utilisateurDao, Utilisateur utilisateur) {
+	public PortefeuilleCreationForm(PortefeuilleDao portefeuilleDao, UtilisateurDao utilisateurDao, Utilisateur utilisateur) {
 		this.portefeuilleDao = portefeuilleDao;
 		this.utilisateurDao = utilisateurDao;
 		this.utilisateur = utilisateur;

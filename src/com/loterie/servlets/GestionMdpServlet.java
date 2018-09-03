@@ -18,10 +18,6 @@ import com.loterie.entities.Utilisateur;
 		Constants.URL_MODIFIER_MDP
 		})
 public class GestionMdpServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2L;
 	@EJB
 	private UtilisateurDao utilisateurDao;

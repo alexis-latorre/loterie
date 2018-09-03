@@ -12,7 +12,7 @@ import com.loterie.tools.Tools;
 
 import static com.loterie.tools.Tools.*;
 
-public class CreationUtilisateurForm {
+public class UtilisateurCreationForm {
 	private static final String PSEUDO_EXISTANT 		= "Le pseudo choisi existe déjà.";
 	private static final String UTILISATEUR_EXISTANT 	= "L'utilisateur est déjà affilié à un compte.";
 	private static final String EMAIL_EXISTANT 			= "Cette adresse email est déjà utilisée par un autre compte.";
@@ -23,7 +23,7 @@ public class CreationUtilisateurForm {
 	private Map<String, String> erreurs;
 	private UtilisateurDao utilisateurDao;
 	
-	public CreationUtilisateurForm(UtilisateurDao utilisateurDao, HttpServletRequest req) {
+	public UtilisateurCreationForm(UtilisateurDao utilisateurDao, HttpServletRequest req) {
 		this.utilisateurDao = utilisateurDao;
 		utilisateur = new Utilisateur();
 		erreurs = new HashMap<String, String>();

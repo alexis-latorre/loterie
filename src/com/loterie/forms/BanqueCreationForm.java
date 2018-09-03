@@ -7,14 +7,14 @@ import org.joda.time.DateTime;
 import com.loterie.dao.BanqueDao;
 import com.loterie.entities.Banque;
 
-public class CreationBanqueForm {
+public class BanqueCreationForm {
 	
 	private Map<String, String> erreurs;
 	private BanqueDao banqueDao;
 	private Banque banque;
 	
 	
-	public CreationBanqueForm(BanqueDao banqueDao) {
+	public BanqueCreationForm(BanqueDao banqueDao) {
 		this.banqueDao = banqueDao;
 		erreurs = new HashMap<>();
 		banque = new Banque();

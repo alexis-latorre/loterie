@@ -216,7 +216,6 @@ public class Tools {
 		}
 		return retour;
 	}
-
 	
 	/**
 	 * <b><i>padLeft</i></b><br />
@@ -233,7 +232,6 @@ public class Tools {
 	public static String padLeft(Object o, int n) {
 		return padLeft(o, n, '0');  
 	}
-
 	
 	/**
 	 * <b><i>padLeft</i></b><br />
@@ -262,21 +260,47 @@ public class Tools {
 		}
 		return retour;
 	}
-	
+
+	/**
+	 * <b><i>getProchainJour</i></b><br />
+	 * <pre>public static {@link java.lang.String String} getProchainJour(int idJour, {@link org.joda.time.DateTime DateTime} dateDebut)</pre>
+	 * Récupère la date (au format yyyy-MM-dd) du prochain jour identifié par idJour depuis dateDebut
+	 * 
+	 * @param idJour - numéro du jour recherché
+	 * @param dateDebut - date de référence
+	 * @return la chaîne justifiée à gauche
+	 */
 	public static String getProchainJour(int idJour, DateTime dateDebut) {
+		// Récupère le numéro de jour dans la semaine de la date donnée
 		int jourDebut = dateDebut.getDayOfWeek();
 		
+		// Pas de traitement si le jour recherché est le même que celui de la date donnée
 		if (idJour != jourDebut) {
+			// Calcule le delta entre le jour demandé et la date de début et ajoute le delta à la date de début
 			if (idJour > jourDebut) {
 				dateDebut = dateDebut.plusDays(idJour - jourDebut);
 			} else {
 				dateDebut = dateDebut.plusDays(7 - (jourDebut - idJour));
 			}
 		}
-		return dateDebut.getYear() + "-" + padRight(dateDebut.getMonthOfYear(), 2) + "-" + padRight(dateDebut.getDayOfMonth(), 2);
+		return dateDebut.getYear() + "-" + padRight(dateDebut.getMonthOfYear(), 2) + "-" + 
+			padRight(dateDebut.getDayOfMonth(), 2);
 	}
-	
-	public static Object executerRequete(String reqStr, Map<String, Object> params, EntityManager em, boolean multiple, String source) {
+
+	/**
+	 * <b><i>executerRequete</i></b><br />
+	 * <pre>public static {@link java.lang.Object Object} executerRequete({@link java.lang.String String} reqStr, {@link java.util.Map Map}<{@link java.lang.String String}, {@link java.lang.Object Object}> params, {@link javax.persistence.EntityManager EntityManager} em, boolean multiple, {@link java.lang.String String} source)</pre>
+	 * Exécute une requête en base et retourne son resultat sous forme d'{@link java.lang.Object Object}
+	 * 
+	 * @param reqStr - requête à exécuter
+	 * @param params - paramètres à ajouter à la requête
+	 * @param em - EntityManager utilisé
+	 * @param multiple - [F] indique si le résultat attendu est une liste
+	 * @param source - nom de la classe et méthode appelant la requête
+	 * @return un objet ou une liste d'objet selon <tt>multiple</tt>
+	 */
+	public static Object executerRequete(String reqStr, Map<String, Object> params, EntityManager em, boolean multiple, 
+			String source) {
 		Object resultat = null;
 		List<Object> resultats = null;
 		
@@ -288,24 +312,18 @@ public class Tools {
 			for (Map.Entry<String, Object> entree : params.entrySet()) {
 				query.setParameter(entree.getKey(), entree.getValue());
 			}
+			resultats = query.getResultList();
+			
+			if (!(resultats.size() > 0)) {
+				throw new NoResultException();
+			}
 			
 			if (multiple) {
 				// La liste des résultats est stockée dans l'objet de retour
-				resultats = query.getResultList();
-				
-				if (!(resultats.size() > 0)) {
-					throw new NoResultException();
-				}
 				return resultats;
 			} else {
 				// Le résultat unique est stocké dans l'objet de retour
-				//resultat = query.getSingleResult();
-				resultat = query.getResultList().get(0);
-				
-				if (resultat == null) {
-					throw new NoResultException();
-				}
-				return resultat;
+				return resultats.get(0);
 			}
 		} catch (NoResultException e) {
 			System.out.printf(Messages.A_RESULTAT_VIDE, source);
