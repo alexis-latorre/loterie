@@ -41,7 +41,6 @@ public class ConnexionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setAttribute("debug", Constants.DEBUG);
 		HttpSession session = req.getSession();
 		boolean loggedIn = false;
 
@@ -53,6 +52,7 @@ public class ConnexionServlet extends HttpServlet {
 		// Si l'utilisateur est authentifié, le calendrier est affiché en page d'accueil
 		if (loggedIn) {
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+			DateTime aujourdhui = new DateTime();
 			DateTime moisSurveille = new DateTime();
 			
 			try {
@@ -67,6 +67,8 @@ public class ConnexionServlet extends HttpServlet {
 			// Récupère les grilles du mois pour lequel l'utilisateur participe ou celles qu'il a créées
 			RecuperationGrillesDuMoisForm grillesDuMoisForm = new RecuperationGrillesDuMoisForm(moisSurveille, 
 					utilisateur, jourDao);
+			req.setAttribute("anneeAjd", aujourdhui.getYear() == moisSurveille.getYear());
+			req.setAttribute("moisAjd", aujourdhui.getMonthOfYear() == moisSurveille.getMonthOfYear());
 			req.setAttribute("mois", grillesDuMoisForm.getMois());
 		}
 		// Transmet l'information de connexion à la page JSP
@@ -77,7 +79,6 @@ public class ConnexionServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setAttribute("debug", Constants.DEBUG);
 		String cible = Constants.URN_ACCUEIL;
 		HttpSession session = req.getSession();
 		ConnexionForm connexionForm = new ConnexionForm(utilisateurDao, req);
