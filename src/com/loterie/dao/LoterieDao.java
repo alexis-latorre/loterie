@@ -4,14 +4,24 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.FlushModeType;
 
+import com.loterie.managers.EMFManager;
 import com.loterie.tools.Tools;
 
 public class LoterieDao {
-	@PersistenceContext(name = "loterie_PU")
 	private EntityManager em;
+	private EntityTransaction tr;
 	
+	private void createEm() {		
+		EntityManagerFactory emf = EMFManager.getInstance();
+		em = emf.createEntityManager();
+		em.setFlushMode(FlushModeType.COMMIT);
+		tr = em.getTransaction();
+	}
+
 	/**
 	 * <b><i>creer</i></b><br />
 	 * <pre>public void creer({@link java.lang.Object Object} entite)</pre>
@@ -20,7 +30,21 @@ public class LoterieDao {
 	 * @param entite - entité à créer en BDD
 	 */
 	protected void creer(Object entite) {
-		em.persist(entite);
+		if (em == null) {
+			createEm();
+		}
+		
+		try {
+			tr.begin();
+			em.persist(entite);
+			tr.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			if (tr.isActive()) {
+				tr.rollback();
+			}
+		}
 	}
 	
 	/**
@@ -31,7 +55,21 @@ public class LoterieDao {
 	 * @param entite - entité à mettre à jour
 	 */
 	protected void maj(Object entite) {
-		em.merge(entite);
+		if (em == null) {
+			createEm();
+		}
+		
+		try {
+			tr.begin();
+			em.merge(entite);
+			tr.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			if (tr.isActive()) {
+				tr.rollback();
+			}
+		}
 	}
 	
 	/**
@@ -42,11 +80,23 @@ public class LoterieDao {
 	 * @param entite - entité à supprimer
 	 */
 	protected void supprimer(Object entite) {
-		// Si l'Entity Manager ne pilote pas la entite, elle y est ajoutée avant
-		if (!em.contains(entite)) {
-			entite = em.merge(entite);
+		if (em != null) {
+			try {
+				tr.begin();
+				// Si l'Entity Manager ne pilote pas la entite, elle y est ajoutée avant
+				/*if (!em.contains(entite)) {
+					entite = em.merge(entite);
+				}*/
+				em.remove(entite);
+				tr.commit();
+			} catch (Exception e) {
+				// TODO: handle exception
+			} finally {
+				if (tr.isActive()) {
+					tr.rollback();
+				}
+			}
 		}
-		em.remove(entite);
 	}
 	
 	/**
@@ -61,6 +111,9 @@ public class LoterieDao {
 	 * @return le résultat de la requête
 	 */
 	protected Object resultat(String reqStr, Map<String, Object> params, String source) {
+		if (em == null) {
+			createEm();
+		}
 		return Tools.executerRequete(reqStr, params, em, false, this.getClass().getName() + "." + source);
 	}
 	
@@ -75,7 +128,14 @@ public class LoterieDao {
 	 * 
 	 * @return la liste des résultats de la requête
 	 */
-	protected List<?> resultats(String reqStr, Map<String, Object> params, String source) {		
+	protected List<?> resultats(String reqStr, Map<String, Object> params, String source) {	
+		if (em == null) {
+			createEm();
+		}	
 		return (List<?>) Tools.executerRequete(reqStr, params, em, true, this.getClass().getName() + "." + source);
+	}
+
+	public LoterieDao getDao() {
+		return this;
 	}
 }

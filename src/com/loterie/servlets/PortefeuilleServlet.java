@@ -2,7 +2,6 @@ package com.loterie.servlets;
 
 import java.io.IOException;
 
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +14,7 @@ import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.PortefeuilleCreationForm;
+import com.loterie.managers.DAOManager;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_MEMBRE_PORTEFEUILLE,
@@ -22,10 +22,8 @@ import com.loterie.forms.PortefeuilleCreationForm;
 })
 public class PortefeuilleServlet extends HttpServlet {
 	private static final long serialVersionUID = 7L;
-	@EJB
-	private PortefeuilleDao portefeuilleDao;
-	@EJB
-	private UtilisateurDao utilisateurDao;
+	private PortefeuilleDao portefeuilleDao = DAOManager.getPortefeuille();
+	private UtilisateurDao utilisateurDao = DAOManager.getUtilisateur();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

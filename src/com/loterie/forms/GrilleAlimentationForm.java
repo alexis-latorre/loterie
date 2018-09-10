@@ -19,6 +19,7 @@ public class GrilleAlimentationForm {
 	private BanqueDao banqueDao;
 	private HttpServletRequest req;
 	private HttpSession session;
+	private Long grilleId;
 
 	public GrilleAlimentationForm(PortefeuilleDao portefeuilleDao, BanqueDao banqueDao, HttpServletRequest req) {
 		session = req.getSession();
@@ -35,6 +36,7 @@ public class GrilleAlimentationForm {
 	public void modifier() {
 		String fonds = req.getParameter("fonds");
 		Grille grille = (Grille) session.getAttribute("grille");
+		grilleId = grille.getId();
 		Banque banque = grille.getBanque();
 		Portefeuille portefeuille = ((Utilisateur) session.getAttribute("utilisateur")).getPortefeuille();
 		
@@ -49,5 +51,9 @@ public class GrilleAlimentationForm {
 				banqueDao.maj(banque);
 			}
 		}
+	}
+
+	public Long getGrilleId() {
+		return grilleId;
 	}
 }

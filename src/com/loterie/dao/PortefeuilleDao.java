@@ -5,6 +5,13 @@ import com.loterie.entities.Portefeuille;
 
 @Stateful
 public class PortefeuilleDao extends LoterieDao {
+	private static PortefeuilleDao INSTANCE = new PortefeuilleDao();
+
+	private PortefeuilleDao() {}
+
+	public static PortefeuilleDao getInstance() {
+		return INSTANCE;
+	}
 
 	/**
 	 * <b><i>creer</i></b><br />

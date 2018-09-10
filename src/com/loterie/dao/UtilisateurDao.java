@@ -15,6 +15,13 @@ import com.loterie.tools.Tools;
 @Stateful
 public class UtilisateurDao extends LoterieDao {
 	private Map<String, Object> params = new HashMap<String, Object>();
+	private static UtilisateurDao INSTANCE = new UtilisateurDao();
+
+	private UtilisateurDao() {}
+
+	public static UtilisateurDao getInstance() {
+		return INSTANCE;
+	}
 
 	/**
 	 * <b><i>creer</i></b><br />
@@ -64,7 +71,7 @@ public class UtilisateurDao extends LoterieDao {
 	 */
 	public Utilisateur trouverParPseudo(String pseudo) {
 		params.clear();
-		params.put("pseudo", pseudo);
+		params.put("pseudo", pseudo);		
 		return (Utilisateur) super.resultat(Constants.SELECT_UTILISATEUR_PAR_NOM, params, "trouverParPseudo");
 	}
 

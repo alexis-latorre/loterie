@@ -3,17 +3,21 @@ package com.loterie.dao;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.Stateful;
 import com.loterie.config.Constants;
 import com.loterie.entities.Jeu;
 
-@Stateless
+@Stateful
 public class JeuDao extends LoterieDao {
-	@PersistenceContext(name = "loterie_PU")
-	private EntityManager em;
 	private Map<String, Object> params = new HashMap<String, Object>();
+	private static JeuDao INSTANCE = new JeuDao();
+
+	private JeuDao() {}
+
+	public static JeuDao getInstance() {
+		return INSTANCE;
+	}
+
 	/**
 	 * <b><i>trouverParNom</i></b><br />
 	 * <pre>public {@link com.loterie.entities.Jeu Jeu} trouverParNom({@link java.lang.String String} nom)</pre>

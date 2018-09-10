@@ -322,8 +322,11 @@ public class Tools {
 				}
 				return resultats;
 			} else {
-				// Le résultat unique est stocké dans l'objet de retour
-				resultat = query.getResultList().get(0);
+				
+				if (query.getResultList() != null && query.getResultList().size() > 0) {
+					// Le résultat unique est stocké dans l'objet de retour
+					resultat = query.getResultList().get(0);
+				}
 				
 				if (resultat == null) {
 					throw new NoResultException();

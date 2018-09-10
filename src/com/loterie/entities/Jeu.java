@@ -17,7 +17,7 @@ public class Jeu {
 	@Column(name = "tirage_par_semaine")
 	private Long tirageParSemaine;
 	@Column(name = "jour_de_tirage")
-	private String jourDeTirage;
+	private String joursDeTirage;
 	@Column(name = "prix_par_tirage")
 	private Double prixTirage;
 	@Column(name = "heure_validation")
@@ -47,19 +47,19 @@ public class Jeu {
 		this.tirageParSemaine = tirageParSemaine;
 	}
 	
-	public String[] getJourDeTirage() {
-		if (jourDeTirage == null) {
+	public String[] getJoursDeTirage() {
+		if (joursDeTirage == null) {
 			return null;	
 		} else {
-			return jourDeTirage.split(",");
+			return joursDeTirage.split(",");
 		}
 	}
 	
-	public void setJourDeTirage(String[] joursDeTirage) {
+	public void setJoursDeTirage(String[] joursDeTirage) {
 		if (joursDeTirage == null) {
-			this.jourDeTirage = null;
+			this.joursDeTirage = null;
 		} else {
-			this.jourDeTirage = String.join(",", joursDeTirage);
+			this.joursDeTirage = String.join(",", joursDeTirage);
 		}
 	}
 	

@@ -11,7 +11,14 @@ import com.loterie.entities.LienGrilleUtilisateur;
 @Stateful
 public class LienGUDao extends LoterieDao {
 	private Map<String, Object> params = new HashMap<String, Object>();
+	private static LienGUDao INSTANCE = new LienGUDao();
 
+	private LienGUDao() {}
+
+	public static LienGUDao getInstance() {
+		return INSTANCE;
+	}
+	
 	/**
 	 * <b><i>creer</i></b><br />
 	 * <pre>public void creer({@link com.loterie.entities.LienGrilleUtilisateur LienGrilleUtilisateur} lgu)</pre>

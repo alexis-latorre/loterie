@@ -1,15 +1,17 @@
 package com.loterie.dao;
 
 import javax.ejb.Stateful;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import com.loterie.entities.Banque;
 
 @Stateful
 public class BanqueDao extends LoterieDao {
-	@PersistenceContext(name = "loterie_PU")
-	private EntityManager em;
+	private static BanqueDao INSTANCE = new BanqueDao();
+
+	private BanqueDao() {}
+
+	public static BanqueDao getInstance() {
+		return INSTANCE;
+	}
 	
 	/**
 	 * <b><i>creerBanque</i></b><br />

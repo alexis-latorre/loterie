@@ -1,7 +1,7 @@
 package com.loterie.servlets;
 
 import java.io.IOException;
-import javax.ejb.EJB;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +23,7 @@ import com.loterie.forms.GrilleAlimentationForm;
 import com.loterie.forms.GrilleCreationForm;
 import com.loterie.forms.GrilleJeuForm;
 import com.loterie.forms.GrilleJointureForm;
+import com.loterie.managers.DAOManager;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_MEMBRE_PROFIL,
@@ -38,20 +39,13 @@ import com.loterie.forms.GrilleJointureForm;
 	})
 public class GrilleServlet extends HttpServlet {
 	private static final long serialVersionUID = 6L;
-	@EJB
-	private GrilleDao grilleDao;
-	@EJB
-	private LienGUDao lienGUDao;
-	@EJB
-	private JeuDao jeuDao;
-	@EJB
-	private BanqueDao banqueDao;
-	@EJB
-	private PortefeuilleDao portefeuilleDao;
-	@EJB
-	private JourDao jourDao;
-	@EJB
-	private UtilisateurDao utilisateurDao;
+	private GrilleDao grilleDao = DAOManager.getGrille();
+	private LienGUDao lienGUDao = DAOManager.getLgu();
+	private JeuDao jeuDao = DAOManager.getJeu();
+	private BanqueDao banqueDao = DAOManager.getBanque();
+	private PortefeuilleDao portefeuilleDao = DAOManager.getPortefeuille();
+	private JourDao jourDao = DAOManager.getJour();
+	private UtilisateurDao utilisateurDao = DAOManager.getUtilisateur();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -159,7 +153,8 @@ public class GrilleServlet extends HttpServlet {
 				gaf.modifier();
 				
 				if (gaf.getErreurs().isEmpty()) {
-					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE);
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + 
+							"?id=" + gaf.getGrilleId());
 					return;
 				}
 				
@@ -168,13 +163,13 @@ public class GrilleServlet extends HttpServlet {
 			// Joue la grille pour la période donnée
 			cible = Constants.URN_MEMBRE_AFFICHER_GRILLE;
 			
-			GrilleJeuForm jgf = new GrilleJeuForm(lienGUDao, jourDao, banqueDao, portefeuilleDao, utilisateurDao, req);
+			GrilleJeuForm gjf = new GrilleJeuForm(lienGUDao, jourDao, banqueDao, portefeuilleDao, utilisateurDao, req);
 			
 			// Si aucun problème n'est détecté, la grille est jouée
-			if (jgf.getErreurs().isEmpty())  {
-				jgf.jouer();
+			if (gjf.getErreurs().isEmpty())  {
+				gjf.jouer();
 				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + 
-						"?id=" + jgf.getGrilleId());
+						"?id=" + gjf.getGrilleId());
 				return;
 			}
 		}

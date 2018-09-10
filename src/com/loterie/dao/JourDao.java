@@ -14,6 +14,13 @@ import com.loterie.entities.Utilisateur;
 @Stateful
 public class JourDao extends LoterieDao {
 	private Map<String, Object> params = new HashMap<String, Object>();
+	private static JourDao INSTANCE = new JourDao();
+
+	private JourDao() {}
+
+	public static JourDao getInstance() {
+		return INSTANCE;
+	}
 
 	/**
 	 * <b><i>creer</i></b><br />

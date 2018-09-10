@@ -11,7 +11,14 @@ import com.loterie.entities.Utilisateur;
 @Stateful
 public class GrilleDao extends LoterieDao {
 	private Map<String, Object> params = new HashMap<String, Object>();
+	private static GrilleDao INSTANCE = new GrilleDao();
 	
+	private GrilleDao() {}
+
+	public static GrilleDao getInstance() {
+		return INSTANCE;
+	}
+
 	/**
 	 * <b><i>creer</i></b><br />
 	 * <pre>public void creer({@link com.loterie.entities.Grille Grille} grille)</pre>

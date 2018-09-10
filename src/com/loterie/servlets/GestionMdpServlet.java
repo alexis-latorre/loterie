@@ -3,7 +3,6 @@ import com.loterie.config.Constants;
 
 import java.io.IOException;
 
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,14 +12,14 @@ import javax.servlet.http.HttpSession;
 
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
+import com.loterie.managers.DAOManager;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_MODIFIER_MDP
 		})
 public class GestionMdpServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
-	@EJB
-	private UtilisateurDao utilisateurDao;
+	private UtilisateurDao utilisateurDao = DAOManager.getUtilisateur();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
