@@ -126,7 +126,7 @@ public class Grille {
 		this.banque = banque;
 	}
 
-	public boolean isPublique() {
+	public boolean getPublique() {
 		return publique;
 	}
 

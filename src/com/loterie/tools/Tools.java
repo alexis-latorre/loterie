@@ -301,7 +301,6 @@ public class Tools {
 	 */
 	public static Object executerRequete(String reqStr, Map<String, Object> params, EntityManager em, boolean multiple, 
 			String source) {
-		Object resultat = null;
 		List<Object> resultats = null;
 		
 		try {

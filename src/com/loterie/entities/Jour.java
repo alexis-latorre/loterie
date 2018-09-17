@@ -14,6 +14,8 @@ import javax.persistence.Transient;
 
 import org.joda.time.DateTime;
 
+import com.loterie.tools.Tools;
+
 @Entity
 @Table(name = "jour")
 public class Jour {
@@ -46,7 +48,8 @@ public class Jour {
 	}
 	
 	public void setDateJour(DateTime dt) {
-		this.dateJour = dt.getYear() + "-" + dt.getMonthOfYear() + "-" + dt.getDayOfMonth();
+		this.dateJour = Tools.padRight(dt.getYear(), 4) + "-" + Tools.padRight(dt.getMonthOfYear(), 2) + "-" + 
+				Tools.padRight(dt.getDayOfMonth(), 2);
 	}
 	
 	public LienGrilleUtilisateur getLgu() {
@@ -57,7 +60,7 @@ public class Jour {
 		this.lgu = lgu;
 	}
 	
-	public boolean isPaye() {
+	public boolean getPaye() {
 		return paye == 1L;
 	}
 	
@@ -77,6 +80,11 @@ public class Jour {
 		this.date = new DateTime()
 				.withYear(Integer.parseInt(args[0]))
 				.withMonthOfYear(Integer.parseInt(args[1]))
-				.withDayOfMonth(Integer.parseInt(args[2])).toDate();
+				.withDayOfMonth(Integer.parseInt(args[2]))
+				.withHourOfDay(0)
+				.withMinuteOfHour(0)
+				.withSecondOfMinute(0)
+				.withMillisOfSecond(0)
+				.toDate();
 	}
 }

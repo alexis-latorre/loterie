@@ -256,7 +256,7 @@ public class MoisHTML {
 				// Le jour venant de la BDD est lié à son objet métier par sa date
 				JourHTML jourHTML = trouverJourParDate(jour.getDateJour()); 
 				Grille grille = jour.getLgu().getGrille();
-				grille.setPaye(jour.isPaye());
+				grille.setPaye(jour.getPaye());
 				// La grille du jour est ajoutée à l'objet métier pour affichage
 				jourHTML.addGrille(grille);
 			}

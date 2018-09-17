@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
+import com.loterie.tools.Tools;
+
 @Entity
 @Table(name = "portefeuille")
 public class Portefeuille {
@@ -36,7 +38,8 @@ public class Portefeuille {
 	}
 	
 	public void setDateCreation(DateTime dt) {
-		this.dateCreation = dt.getYear() + "-" + dt.getMonthOfYear() + "-" + dt.getDayOfMonth();
+		this.dateCreation = Tools.padRight(dt.getYear(), 4) + "-" + Tools.padRight(dt.getMonthOfYear(), 2) + "-" + 
+				Tools.padRight(dt.getDayOfMonth(), 2);
 	}
 	
 	public Double getFonds() {
@@ -47,8 +50,8 @@ public class Portefeuille {
 		this.fonds = fonds;
 	}
 
-	public void ajouterFonds(Double fonds) {
-		this.fonds += fonds;
+	public void ajouterFonds(Double montant) {
+		this.fonds += montant;
 	}
 
 	public void retirerFonds(Double montant) {

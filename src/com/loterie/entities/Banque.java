@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 
+import com.loterie.tools.Tools;
+
 @Entity
 @Table(name = "banque")
 public class Banque {
@@ -38,7 +40,8 @@ public class Banque {
 	}
 	
 	public void setDateCreation(DateTime dt) {
-		this.dateCreation = dt.getYear() + "-" + dt.getMonthOfYear() + "-" + dt.getDayOfMonth();
+		this.dateCreation = Tools.padRight(dt.getYear(), 4) + "-" + Tools.padRight(dt.getMonthOfYear(), 2) + "-" + 
+				Tools.padRight(dt.getDayOfMonth(), 2);
 	}
 	
 	public Double getFonds() {
