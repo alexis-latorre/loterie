@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -145,10 +144,6 @@ class TestEntities {
 		jour.setPaye(jourPaye);
 	}
 
-	@AfterEach
-	void tearDown() throws Exception {
-	}
-
 	@Test
 	public void test() {
 		banque.ajouterFonds(5D);
@@ -180,19 +175,18 @@ class TestEntities {
 
 		testLGU();
 		
-		testJour();
-		jourPaye = !jourPaye;
-		jour.setPaye(jourPaye);
+		testJour(jourPaye);
+		jour.setPaye(false);
 		jour.setDateJour(jourDateJourDT);
-		testJour();
+		testJour(false);
 	}
 
-	private void testJour() {
+	private void testJour(boolean paye) {
 		Object[] expected = {
 				jourId,
 				jourDateJour,
 				lgu,
-				jourPaye,
+				paye,
 				jourDate
 		};
 		Object[] actual = {

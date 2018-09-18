@@ -60,7 +60,7 @@ public class Tools {
 		 * d'objets que le tableau d'options, sinon une exception est levée
 		 */
 		if (options.length != criteres.length) {
-			throw new Exception();
+			throw new Exception("options.length != criteres.length");
 		}
 		
 		/* Pour chaque option passée en paramètre,
@@ -82,14 +82,15 @@ public class Tools {
 			}
 			// Si il est demandé de vérifier une correspondance avec une REGEXP
 			if (option == VERIF_REGEXP) {
-				checkpoint = motDePasse.matches((String) criteres[i]);
+				throw new Exception("Not yet implemented!");
+				/*checkpoint = motDePasse.matches((String) criteres[i]);
 				// Concatène le resultat du checkpoint à la vérification globale
 				resultat &= checkpoint;
 				
 				// Lève une exception si le checkpoint est invalide
 				if (! checkpoint) {
 					System.out.printf(Messages.E_INTEGRITE_ETAPE_MANQUEE, "VERIF_REGEXP");
-				}
+				}*/
 			}
 		}
 		// Retourne le résultat globale du passage dans les différents checkpoints
@@ -156,7 +157,8 @@ public class Tools {
 	 */
 	public static String getMaintenant() {
 		DateTime maintenant = new DateTime();
-		return maintenant.getYear() + "-" + maintenant.getMonthOfYear() + "-" + maintenant.getDayOfMonth();
+		return padRight(maintenant.getYear(), 4) + "-" + padRight(maintenant.getMonthOfYear(), 2) + "-" + 
+				padRight(maintenant.getDayOfMonth(), 2);
 	}
 	
 	/**

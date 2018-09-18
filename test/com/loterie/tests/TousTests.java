@@ -7,9 +7,11 @@ class TousTests {
 	void test() throws Exception {
 		TestEntities entities = new TestEntities();
 		TestTools tools = new TestTools();
+		TestBusiness business = new TestBusiness();
 	
 		entities.test();
 		tools.test();
+		business.test();
 	}
 
 }
