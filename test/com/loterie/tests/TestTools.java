@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,19 +81,6 @@ class TestTools {
 		testGetProchainJour(0);
 		testGetProchainJour(1);
 		testGetProchainJour(6);
-		
-		testExecuterRequete("SELECT 1 = 0");
-	}
-
-	private void testExecuterRequete(String req) {		
-		Object[] expected = {
-				null
-		};
-		
-		Object[] actual = {
-				Tools.executerRequete(req, new HashMap<String, Object>(), null, false, "")
-		};
-		assertArrayEquals(expected, actual);
 	}
 
 	private void testGetProchainJour(int jour) {

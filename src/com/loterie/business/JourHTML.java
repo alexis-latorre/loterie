@@ -162,4 +162,9 @@ public class JourHTML {
 	public boolean isPaye() {
 		return paye;
 	}
+	
+	public String toString() {
+		return dt.toString() + ";" + numeroDansSemaine + ";" + numeroDansMois + ";" + numeroDansAnnee + ";" + 
+				numeroMois + ";" + nomLong + ";" + nomCourt + ";" + initiale + ";" + grilles;
+	}
 }

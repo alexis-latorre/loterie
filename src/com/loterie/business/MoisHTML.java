@@ -39,8 +39,8 @@ public class MoisHTML {
 		this.jours = new ArrayList<JourHTML>();
 		this.nom = dt.monthOfYear().getAsText(Locale.FRANCE);
 		this.annee = dt.getYear();
-		this.moisPrecedent = dt.minusMonths(1);
-		this.moisSuivant = dt.plusMonths(1);
+		this.moisPrecedent = dt.minusMonths(1).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
+		this.moisSuivant = dt.plusMonths(1).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
 		anneeAjd = aujourdhui.getYear() == dt.getYear();
 		moisAjd = aujourdhui.getMonthOfYear() == dt.getMonthOfYear();
 
