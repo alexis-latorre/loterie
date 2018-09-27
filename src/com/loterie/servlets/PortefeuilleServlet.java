@@ -17,8 +17,8 @@ import com.loterie.entities.Utilisateur;
 import com.loterie.forms.PortefeuilleCreationForm;
 
 @WebServlet(urlPatterns = {
-		Constants.URL_MEMBRE_PORTEFEUILLE,
-		Constants.URL_MEMBRE_PORTEFEUILLE_AJOUT
+		/*Constants.URL_MEMBRE_PORTEFEUILLE,
+		Constants.URL_MEMBRE_PORTEFEUILLE_AJOUT*/
 })
 public class PortefeuilleServlet extends HttpServlet {
 	private static final long serialVersionUID = 7L;

@@ -65,6 +65,7 @@ public interface Constants {
 	public static final String URL_MEMBRE_PORTEFEUILLE 						= "/membre/monPortefeuille";
 	public static final String URL_MEMBRE_PORTEFEUILLE_AJOUT				= "/membre/ajouterFonds";
 	public static final String URL_ADMIN_ACCUEIL 							= "/admin/accueil";
+	public static final String URL_ADMIN_CREDITER							= "/admin/crediterJoueur";
 
 	/**
 	 * Ressources JSP
@@ -77,13 +78,14 @@ public interface Constants {
 	public static final String URN_MEMBRE_403 								= "/WEB-INF/membre/403.jsp";
 	public static final String URN_MEMBRE_ACCUEIL 							= "/WEB-INF/membre/homePage.jsp";
 	public static final String URN_MEMBRE_AFFICHER_GRILLES 					= "/WEB-INF/membre/afficherGrilles.jsp";
-	public static final String URN_MEMBRE_AFFICHER_GRILLE 					= "/WEB-INF/membre/detailGrille.jsp";
+	public static final String URN_MEMBRE_AFFICHER_GRILLE 					= "/WEB-INF/membre/detailsGrille.jsp";
 	public static final String URN_MEMBRE_CREER_GRILLE 						= "/WEB-INF/membre/creerGrille.jsp";
 	public static final String URN_MEMBRE_MODIFIER_GRILLE 					= "/WEB-INF/membre/modifierGrille.jsp";
 	public static final String URN_MEMBRE_PORTEFEUILLE 						= "/WEB-INF/membre/afficherPortefeuille.jsp";
 
 	public static final String URN_ADMIN_403 								= "/WEB-INF/admin/403.jsp";
 	public static final String URN_ADMIN_ACCUEIL 							= "/WEB-INF/admin/homePage.jsp";
+	public static final String URN_ADMIN_CREDITER 							= "/WEB-INF/admin/crediterJoueur.jsp";
 
 	/**
 	 * Requêtes SQL

@@ -12,13 +12,15 @@
 		    <ul class="dropdown-menu">
 				<li class="dropdown-item"><a href="<c:url value="/membre/profil" />">Mon profil</a></li>
 				<li class="dropdown-item"><a href="<c:url value="/membre/afficherGrilles" />">Afficher mes grilles</a></li>
+				<c:if test="${utilisateur.estAdministrateur()}">
 				<li class="dropdown-item"><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a></li>
-				<li class="dropdown-item"><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a></li>
+				</c:if>
+				<!--li class="dropdown-item"><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a></li-->
 			</ul>
 		</li>
 		<c:if test="${utilisateur.niveau <= 0}">
 		<li class="nav-item">
-			<a class="nav-link" href="<c:url value="/admin" />">Administration</a>
+			<a class="nav-link" href="<c:url value="/admin/accueil" />">Administration</a>
 		</li>
 		</c:if>
 	</c:if>

@@ -2,18 +2,21 @@
 
 <html>
 <head>
-  <title>Loterie | Mon profil</title>
+  <title>Loterie | Administration</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
 <body bgcolor="white">
 	<c:import url="/WEB-INF/commun/header.jsp" />
 
-	<h3>Mon profil</h3>
-	
+	<h3>Administration</h3>
+	<h4>Fonctions membre</h4>
 	<ul>
 		<li><a href="<c:url value="/membre/afficherGrilles" />">Afficher mes grilles</a>
 		<li><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a>
-		<!--li><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a-->
+	</ul>
+	<h4>Fonctions administrateur</h4>
+	<ul>
+		<li><a href="<c:url value="/admin/crediterJoueur" />">Créditer un joueur</a>
 	</ul>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
