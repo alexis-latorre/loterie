@@ -1,5 +1,7 @@
 package com.loterie.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GenerationType;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.loterie.config.Constants;
 
@@ -29,7 +32,9 @@ public class Utilisateur {
 	@ManyToOne
 	@JoinColumn(name = "fk_portefeuille_id")
 	private Portefeuille portefeuille;
-	
+	@Transient
+	private List<Grille> grilles;
+
 	public Long getId() {
 		return id;
 	}
@@ -96,6 +101,14 @@ public class Utilisateur {
 	
 	public Portefeuille getPortefeuille() {
 		return portefeuille;
+	}
+	
+	public List<Grille> getGrilles() {
+		return grilles;
+	}
+
+	public void setGrilles(List<Grille> grilles) {
+		this.grilles = grilles;
 	}
 	
 	public void setPortefeuille(Portefeuille portefeuille) {

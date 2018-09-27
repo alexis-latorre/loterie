@@ -16,7 +16,8 @@
 	</ul>
 	<h4>Fonctions administrateur</h4>
 	<ul>
-		<li><a href="<c:url value="/admin/crediterJoueur" />">Créditer un joueur</a>
+		<li><a href="<c:url value="/admin/crediterJoueur" />">Créditer un joueur</a></li>
+		<li><a href="<c:url value="/admin/detailsUtilisateurs" />">Afficher les utilisateurs</a></li>
 	</ul>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
