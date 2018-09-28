@@ -37,12 +37,17 @@ public interface Constants {
 	 */
 	public static final Long L_UTILISATEUR_ROLE_ADMIN 						= 0L;
 	public static final String S_UTILISATEUR_ROLE_ADMIN						= "administrateur";
+	public static final String CLASSE_ADMIN 								= "danger";
 	public static final Long L_UTILISATEUR_ROLE_MODERATEUR 					= 1L;
 	public static final String S_UTILISATEUR_ROLE_MODERATEUR				= "modérateur";
+	public static final String CLASSE_MODERATEUR 							= "warning";
 	public static final Long L_UTILISATEUR_ROLE_MEMBRE 						= 3L;
 	public static final String S_UTILISATEUR_ROLE_MEMBRE					= "membre";
+	public static final String CLASSE_MEMBRE 								= "success";
 	public static final Long L_UTILISATEUR_ROLE_BASIQUE						= 5L;
 	public static final String S_UTILISATEUR_ROLE_BASIQUE					= "utilisateur";
+	public static final String CLASSE_BASIQUE 								= "primary";
+	public static final String CLASSE_AUTRE 								= "default";
 
 	/**
 	 * Mapping URL

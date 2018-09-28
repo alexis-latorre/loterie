@@ -5,11 +5,14 @@
   <title>Loterie | Détails des utilisateurs</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body bgcolor="white">
+<body class="container">
 	<c:import url="/WEB-INF/commun/header.jsp" />
+	<c:set scope="page" var="utilisateur" value="${utilisateur}" />
+	<c:import url="/WEB-INF/parts/role.jsp"></c:import>
 
 	<h3>Administration - gérer les utilisateurs</h3>
-	<table id="table_detailsUtilisateurs" class="table table-bordered table-striped align-middle">
+	<span class="label label-${role}"><c:out value="${utilisateur.nomRole}" /></span>
+	<table id="table_detailsUtilisateurs" class="table table-bordered table-striped">
 		<thead>
 			<tr>
 				<th id="header_role">Rôle</th>
@@ -22,7 +25,7 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${joueurs}" var="joueur">
-			<c:set scope="application" var="joueur" value="${joueur}" />
+			<c:set scope="page" var="utilisateur" value="${joueur}" />
 			<c:import url="/WEB-INF/parts/role.jsp"></c:import>
 			<c:set var="classeFonds" value="text-normal" />
 			<c:choose>
