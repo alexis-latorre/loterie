@@ -49,7 +49,7 @@ public class AdministrationServlet extends HttpServlet {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
 					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, req);
-					urf.recupererRang(Constants.UTILISATEUR_ROLE_MEMBRE);
+					urf.recupererRang(Constants.L_UTILISATEUR_ROLE_MEMBRE);
 					cible = Constants.URN_ADMIN_CREDITER;
 					break;
 				}
@@ -57,7 +57,7 @@ public class AdministrationServlet extends HttpServlet {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
 					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, req);
-					urf.recupererRang(Constants.UTILISATEUR_ROLE_BASIQUE);
+					urf.recupererRang(Constants.L_UTILISATEUR_ROLE_BASIQUE);
 					cible = Constants.URN_ADMIN_DETAILS_UTILISATEURS;
 					break;
 				}

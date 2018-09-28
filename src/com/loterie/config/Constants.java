@@ -35,10 +35,14 @@ public interface Constants {
 	/**
 	 * Constantes liées aux entités
 	 */
-	public static final Long UTILISATEUR_ROLE_ADMIN 						= 0L;
-	public static final Long UTILISATEUR_ROLE_MODERATEUR 					= 1L;
-	public static final Long UTILISATEUR_ROLE_MEMBRE 						= 3L;
-	public static final Long UTILISATEUR_ROLE_BASIQUE 						= 5L;
+	public static final Long L_UTILISATEUR_ROLE_ADMIN 						= 0L;
+	public static final String S_UTILISATEUR_ROLE_ADMIN						= "administrateur";
+	public static final Long L_UTILISATEUR_ROLE_MODERATEUR 					= 1L;
+	public static final String S_UTILISATEUR_ROLE_MODERATEUR				= "modérateur";
+	public static final Long L_UTILISATEUR_ROLE_MEMBRE 						= 3L;
+	public static final String S_UTILISATEUR_ROLE_MEMBRE					= "membre";
+	public static final Long L_UTILISATEUR_ROLE_BASIQUE						= 5L;
+	public static final String S_UTILISATEUR_ROLE_BASIQUE					= "utilisateur";
 
 	/**
 	 * Mapping URL

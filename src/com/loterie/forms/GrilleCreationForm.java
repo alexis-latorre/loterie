@@ -161,7 +161,7 @@ public class GrilleCreationForm {
 		int nbNumeros = 0;
 		List<List<Integer>> tableNumeros = new ArrayList<List<Integer>>();
 		// Seuls les membres peuvent jouer
-		List<Utilisateur> utilisateurs = utilisateurDao.trouverParRoleMinimum(Constants.UTILISATEUR_ROLE_MEMBRE);
+		List<Utilisateur> utilisateurs = utilisateurDao.trouverParRoleMinimum(Constants.L_UTILISATEUR_ROLE_MEMBRE);
 		req.setAttribute("utilisateurs", utilisateurs);
 		
 		for (int i = 0; i < Constants.EUROMILLIONS_NUMEROS_NB_LIGNES; i++) {

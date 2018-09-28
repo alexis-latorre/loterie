@@ -49,7 +49,7 @@ public class UtilisateurCreationForm {
 			utilisateur.setEmail(email);
 			utilisateur.setGrainDeSel(grainDeSel);
 			utilisateur.setMotDePasse(sha256mdp);
-			utilisateur.setNiveau(Constants.UTILISATEUR_ROLE_BASIQUE);
+			utilisateur.setNiveau(Constants.L_UTILISATEUR_ROLE_BASIQUE);
 		}
 	}
 	

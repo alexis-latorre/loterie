@@ -34,6 +34,8 @@ public class Utilisateur {
 	private Portefeuille portefeuille;
 	@Transient
 	private List<Grille> grilles;
+	@Transient
+	private String nomRole;
 
 	public Long getId() {
 		return id;
@@ -111,23 +113,31 @@ public class Utilisateur {
 		this.grilles = grilles;
 	}
 	
+	public String getNomRole() {
+		return nomRole;
+	}
+
+	public void setNomRole(String nomRole) {
+		this.nomRole = nomRole;
+	}
+
 	public void setPortefeuille(Portefeuille portefeuille) {
 		this.portefeuille = portefeuille;
 	}
 	
 	public boolean estAdministrateur() {
-		return this.niveau <= Constants.UTILISATEUR_ROLE_ADMIN;
+		return this.niveau <= Constants.L_UTILISATEUR_ROLE_ADMIN;
 	}
 	
 	public boolean estModerateur() {
-		return this.niveau <= Constants.UTILISATEUR_ROLE_MODERATEUR;
+		return this.niveau <= Constants.L_UTILISATEUR_ROLE_MODERATEUR;
 	}
 	
 	public boolean estMembre() {
-		return this.niveau <= Constants.UTILISATEUR_ROLE_MEMBRE;
+		return this.niveau <= Constants.L_UTILISATEUR_ROLE_MEMBRE;
 	}
 	
 	public boolean estBasique() {
-		return this.niveau <= Constants.UTILISATEUR_ROLE_BASIQUE;
+		return this.niveau <= Constants.L_UTILISATEUR_ROLE_BASIQUE;
 	}
 }

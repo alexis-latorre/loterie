@@ -334,4 +334,14 @@ public class Tools {
 		
 		return null;
 	}
+	
+	public static String title(String str) {
+		if (str == null || str.isEmpty()) {
+			return "";
+		} else if (str.length() < 2) {
+			return str.toUpperCase();
+		} else {
+			return str.substring(0, 1).toUpperCase() + str.substring(1);
+		}
+	}
 }
