@@ -7,11 +7,9 @@
 </head>
 <body class="container">
 	<c:import url="/WEB-INF/commun/header.jsp" />
-	<c:set scope="page" var="utilisateur" value="${utilisateur}" />
-	<c:import url="/WEB-INF/parts/role.jsp"></c:import>
 
 	<h3>Administration - gérer les utilisateurs</h3>
-	<span class="label label-${role}"><c:out value="${utilisateur.nomRole}" /></span>
+	<!--span class="label label-${joueur.classRole}"><c:out value="${utilisateur.nomRole}" /></span-->
 	<table id="table_detailsUtilisateurs" class="table table-bordered table-striped">
 		<thead>
 			<tr>
@@ -25,32 +23,30 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${joueurs}" var="joueur">
-			<c:set scope="page" var="utilisateur" value="${joueur}" />
-			<c:import url="/WEB-INF/parts/role.jsp"></c:import>
 			<c:set var="classeFonds" value="text-normal" />
 			<c:choose>
-				<c:when test="${joueur.portefeuille.fonds > 0}">
+				<c:when test="${joueur.u.portefeuille.fonds > 0}">
 					<c:set var="classeFonds" value="success text-success" />
 				</c:when>
-				<c:when test="${joueur.portefeuille.fonds < 0}">
+				<c:when test="${joueur.u.portefeuille.fonds < 0}">
 					<c:set var="classeFonds" value="danger text-danger" />
 				</c:when>
-				<c:when test="${joueur.portefeuille.fonds == 0}">
+				<c:when test="${joueur.u.portefeuille.fonds == 0}">
 					<c:set var="classeFonds" value="warning text-warning" />
 				</c:when>
 			</c:choose>
 			<tr>
-				<td><span class="label label-${role}"><c:out value="${joueur.niveau}: ${joueur.nomRole}" /></span></td>
-				<td><c:out value="${joueur.nom} ${joueur.prenom}" /></td>
-				<td><c:out value="${joueur.pseudo}" /></td>
-				<td class="${classeFonds}"><c:out value="${joueur.portefeuille.fonds}" /></td>
+				<td><span class="label label-${joueur.classRole}"><c:out value="${joueur.u.niveau}: ${joueur.u.nomRole}" /></span></td>
+				<td><c:out value="${joueur.u.nom} ${joueur.u.prenom}" /></td>
+				<td><c:out value="${joueur.u.pseudo}" /></td>
+				<td class="${classeFonds}"><c:out value="${joueur.u.portefeuille.fonds}" /></td>
 				<td>
-				<c:forEach items="${joueur.grilles}" var="grille">
+				<c:forEach items="${joueur.u.grilles}" var="grille">
 					<c:out value="${grille.nom}" /><br />
 				</c:forEach>
 				</td>
 				<td>
-					<a href="<c:url value="/admin/detailsUtilisateur"><c:param name="id" value="${joueur.id}" /></c:url>">Éditer</a>
+					<a href="<c:url value="/admin/detailsUtilisateur"><c:param name="id" value="${joueur.u.id}" /></c:url>">Éditer</a>
 				</td>
 			</tr>
 		</c:forEach>

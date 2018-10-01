@@ -15,6 +15,16 @@ public interface Constants {
 	public static final String[] JOURS_LONGS 								= {"lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"};
 	public static final String[] JOURS_COURTS 								= {"lun", "mar", "mer", "jeu", "ven", "sam", "dim"};
 	public static final String[] JOURS_INITIALES 							= {"l", "ma", "me", "j", "v", "s", "d"};
+	public static final String LOG_INFO										= "I";
+	public static final String LOG_AVERTISSEMENT							= "A";
+	public static final String LOG_ERREUR									= "E";
+	public static final String LOG_SEVERE									= "S";
+	public static final String LOG_FATALE									= "F";
+	public static final String LOG_FINANCE									= "FINANCE";
+	public static final String LOG_COMPTE									= "COMPTE";
+	public static final String LOG_ADMINISTRATION							= "ADMINISTRATION";
+	public static final String LOG_GRILLE									= "GRILLE";
+	public static final String LOG_SERVEUR									= "SERVEUR";
 
 	/**
 	 * Constantes Euromillions
@@ -77,6 +87,7 @@ public interface Constants {
 	public static final String URL_ADMIN_CREDITER							= "/admin/crediterJoueur";
 	public static final String URL_ADMIN_DETAILS_UTILISATEUR 				= "/admin/detailsUtilisateur";
 	public static final String URL_ADMIN_DETAILS_UTILISATEURS 				= "/admin/detailsUtilisateurs";
+	public static final String URL_ADMIN_LOGS				 				= "/admin/logs";
 
 	/**
 	 * Ressources JSP
@@ -99,6 +110,7 @@ public interface Constants {
 	public static final String URN_ADMIN_CREDITER 							= "/WEB-INF/admin/crediterJoueur.jsp";
 	public static final String URN_ADMIN_DETAILS_UTILISATEUR 				= "/WEB-INF/admin/detailsUtilisateur.jsp";
 	public static final String URN_ADMIN_DETAILS_UTILISATEURS 				= "/WEB-INF/admin/detailsUtilisateurs.jsp";
+	public static final String URN_ADMIN_LOGS				 				= "/WEB-INF/admin/logs.jsp";
 
 	/**
 	 * Requêtes SQL
@@ -123,5 +135,6 @@ public interface Constants {
 	public static final String SELECT_JOUR_PAR_INTERVALLE_ET_UTILISATEUR 	= "SELECT DISTINCT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE (j.dateJour BETWEEN :date_debut AND :date_fin) AND l.utilisateur = :utilisateur AND j.lgu = l";
 	public static final String SELECT_JOUR_DERNIER_JOUE_PAR_GRILLE			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l ON j.lgu = l JOIN Grille g WHERE l.grille = :grille ORDER BY j.dateJour DESC";
 	public static final String SELECT_JEU_PAR_NOM 							= "SELECT j FROM Jeu j WHERE j.nom = :nom";
+	public static final String SELECT_LOG		 							= "SELECT l FROM Log l";
 
 }

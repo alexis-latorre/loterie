@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.loterie.config.Constants;
 import com.loterie.dao.GrilleDao;
+import com.loterie.dao.LogDao;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
@@ -22,7 +23,8 @@ import com.loterie.forms.UtilisateurRecuperationForm;
 		Constants.URL_ADMIN_ACCUEIL,
 		Constants.URL_ADMIN_CREDITER,
 		Constants.URL_ADMIN_DETAILS_UTILISATEUR,
-		Constants.URL_ADMIN_DETAILS_UTILISATEURS
+		Constants.URL_ADMIN_DETAILS_UTILISATEURS,
+		Constants.URL_ADMIN_LOGS
 		})
 public class AdministrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 5L;
@@ -33,6 +35,8 @@ public class AdministrationServlet extends HttpServlet {
 	private GrilleDao grilleDao;
 	@EJB
 	private PortefeuilleDao portefeuilleDao;
+	@EJB
+	private LogDao logDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -67,6 +71,13 @@ public class AdministrationServlet extends HttpServlet {
 					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, req);
 					urf.recupererId();
 					cible = Constants.URN_ADMIN_DETAILS_UTILISATEUR;
+					break;
+				}
+				case Constants.URL_ADMIN_LOGS: {
+					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
+					
+					req.setAttribute("logs", logDao.trouver());
+					cible = Constants.URN_ADMIN_LOGS;
 					break;
 				}
 				default: cible = Constants.URN_ADMIN_ACCUEIL;

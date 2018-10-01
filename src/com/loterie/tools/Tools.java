@@ -16,6 +16,7 @@ import com.loterie.config.Messages;
 public class Tools {	
 	public static final int VERIF_TAILLE 		= 1;
 	public static final int VERIF_REGEXP 		= 2;
+	private static final DateTime NOW			= new DateTime();
 
 	/**
 	 * <b><i>comparerChainesNonNull</i></b><br />
@@ -310,8 +311,10 @@ public class Tools {
 			Query query = em.createQuery(reqStr);
 			
 			// Tous les paramètres sont ajoutées à la requête
-			for (Map.Entry<String, Object> entree : params.entrySet()) {
-				query.setParameter(entree.getKey(), entree.getValue());
+			if (params != null) {
+				for (Map.Entry<String, Object> entree : params.entrySet()) {
+					query.setParameter(entree.getKey(), entree.getValue());
+				}
 			}
 			resultats = query.getResultList();
 			
@@ -343,5 +346,13 @@ public class Tools {
 		} else {
 			return str.substring(0, 1).toUpperCase() + str.substring(1);
 		}
+	}
+
+	public static String getDate() {
+		return NOW.getYear() + "-" + NOW.getMonthOfYear() + "-" + NOW.getDayOfMonth();
+	}
+
+	public static String getHeure() {
+		return NOW.getHourOfDay() + ":" + NOW.getMinuteOfHour() + ":" + NOW.getSecondOfMinute();
 	}
 }

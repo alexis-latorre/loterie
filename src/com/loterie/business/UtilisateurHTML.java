@@ -4,27 +4,27 @@ import com.loterie.config.RolesConfig;
 import com.loterie.entities.Utilisateur;
 
 public class UtilisateurHTML {
-	private Utilisateur utilisateur;
+	private Utilisateur u;
 	private String classRole;
 	
 	public UtilisateurHTML(Utilisateur utilisateur) {
-		setUtilisateur(utilisateur);
+		setU(utilisateur);
 		setClassRole(utilisateur.getNomRole());
 	}
 
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
+	public Utilisateur getU() {
+		return u;
 	}
 
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
+	public void setU(Utilisateur utilisateur) {
+		this.u = utilisateur;
 	}
 
 	public String getClassRole() {
 		return classRole;
 	}
 
-	public void setClassRole(String role) {		
-		this.classRole = RolesConfig.getClasse(role);
+	public void setClassRole(String role) {
+		this.classRole = RolesConfig.getClasse(role.toLowerCase());
 	}
 }

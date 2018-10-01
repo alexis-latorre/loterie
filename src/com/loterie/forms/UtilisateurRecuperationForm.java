@@ -1,10 +1,12 @@
 package com.loterie.forms;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.loterie.business.UtilisateurHTML;
 import com.loterie.config.RolesConfig;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.UtilisateurDao;
@@ -26,15 +28,17 @@ public class UtilisateurRecuperationForm {
 	}
 	
 	public void recupererRang(Long niveau) {
-		List<Utilisateur> joueurs = utilisateurDao.trouverParRoleMinimum(niveau);
+		List<Utilisateur> utilisateurs = utilisateurDao.trouverParRoleMinimum(niveau);
+		List<UtilisateurHTML> joueurs = new ArrayList<UtilisateurHTML>();
 		
-		for (Utilisateur joueur : joueurs) {
-			joueur.setNomRole(Tools.title(RolesConfig.getRole(joueur.getNiveau())));
-			List<Grille> grilles = grilleDao.trouverParUtilisateur(joueur);
+		for (Utilisateur utilisateur : utilisateurs) {
+			utilisateur.setNomRole(Tools.title(RolesConfig.getRole(utilisateur.getNiveau())));
+			List<Grille> grilles = grilleDao.trouverParUtilisateur(utilisateur);
 
 			if (grilles != null) {
-				joueur.setGrilles(grilles);
+				utilisateur.setGrilles(grilles);
 			}
+			joueurs.add(new UtilisateurHTML(utilisateur));
 		}
 		
 		try {
@@ -58,7 +62,7 @@ public class UtilisateurRecuperationForm {
 		try {
 			Utilisateur joueur = utilisateurDao.trouverParId(Long.valueOf(req.getParameter("id")));
 			joueur.setNomRole(Tools.title(RolesConfig.getRole(joueur.getNiveau())));
-			req.setAttribute("joueur", joueur);
+			req.setAttribute("joueur", new UtilisateurHTML(joueur));
 		} catch (Exception e) {
 			// TODO: Implémenter le message
 			e.printStackTrace();
