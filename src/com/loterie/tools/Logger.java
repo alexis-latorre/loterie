@@ -12,6 +12,7 @@ import com.loterie.entities.Utilisateur;
 public class Logger {
 	@EJB
 	private LogDao logDao;
+
 	private static Logger INSTANCE = new Logger();
 	
 	private Logger() {}
@@ -28,41 +29,46 @@ public class Logger {
 		return logDao.trouver();
 	}
 	
-	public static void log(String message, String niveau, String type, Utilisateur declencheur, 
-			Utilisateur utilisateurLie) {
-		Log l = new Log();
-		l.LogInit(message, niveau, type, declencheur, utilisateurLie);
-		Logger logger = Logger.getInstance();
-		logger.privateLog(l);
+	public static void log(LogDao logDao, String message, String niveau, String type, Utilisateur declencheur) {
+		log(logDao, message, niveau, type, declencheur, null);
 	}
 	
-	public static void log(String message, String niveau, String type, Utilisateur declencheur) {
-		log(message, niveau, type, declencheur, null);
-	}
-	
-	public static void log(String message, String niveau, Utilisateur declencheur) {
-		log(message, niveau, Constants.LOG_SERVEUR, declencheur, null);
+	public static void log(LogDao logDao, String message, String niveau, Utilisateur declencheur) {
+		log(logDao, message, niveau, Constants.LOG_SERVEUR, declencheur, null);
 		
 	}
 	
-	public static void log(String message, Utilisateur declencheur) {
-		log(message, Constants.LOG_INFO, Constants.LOG_SERVEUR, declencheur, null);
+	public static void log(LogDao logDao, String message, Utilisateur declencheur) {
+		log(logDao, message, Constants.LOG_INFO, Constants.LOG_SERVEUR, declencheur, null);
 	}
 	
-	public static void log(String message, String niveau, String type) {
-		log(message, niveau, type, null, null);
+	public static void log(LogDao logDao, String message, String niveau, String type) {
+		log(logDao, message, niveau, type, null, null);
 	}
 	
-	public static void log(String message, String niveau) {
-		log(message, niveau, Constants.LOG_SERVEUR, null, null);
+	public static void log(LogDao logDao, String message, String niveau) {
+		log(logDao, message, niveau, Constants.LOG_SERVEUR, null, null);
 	}
 	
-	public static void log(String message) {
-		log(message, Constants.LOG_INFO, Constants.LOG_SERVEUR, null, null);
+	public static void log(LogDao logDao, String message) {
+		log(logDao, message, Constants.LOG_INFO, Constants.LOG_SERVEUR, null, null);
+	}
+	
+	public static void log(LogDao logDao, String message, String niveau, String type, Utilisateur declencheur, 
+			Utilisateur utilisateurLie) {
+		Logger logger = Logger.getInstance();
+		logger.setLogDao(logDao);
+		Log l = new Log();
+		l.LogInit(message, niveau, type, declencheur, utilisateurLie);
+		logger.privateLog(l);
 	}
 	
 	public static List<Log> lire() {
 		Logger logger = Logger.getInstance();
 		return logger.privateLire();
+	}
+	
+	private void setLogDao(LogDao logDao) {
+		this.logDao = logDao;
 	}
 }

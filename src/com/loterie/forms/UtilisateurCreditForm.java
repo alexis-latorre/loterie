@@ -24,7 +24,7 @@ public class UtilisateurCreditForm {
 		this.utilisateurDao = utilisateurDao;
 		this.portefeuilleDao = portefeuilleDao;
 		this.req = req;
-		utilisateur = validerUtilisateur(req.getParameter("joueur"));
+		utilisateur = validerUtilisateur(req.getAttribute("joueur"));
 		portefeuille = utilisateur.getPortefeuille();
 		fonds = validerFonds(req.getParameter("fonds"));
 		majErreurs();
@@ -38,10 +38,12 @@ public class UtilisateurCreditForm {
 		return erreurs;
 	}
 
-	private Utilisateur validerUtilisateur(String id) {
+	private Utilisateur validerUtilisateur(Object id) {
 		try {
-			return utilisateurDao.trouverParId(Long.parseLong(id));
+			return utilisateurDao.trouverParId(Long.parseLong((String)id));
 		} catch (Exception e) {
+			System.err.println("MEEEERDEUH: " + id);
+			e.printStackTrace();
 			erreurs.put("joueur", Messages.MSG_UTILISATEUR_INTROUVABLE);
 			return null;
 		}
@@ -56,11 +58,22 @@ public class UtilisateurCreditForm {
 		}
 	}
 
-	public void crediter() {
+	public Map<String, Object> crediter() {
+		String action = "crédité";
 		portefeuille.ajouterFonds(fonds);
 		portefeuilleDao.maj(portefeuille);
 		utilisateur.setPortefeuille(portefeuille);
 		utilisateurDao.maj(utilisateur);
 		majErreurs();
+		Map<String, Object> retour = new HashMap<String, Object>();
+		
+		if (fonds < 0D) {
+			action = "débité";
+			fonds *= -1;
+		}
+		retour.put("action", action);
+		retour.put("fonds", fonds);
+		retour.put("joueur", utilisateur);
+		return retour;
 	}
 }

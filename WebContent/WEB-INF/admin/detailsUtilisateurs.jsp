@@ -46,7 +46,8 @@
 				</c:forEach>
 				</td>
 				<td>
-					<a href="<c:url value="/admin/detailsUtilisateur"><c:param name="id" value="${joueur.u.id}" /></c:url>">Éditer</a>
+					<a href="<c:url value="/admin/detailsUtilisateur"><c:param name="id" value="${joueur.u.id}" /></c:url>">Éditer</a> | 
+					<a href="<c:url value="/admin/crediterJoueur"><c:param name="id" value="${joueur.u.id}" /></c:url>">Créditer</a>
 				</td>
 			</tr>
 		</c:forEach>

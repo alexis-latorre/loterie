@@ -25,20 +25,22 @@
 		<c:forEach items="${logs}" var="log">
 			<c:set var="classe" value="text-normal" />
 			<c:choose>
-				<c:when test="${log.niveau == 'A'}">
+				<c:when test="${log.l.niveau == 'A'}">
 					<c:set var="classe" value="warning text-warning" />
 				</c:when>
-				<c:when test="${log.niveau == 'E' or log.niveau == 'S' or log.niveau == 'F'}">
+				<c:when test="${log.l.niveau == 'E' or log.l.niveau == 'S' or log.l.niveau == 'F'}">
 					<c:set var="classe" value="danger text-danger" />
 				</c:when>
 			</c:choose>
 			<tr>
-				<td class="${classe}"><c:out value="${log.utc}" /></td>
-				<td class="${classe}"><c:out value="${log.jour}" /></td>
-				<td class="${classe}"><c:out value="${log.heure}" /></td>
-				<td class="${classe}"><c:out value="${log.niveau}" /></td>
-				<td class="${classe}"><c:out value="${log.type}" /></td>
-				<td class="${classe}"><c:out value="${log.message}" /></td>
+				<td class="${classe}"><c:out value="${log.l.utc}" /></td>
+				<td class="${classe}"><c:out value="${log.l.jour}" /></td>
+				<td class="${classe}"><c:out value="${log.l.heure}" /></td>
+				<td class="${classe}"><c:out value="${log.l.niveau}" /></td>
+				<td class="${classe}"><c:out value="${log.l.type}" /></td>
+				<td class="${classe}">
+					${log.message}
+				</td>
 			</tr>
 		</c:forEach>
 		</tbody>

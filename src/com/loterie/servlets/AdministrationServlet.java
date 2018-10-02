@@ -1,6 +1,7 @@
 package com.loterie.servlets;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -16,8 +17,11 @@ import com.loterie.dao.LogDao;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
+import com.loterie.forms.LogRecuperationForm;
 import com.loterie.forms.UtilisateurCreditForm;
 import com.loterie.forms.UtilisateurRecuperationForm;
+import com.loterie.tools.DevTools;
+import com.loterie.tools.Logger;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_ADMIN_ACCUEIL,
@@ -53,7 +57,14 @@ public class AdministrationServlet extends HttpServlet {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
 					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, req);
-					urf.recupererRang(Constants.L_UTILISATEUR_ROLE_MEMBRE);
+					String id = req.getParameter("id");
+					
+					if (id != null && !id.isEmpty()) {
+						req.getSession().setAttribute("joueurAcrediter", id);
+						urf.recupererId();
+					} else {
+						urf.recupererRang(Constants.L_UTILISATEUR_ROLE_MEMBRE);
+					}
 					cible = Constants.URN_ADMIN_CREDITER;
 					break;
 				}
@@ -76,7 +87,8 @@ public class AdministrationServlet extends HttpServlet {
 				case Constants.URL_ADMIN_LOGS: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
-					req.setAttribute("logs", logDao.trouver());
+					LogRecuperationForm lrf = new LogRecuperationForm(logDao);
+					req.setAttribute("logs", lrf.parseLogs());
 					cible = Constants.URN_ADMIN_LOGS;
 					break;
 				}
@@ -100,8 +112,23 @@ public class AdministrationServlet extends HttpServlet {
 			if (utilisateur.estModerateur() || utilisateur.estAdministrateur()) {
 				switch (uri) {
 					case Constants.URL_ADMIN_CREDITER: {
+						DevTools.dumpSession(req);
+						String id = req.getParameter("joueur");
+						
+						if (id == null || id.isEmpty()) {
+							req.setAttribute("joueur", req.getSession().getAttribute("joueurAcrediter"));
+							req.getSession().setAttribute("joueurAcrediter", null);
+						} else {
+							req.setAttribute("joueur", id);
+						}
 						UtilisateurCreditForm ucf = new UtilisateurCreditForm(utilisateurDao, portefeuilleDao, req);
-						ucf.crediter();
+						Map<String, Object> retour = ucf.crediter();
+						
+						if (ucf.getErreurs().isEmpty()) {
+							Logger.log(logDao, "%u a " + retour.get("action") + " %j de " + retour.get("fonds") + " euros.", 
+									Constants.LOG_INFO, Constants.LOG_FINANCE, utilisateur, 
+									(Utilisateur)retour.get("joueur"));
+						}
 						resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_ADMIN_CREDITER);
 						return;
 					}

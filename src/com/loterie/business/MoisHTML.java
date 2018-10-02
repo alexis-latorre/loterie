@@ -39,13 +39,13 @@ public class MoisHTML {
 		this.jours = new ArrayList<JourHTML>();
 		this.nom = dt.monthOfYear().getAsText(Locale.FRANCE);
 		this.annee = dt.getYear();
-		this.moisPrecedent = dt.minusMonths(1).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
-		this.moisSuivant = dt.plusMonths(1).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
+		this.moisPrecedent = dt.minusMonths(1).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(1);
+		this.moisSuivant = dt.plusMonths(1).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(1);
 		anneeAjd = aujourdhui.getYear() == dt.getYear();
 		moisAjd = aujourdhui.getMonthOfYear() == dt.getMonthOfYear();
 
-		DateTime pj = new DateTime(dt.getYear(), dt.getMonthOfYear(), 1, 0, 0, 0);
-		DateTime dj = new DateTime(dt.getYear(), dt.getMonthOfYear(), this.dernierJour, 0, 0, 0);
+		DateTime pj = new DateTime(dt.getYear(), dt.getMonthOfYear(), 1, 0, 0, 1);
+		DateTime dj = new DateTime(dt.getYear(), dt.getMonthOfYear(), this.dernierJour, 0, 0, 1);
 
 		int premierJourSemaine = pj.getDayOfWeek();
 		int dernierJourSemaine = dj.getDayOfWeek();

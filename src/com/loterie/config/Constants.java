@@ -135,6 +135,6 @@ public interface Constants {
 	public static final String SELECT_JOUR_PAR_INTERVALLE_ET_UTILISATEUR 	= "SELECT DISTINCT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE (j.dateJour BETWEEN :date_debut AND :date_fin) AND l.utilisateur = :utilisateur AND j.lgu = l";
 	public static final String SELECT_JOUR_DERNIER_JOUE_PAR_GRILLE			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l ON j.lgu = l JOIN Grille g WHERE l.grille = :grille ORDER BY j.dateJour DESC";
 	public static final String SELECT_JEU_PAR_NOM 							= "SELECT j FROM Jeu j WHERE j.nom = :nom";
-	public static final String SELECT_LOG		 							= "SELECT l FROM Log l";
+	public static final String SELECT_LOG		 							= "SELECT l FROM Log l ORDER BY l.utc DESC";
 
 }
