@@ -6,7 +6,7 @@
 <title>Loterie | Grille N° <c:out value="${grille.id}"></c:out></title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body>
+<body class="container">
 	<c:import url="/WEB-INF/commun/header.jsp" />
 	<c:choose>
 	<c:when test="${empty erreurs}">

@@ -18,8 +18,10 @@ public class LogRecuperationForm {
 		List<Log> logs = logDao.trouver();
 		List<LogHTML> logsHTML = new ArrayList<LogHTML>();
 		
-		for (Log log : logs) {
-			logsHTML.add(new LogHTML(log));
+		if (logs != null) {
+			for (Log log : logs) {
+				logsHTML.add(new LogHTML(log));
+			}
 		}
 		return logsHTML;
 	}

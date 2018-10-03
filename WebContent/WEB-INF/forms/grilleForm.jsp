@@ -1,4 +1,4 @@
-<label>Nom de la grille :<input type="text" name="nom" id="input-nom" value="${requestScope.grille.nom}" /></label><br />
+<label>Nom de la grille : <input type="text" name="nom" id="input-nom" value="${requestScope.grille.nom}" /></label><br />
 <h4>Choisir les numéros</h4>
 <table>
 <c:forEach items="${tableNumeros}" var="ligneNumeros">
@@ -44,6 +44,6 @@
 	</tr>
 </c:forEach>
 </table>
-<label>Étoile + :<input type="checkbox" name="etoilePlus" id="input-etoilePlus" <c:out value="${checked}" /> /></label><br />
+<label>Étoile + <input type="checkbox" name="etoilePlus" id="input-etoilePlus" <c:out value="${checked}" /> /></label><br />
 <label>MyMillion : <input type="text" name="mymillion" id="input-mymillion" value="${requestScope.grille.myMillion}" /></label><br />
 <br />

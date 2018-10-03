@@ -12,7 +12,7 @@
 	</c:choose>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body bgcolor="white">
+<body class="container">
 	<c:import url="/WEB-INF/commun/header.jsp" />
 
 	<c:choose>

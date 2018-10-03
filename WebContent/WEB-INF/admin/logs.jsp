@@ -22,27 +22,36 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${logs}" var="log">
-			<c:set var="classe" value="text-normal" />
-			<c:choose>
-				<c:when test="${log.l.niveau == 'A'}">
-					<c:set var="classe" value="warning text-warning" />
-				</c:when>
-				<c:when test="${log.l.niveau == 'E' or log.l.niveau == 'S' or log.l.niveau == 'F'}">
-					<c:set var="classe" value="danger text-danger" />
-				</c:when>
-			</c:choose>
-			<tr>
-				<td class="${classe}"><c:out value="${log.l.utc}" /></td>
-				<td class="${classe}"><c:out value="${log.l.jour}" /></td>
-				<td class="${classe}"><c:out value="${log.l.heure}" /></td>
-				<td class="${classe}"><c:out value="${log.l.niveau}" /></td>
-				<td class="${classe}"><c:out value="${log.l.type}" /></td>
-				<td class="${classe}">
-					${log.message}
-				</td>
-			</tr>
-		</c:forEach>
+		<c:choose>
+			<c:when test="${empty logs}">
+				<tr>
+					<td colspan="6" style="text-align: center; font-style: italic">Aucun log sur le serveur</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+			<c:forEach items="${logs}" var="log">
+				<c:set var="classe" value="text-normal" />
+				<c:choose>
+					<c:when test="${log.l.niveau == 'A'}">
+						<c:set var="classe" value="warning text-warning" />
+					</c:when>
+					<c:when test="${log.l.niveau == 'E' or log.l.niveau == 'S' or log.l.niveau == 'F'}">
+						<c:set var="classe" value="danger text-danger" />
+					</c:when>
+				</c:choose>
+				<tr>
+					<td class="${classe}"><c:out value="${log.l.utc}" /></td>
+					<td class="${classe}"><c:out value="${log.l.jour}" /></td>
+					<td class="${classe}"><c:out value="${log.l.heure}" /></td>
+					<td class="${classe}"><c:out value="${log.l.niveau}" /></td>
+					<td class="${classe}"><c:out value="${log.l.type}" /></td>
+					<td class="${classe}">
+						${log.message}
+					</td>
+				</tr>
+			</c:forEach>
+			</c:otherwise>
+		</c:choose>
 		</tbody>
 	</table>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />

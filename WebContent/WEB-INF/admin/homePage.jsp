@@ -5,7 +5,7 @@
   <title>Loterie | Administration</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body bgcolor="white">
+<body class="container">
 	<c:import url="/WEB-INF/commun/header.jsp" />
 
 	<h3>Administration</h3>

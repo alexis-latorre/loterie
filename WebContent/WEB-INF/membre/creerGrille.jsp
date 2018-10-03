@@ -7,7 +7,7 @@
 <title>Loterie | Créer une grille</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body>
+<body class="container">
 	<c:import url="/WEB-INF/commun/header.jsp" />
 	<h3>Ajouter une nouvelle grille</h3>
 	<form id="form-nouvelleGrille" action="<c:url value="/membre/creerGrille" />" method="post">

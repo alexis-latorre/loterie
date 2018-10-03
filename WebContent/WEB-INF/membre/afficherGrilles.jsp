@@ -7,7 +7,7 @@
 <title>Loterie | Mes grilles</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body>
+<body class="container">
 	<c:import url="/WEB-INF/commun/header.jsp" />
 	<h3>Mes grilles</h3>
 	<c:choose>
