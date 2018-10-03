@@ -287,7 +287,7 @@ public class Tools {
 			}
 		}
 		return dateDebut.getYear() + "-" + padRight(dateDebut.getMonthOfYear(), 2) + "-" + 
-			padRight(dateDebut.getDayOfMonth(), 2);
+			padRight(dateDebut.getDayOfMonth(), 2) + " 12:00:00";
 	}
 
 	/**

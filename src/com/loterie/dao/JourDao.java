@@ -109,4 +109,8 @@ public class JourDao extends LoterieDao {
 		return (List<Jour>) super.resultats(Constants.SELECT_JOUR_PAR_INTERVALLE_ET_UTILISATEUR, params, 
 				"trouverParIntervalleEtUtilisateur");
 	}
+	
+	public void clearCache() {
+		super.clearCache();
+	}
 }

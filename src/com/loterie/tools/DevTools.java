@@ -5,7 +5,10 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.loterie.dao.LoterieDao;
+
 public class DevTools {
+	
 	public static void dumpSession(HttpServletRequest req) {
 		if (req != null) {
 			HttpSession session = req.getSession();
@@ -26,5 +29,9 @@ public class DevTools {
 			System.out.println("########################");
 			
 		}
+	}
+	
+	public static void clearCache(Object dao) {
+		((LoterieDao) dao).clearCache();
 	}
 }

@@ -42,8 +42,6 @@ public class UtilisateurCreditForm {
 		try {
 			return utilisateurDao.trouverParId(Long.parseLong((String)id));
 		} catch (Exception e) {
-			System.err.println("MEEEERDEUH: " + id);
-			e.printStackTrace();
 			erreurs.put("joueur", Messages.MSG_UTILISATEUR_INTROUVABLE);
 			return null;
 		}

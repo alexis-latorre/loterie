@@ -31,7 +31,10 @@ public class GrilleRecuperationDuMoisForm {
 		this.jourDao = jourDao;
 		mois = new MoisHTML(moisSurveille);
 		List<Jour> jours = this.jourDao.trouverParIntervalleEtUtilisateur(mois.getPremiereDate(), mois.getDerniereDate(), utilisateur);
-		mois.combinerJours(jours);
+		
+		if (jours != null) {
+			mois.combinerJours(jours);
+		}
 	}
 	
 	public MoisHTML getMois() {

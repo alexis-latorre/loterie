@@ -17,10 +17,11 @@ import com.loterie.dao.JourDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.UtilisateurConnexionForm;
+import com.loterie.tools.DevTools;
 import com.loterie.forms.GrilleRecuperationDuMoisForm;
 
 @WebServlet(urlPatterns = {
-		//Constants.URL_ROOT,
+		"/clearCache",
 		Constants.URL_PUBLIC_ACCUEIL,
 		Constants.URL_PUBLIC_CONNEXION
 		})
@@ -35,6 +36,13 @@ public class ConnexionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
+		
+		if (uri.equals("/clearCache")) {
+			DevTools.clearCache(jourDao);
+			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_PUBLIC_ACCUEIL);
+			return;
+		}
 		HttpSession session = req.getSession();
 		boolean loggedIn = false;
 

@@ -109,7 +109,7 @@ public class GrilleJeuForm {
 		
 		for (int i = 0; i < nbPeriode; i++) {
 			String prochainJour = Tools.getProchainJour(prochainJourDeJeu, dateValidation);
-			dateValidation = DateTime.parse(prochainJour);
+			dateValidation = DateTime.parse(prochainJour.substring(0, 10));
 			idJour++;
 			
 			if (idJour >= jours.length) {

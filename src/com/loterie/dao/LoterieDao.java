@@ -78,4 +78,8 @@ public class LoterieDao {
 	protected List<?> resultats(String reqStr, Map<String, Object> params, String source) {		
 		return (List<?>) Tools.executerRequete(reqStr, params, em, true, this.getClass().getName() + "." + source);
 	}
+	
+	public void clearCache() {
+		em.getEntityManagerFactory().getCache().evictAll();
+	}
 }

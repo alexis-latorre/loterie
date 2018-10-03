@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.ejb.Stateful;
 import com.loterie.config.Constants;
 import com.loterie.entities.Log;
+import com.loterie.tools.DevTools;
 
 @Stateful
 public class LogDao extends LoterieDao {
@@ -39,6 +40,7 @@ public class LogDao extends LoterieDao {
 	}
 
 	public List<Log> trouver() {
+		DevTools.clearCache(this);
 		return (List<Log>) super.resultats(Constants.SELECT_LOG, null, null);
 	}
 }

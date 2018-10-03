@@ -40,7 +40,7 @@ public class Jour {
 	}
 	
 	public String getDateJour() {
-		return dateJour;
+		return dateJour.substring(0, 10);
 	}
 	
 	public void setDateJour(String dateJour) {
@@ -49,7 +49,7 @@ public class Jour {
 	
 	public void setDateJour(DateTime dt) {
 		this.dateJour = Tools.padRight(dt.getYear(), 4) + "-" + Tools.padRight(dt.getMonthOfYear(), 2) + "-" + 
-				Tools.padRight(dt.getDayOfMonth(), 2);
+				Tools.padRight(dt.getDayOfMonth(), 2) + " 12:00:00";
 	}
 	
 	public LienGrilleUtilisateur getLgu() {
@@ -76,12 +76,12 @@ public class Jour {
 	}
 	
 	private void setDate(String dateStr) {
-		String[] args = dateStr.split("-");
+		String[] args = dateStr.split(" ")[0].split("-");
 		this.date = new DateTime()
 				.withYear(Integer.parseInt(args[0]))
 				.withMonthOfYear(Integer.parseInt(args[1]))
 				.withDayOfMonth(Integer.parseInt(args[2]))
-				.withHourOfDay(0)
+				.withHourOfDay(12)
 				.withMinuteOfHour(0)
 				.withSecondOfMinute(0)
 				.withMillisOfSecond(0)

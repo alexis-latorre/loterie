@@ -1,3 +1,4 @@
+<a href="<c:url value="/clearCache" />">clear</a>
 <h1>MyLoterie</h1>
 <ul class="nav nav-pills nav-justified">
 	<li class="nav-item">

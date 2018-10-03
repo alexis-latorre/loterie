@@ -127,7 +127,8 @@ public class JourHTML {
 	 * @return la date du jour
 	 */
 	public String getDateJour() {
-		return Tools.padRight(dt.getYear(), 4) + "-" + Tools.padRight(dt.getMonthOfYear(), 2) + "-" + Tools.padRight(dt.getDayOfMonth(), 2);
+		return Tools.padRight(dt.getYear(), 4) + "-" + Tools.padRight(dt.getMonthOfYear(), 2) + "-" + 
+				Tools.padRight(dt.getDayOfMonth(), 2);
 	}
 	
 	/**
