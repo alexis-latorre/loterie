@@ -7,7 +7,7 @@
 <title>Loterie | Erreur 403</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body>
+<body class="container">
 	<h1>INTERDIT !</h1>
 	<p>Vous essayez d'accéder à une page qui ne vous est pas autorisée.</p>
 	<a href="<c:url value="/accueil" />">Retourner à l'accueil</a>

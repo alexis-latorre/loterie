@@ -1,6 +1,6 @@
 package com.loterie.business;
 
-import com.loterie.config.Constants;
+import com.loterie.config.LiensConfig;
 import com.loterie.config.RolesConfig;
 import com.loterie.entities.Utilisateur;
 
@@ -30,7 +30,7 @@ public class UtilisateurHTML {
 	}
 
 	public String getURL() {
-		return "<a href=\"" + Constants.CONTEXTE + Constants.URL_ADMIN_DETAILS_UTILISATEUR + "?id=" + u.getId() + "\""
-				+ " title=\"Voir les détails de l'utilisateur\">" + u.getPseudo() + "</a>";
+		String[] params = {u.getId().toString(), u.getPseudo()};
+		return LiensConfig.getLienConfigFormatte(LiensConfig.LIEN_UTILISATEUR, params);		
 	}
 }

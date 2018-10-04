@@ -7,7 +7,7 @@
 <title>Loterie | Erreur 403</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body>
+<body class="container">
 	<h1>OUPS !</h1>
 	<p>Vous essayez d'accéder à une page qui nécessite d'être connecté.</p>
 	<a href="<c:url value="/accueil" />">Retourner à l'accueil</a>

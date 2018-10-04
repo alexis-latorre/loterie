@@ -46,7 +46,7 @@ public class GrilleJeuForm {
 		this.portefeuilleDao = portefeuilleDao;
 		this.utilisateurDao = utilisateurDao;
 		this.req = req;
-		erreurs = new HashMap<>();
+		erreurs = new HashMap<String, String>();
 		periode = req.getParameter("periode");
 		session = this.req.getSession();
 		grille = (Grille) session.getAttribute("grille");
@@ -80,16 +80,19 @@ public class GrilleJeuForm {
 		DateTime dateValidation = ajd;
 		int prochainJourDeJeu = Integer.parseInt(jours[0]);		
 		int idJour = 0;
-		
-		for (int i = 0; i < jours.length; i++) {
-			if (Integer.parseInt(jours[i]) >= ajd.getDayOfWeek()) {
-				prochainJourDeJeu = Integer.parseInt(jours[i]);
-				idJour = i;
-				break;
+		String typePeriode = periode.substring(1);
+
+		if (typePeriode.equals("j")) {
+			for (int i = 1; i < jours.length; i++) {
+				if (Integer.parseInt(jours[i]) >= ajd.getDayOfWeek()) {
+					prochainJourDeJeu = Integer.parseInt(jours[i]);
+					idJour = i;
+					break;
+				}
 			}
 		}
+		
 		int nbPeriode = Integer.parseInt(periode.substring(0, 1));
-		String typePeriode = periode.substring(1);
 		DateTime maintenant = new DateTime();
 
 		if (maintenant.isAfter(dateValidation)) {
