@@ -1,6 +1,8 @@
 package com.loterie.servlets;
 
 import java.io.IOException;
+import java.util.Map;
+
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +17,7 @@ import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JeuDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
+import com.loterie.dao.LogDao;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
@@ -23,6 +26,7 @@ import com.loterie.forms.GrilleAlimentationForm;
 import com.loterie.forms.GrilleCreationForm;
 import com.loterie.forms.GrilleJeuForm;
 import com.loterie.forms.GrilleJointureForm;
+import com.loterie.tools.Logger;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_MEMBRE_PROFIL,
@@ -52,6 +56,8 @@ public class GrilleServlet extends HttpServlet {
 	private JourDao jourDao;
 	@EJB
 	private UtilisateurDao utilisateurDao;
+	@EJB
+	private LogDao logDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -172,7 +178,9 @@ public class GrilleServlet extends HttpServlet {
 			
 			// Si aucun problème n'est détecté, la grille est jouée
 			if (jgf.getErreurs().isEmpty())  {
-				jgf.jouer();
+				Map<String, Object> retour = jgf.jouer();
+				Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
+						Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, retour.get("grille"));
 				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + 
 						"?id=" + jgf.getGrilleId());
 				return;

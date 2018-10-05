@@ -66,7 +66,10 @@ public class GrilleJeuForm {
 		return erreurs;
 	}
 
-	public void jouer() {
+	public Map<String, Object> jouer() {
+		Map<String, Object> retour = new HashMap<String, Object>();
+		retour.put("grille", grille);
+		String retourPeriode = "";
 		Jeu jeu = grille.getJeu();
 		Banque banque = grille.getBanque();
 		int heureValidation = Integer.parseInt(jeu.getHeureValidation().split(":")[0]);
@@ -80,9 +83,12 @@ public class GrilleJeuForm {
 		DateTime dateValidation = ajd;
 		int prochainJourDeJeu = Integer.parseInt(jours[0]);		
 		int idJour = 0;
+		int nbPeriode = Integer.parseInt(periode.substring(0, 1));
 		String typePeriode = periode.substring(1);
 
 		if (typePeriode.equals("j")) {
+			retourPeriode = nbPeriode + " jour";
+			
 			for (int i = 1; i < jours.length; i++) {
 				if (Integer.parseInt(jours[i]) >= ajd.getDayOfWeek()) {
 					prochainJourDeJeu = Integer.parseInt(jours[i]);
@@ -90,9 +96,15 @@ public class GrilleJeuForm {
 					break;
 				}
 			}
+		} else {
+			retourPeriode = nbPeriode + " semaine";
+		}
+		if (nbPeriode > 1) {
+			retourPeriode += "s";
 		}
 		
-		int nbPeriode = Integer.parseInt(periode.substring(0, 1));
+		retour.put("periode", retourPeriode);
+		
 		DateTime maintenant = new DateTime();
 
 		if (maintenant.isAfter(dateValidation)) {
@@ -179,6 +191,7 @@ public class GrilleJeuForm {
 		}
 		Utilisateur joueur = utilisateurDao.trouverParPseudo(utilisateur.getPseudo());
 		session.setAttribute("utilisateur", joueur);
+		return retour;
 	}
 	
 	public Long getGrilleId() {

@@ -31,17 +31,26 @@ public class Log {
 	@ManyToOne(targetEntity = Utilisateur.class)
 	@JoinColumn(name = "fk_joueur_lie")
 	private Utilisateur utilisateurLie;
+	@JoinColumn(name = "fk_grille_liee")
+	private Grille grilleLiee;
 	private String message;
 	
 	public void LogInit(String message, String niveau, String type, Utilisateur declencheur, 
-			Utilisateur utilisateurLie) {
+			Object entiteLiee) {
 		this.message = message;
 		this.jour = Date.valueOf(Tools.getDate());
 		this.heure = Time.valueOf(Tools.getHeure());
 		this.niveau = niveau;
 		this.type = type;
 		this.declencheur = declencheur;
-		this.utilisateurLie = utilisateurLie;
+		
+		if (entiteLiee != null) {
+			if (Utilisateur.class.equals(entiteLiee.getClass())) {
+				this.utilisateurLie = (Utilisateur) entiteLiee;
+			} else if (Grille.class.equals(entiteLiee.getClass())) {
+				this.grilleLiee = (Grille) entiteLiee;
+			}
+		}
 	}
 	
 	public Long getId() {
@@ -106,6 +115,14 @@ public class Log {
 	
 	public void setUtilisateurLie(Utilisateur utilisateurLie) {
 		this.utilisateurLie = utilisateurLie;
+	}
+	
+	public Grille getGrilleLiee() {
+		return grilleLiee;
+	}
+	
+	public void setGrilleLiee(Grille grilleLiee) {
+		this.grilleLiee = grilleLiee;
 	}
 	
 	public String getMessage() {

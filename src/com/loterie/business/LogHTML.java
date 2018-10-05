@@ -1,6 +1,7 @@
 package com.loterie.business;
 
 import com.loterie.config.RolesConfig;
+import com.loterie.entities.Grille;
 import com.loterie.entities.Log;
 import com.loterie.entities.Utilisateur;
 
@@ -25,6 +26,12 @@ public class LogHTML {
 				j.setNomRole(RolesConfig.getRole(j.getNiveau()));
 				UtilisateurHTML jHTML = new UtilisateurHTML(j);
 				message = message.replaceAll("%j", jHTML.getURL());
+			}
+
+			if (message.contains("%g")) {
+				Grille g = log.getGrilleLiee();
+				GrilleHTML gHTML = new GrilleHTML(g);
+				message = message.replaceAll("%g", gHTML.getURL());
 			}
 		}
 	}

@@ -8,7 +8,13 @@ public class LiensConfig {
 	public static final String LIEN_UTILISATEUR_HREF 			= "<a href=\"" + Constants.CONTEXTE + 
 			Constants.URL_ADMIN_DETAILS_UTILISATEUR + "?id=:id\"" + 
 			" title=\"Voir les détails de l'utilisateur\">:pseudo</a>";
-	public static final String[] LIEN_UTILISATEUR_REP			= {":id", ":pseudo"}; 
+	public static final String[] LIEN_UTILISATEUR_REP			= {":id", ":pseudo"};
+
+	public static final String LIEN_GRILLE 						= "lienGrille";
+	public static final String LIEN_GRILLE_HREF 				= "<a href=\"" + Constants.CONTEXTE + 
+			Constants.URL_MEMBRE_AFFICHER_GRILLE + "?id=:id\"" + 
+			" title=\"Voir les détails de la grille\">:nom</a>";
+	public static final String[] LIEN_GRILLE_REP				= {":id", ":nom"};
 	
 	private Map<String, LienStruct> liensBruts = new HashMap<String, LienStruct>();
 	private static LiensConfig INSTANCE = new LiensConfig();
@@ -34,6 +40,8 @@ public class LiensConfig {
 	private LiensConfig() {
 		LienStruct struct = new LienStruct(LIEN_UTILISATEUR_HREF, LIEN_UTILISATEUR_REP);
 		liensBruts.put(LIEN_UTILISATEUR, struct);
+		struct = new LienStruct(LIEN_GRILLE_HREF, LIEN_GRILLE_REP);
+		liensBruts.put(LIEN_GRILLE, struct);
 	}
 	
 	private static LiensConfig getInstance() {

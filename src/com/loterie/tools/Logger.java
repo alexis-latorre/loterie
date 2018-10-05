@@ -55,11 +55,11 @@ public class Logger {
 	}
 	
 	public static void log(LogDao logDao, String message, String niveau, String type, Utilisateur declencheur, 
-			Utilisateur utilisateurLie) {
+			Object entiteLiee) {
 		Logger logger = Logger.getInstance();
 		logger.setLogDao(logDao);
 		Log l = new Log();
-		l.LogInit(message, niveau, type, declencheur, utilisateurLie);
+		l.LogInit(message, niveau, type, declencheur, entiteLiee);
 		logger.privateLog(l);
 	}
 	

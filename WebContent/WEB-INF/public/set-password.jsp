@@ -7,7 +7,7 @@
 	<title>Insert title here</title>
   	<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body>
+<body class="container">
 	<form method="post" action="<c:url value="/updatePassword" />">
 		<c:import url="/WEB-INF/forms/passwordForm.jsp"></c:import>
 		<br />

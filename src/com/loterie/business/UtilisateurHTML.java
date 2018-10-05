@@ -30,6 +30,9 @@ public class UtilisateurHTML {
 	}
 
 	public String getURL() {
+		if (u == null) {
+			return "&lt;utilisateur supprimé&gt;";
+		}
 		String[] params = {u.getId().toString(), u.getPseudo()};
 		return LiensConfig.getLienConfigFormatte(LiensConfig.LIEN_UTILISATEUR, params);		
 	}

@@ -7,7 +7,7 @@
 	<title>Loterie | Inscription</title>
   	<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
 </head>
-<body>
+<body class="container">
 	<form action="<c:url value="/inscription" />" method="post">
 		<c:import url="/WEB-INF/commun/header.jsp"></c:import>
 		<h3>Inscription</h3>
