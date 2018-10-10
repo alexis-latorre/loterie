@@ -52,6 +52,18 @@ public class Log {
 			}
 		}
 	}
+
+	public void LogInit(String message, String niveau, String type, Utilisateur declencheur,
+			Utilisateur utilisateurLie, Grille grilleLiee) {
+		this.message = message;
+		this.jour = Date.valueOf(Tools.getDate());
+		this.heure = Time.valueOf(Tools.getHeure());
+		this.niveau = niveau;
+		this.type = type;
+		this.declencheur = declencheur;
+		this.utilisateurLie = utilisateurLie;
+		this.grilleLiee = grilleLiee;
+	}
 	
 	public Long getId() {
 		return id;

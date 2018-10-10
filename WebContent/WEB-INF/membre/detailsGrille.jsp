@@ -12,6 +12,7 @@
 	<c:when test="${empty erreurs}">
 	<h3>Grille N° <c:out value="${grille.id}"></c:out>
 	<c:if test="${not empty jour.date}"> (jouée jusqu'au <fmt:formatDate pattern="dd/MM/yyyy" value="${jour.date}" />)</c:if>
+	<c:if test="${utilisateur.estAdministrateur() or utilisateur.id == grille.utilisateur.id}"><a title="Editer cette grille" href="<c:url value="/membre/editerGrille"><c:param name="id" value="${grille.id}" /></c:url>">éditer</a></c:if>
 	</h3>
 	<div>Numéros : <c:out value="${fn:join(grille.numeros, ', ')}"></c:out><br />
 	Étoiles : <c:out value="${fn:join(grille.etoiles, ', ')}"></c:out><br />

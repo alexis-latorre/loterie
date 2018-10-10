@@ -13,23 +13,40 @@
 	<c:choose>
 		<c:when test="${not empty grilles}">
 			<c:forEach items="${grilles}" var="grille">
+				<c:if test="${grille.visible or utilisateur.estAdministrateur()}">
 				<div>
 					<p>
-						<c:choose>
+						<!-- <c:choose>
 							<c:when test="${grille.rejoindre == false}">
-							<a title="Quitter cette grille" href="<c:url value="/membre/quitterGrille"><c:param name="id" value="${grille.id}" /></c:url>">quitter</a> 
+							<a title="Quitter cette grille" href="<c:url value="/membre/quitterGrille"><c:param name="id" value="${grille.id}" /></c:url>">quitter</a> |
 							</c:when>
 							<c:otherwise>
-							<a title="Rejoindre cette grille" href="<c:url value="/membre/rejoindreGrille"><c:param name="id" value="${grille.id}" /></c:url>">rejoindre</a>
+							<a title="Rejoindre cette grille" href="<c:url value="/membre/rejoindreGrille"><c:param name="id" value="${grille.id}" /></c:url>">rejoindre</a> |
 							</c:otherwise>
-						</c:choose>
-						<c:if test="${utilisateur.id == grille.utilisateur.id}">
-						| <a title="Editer cette grille" href="<c:url value="/membre/editerGrille"><c:param name="id" value="${grille.id}" /></c:url>">éditer</a> | 
-						<a title="Supprimer cette grille" href="<c:url value="/membre/supprimerGrille"><c:param name="id" value="${grille.id}" /></c:url>">suppr.</a>
+						</c:choose> -->
+						<c:if test="${utilisateur.estAdministrateur() or utilisateur.id == grille.utilisateur.id}">
+						<a title="Editer cette grille" href="<c:url value="/membre/editerGrille"><c:param name="id" value="${grille.id}" /></c:url>">éditer</a> |
+							<c:choose>
+								<c:when test="${grille.active}"> 
+								<a title="Désactiver cette grille" href="<c:url value="/membre/desactiverGrille"><c:param name="id" value="${grille.id}" /></c:url>">désactiver</a>
+								</c:when>
+								<c:otherwise>
+								<a title="Activer cette grille" href="<c:url value="/membre/activerGrille"><c:param name="id" value="${grille.id}" /></c:url>">activer</a>
+								</c:otherwise>
+							</c:choose>
 						</c:if>
+						<c:choose>
+							<c:when test="${grille.visible and utilisateur.id == grille.utilisateur.id}">
+							 | <a title="Supprimer cette grille" href="<c:url value="/membre/supprimerGrille"><c:param name="id" value="${grille.id}" /></c:url>">supprimer</a>
+							</c:when>
+							<c:when test="${not grille.visible and utilisateur.estAdministrateur()}">
+							 | <a title="Supprimer cette grille" href="<c:url value="/admin/retablirGrille"><c:param name="id" value="${grille.id}" /></c:url>">rétablir</a>
+							</c:when>
+						</c:choose>
 					</p>
 					<h4><a title="Accéder aux détails de cette grille" href="<c:url value="/membre/afficherGrille"><c:param name="id" value="${grille.id}" /></c:url>">${grille.nom}</a></h4>
 				</div>
+				</c:if>
 			</c:forEach>
 			<p><a href="<c:url value="/membre/creerGrille" />">Ajouter une grille</a></p>
 		</c:when>

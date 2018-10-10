@@ -186,7 +186,11 @@ public class GrilleJeuForm {
 			banqueDao.maj(banque);
 			
 			for (Jour jour : joursAjouer) {
-				jourDao.creer(jour);
+				try {
+					jourDao.creer(jour);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 		}
 		Utilisateur joueur = utilisateurDao.trouverParPseudo(utilisateur.getPseudo());

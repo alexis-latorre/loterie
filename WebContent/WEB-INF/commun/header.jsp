@@ -1,4 +1,3 @@
-<a href="<c:url value="/clearCache" />">clear</a>
 <h1>MyLoterie</h1>
 <ul class="nav nav-pills nav-justified">
 	<li class="nav-item">
@@ -13,15 +12,20 @@
 		    <ul class="dropdown-menu">
 				<li class="dropdown-item"><a href="<c:url value="/membre/profil" />">Mon profil</a></li>
 				<li class="dropdown-item"><a href="<c:url value="/membre/afficherGrilles" />">Afficher mes grilles</a></li>
-				<c:if test="${utilisateur.estAdministrateur()}">
+				<c:if test="${utilisateur.estAdministrateur() or utilisateur.estModerateur()}">
 				<li class="dropdown-item"><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a></li>
 				</c:if>
 				<!--li class="dropdown-item"><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a></li-->
 			</ul>
 		</li>
-		<c:if test="${utilisateur.niveau <= 0}">
+		<c:if test="${utilisateur.estAdministrateur() or utilisateur.estModerateur()}">
 		<li class="nav-item">
-			<a class="nav-link" href="<c:url value="/admin/accueil" />">Administration</a>
+		    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administration<span class="caret"></span></a>
+		    <ul class="dropdown-menu">
+				<li class="dropdown-item"><a href="<c:url value="/admin/crediterJoueur" />">Créditer un joueur</a></li>
+				<li class="dropdown-item"><a href="<c:url value="/admin/detailsUtilisateurs" />">Afficher les utilisateurs</a></li>
+				<li class="dropdown-item"><a href="<c:url value="/admin/logs" />">Consulter les logs</a></li>
+			</ul>
 		</li>
 		</c:if>
 	</c:if>

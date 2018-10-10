@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 
 import com.loterie.config.Constants;
 import com.loterie.dao.LogDao;
+import com.loterie.entities.Grille;
 import com.loterie.entities.Log;
 import com.loterie.entities.Utilisateur;
 
@@ -52,6 +53,15 @@ public class Logger {
 	
 	public static void log(LogDao logDao, String message) {
 		log(logDao, message, Constants.LOG_INFO, Constants.LOG_SERVEUR, null, null);
+	}
+	
+	public static void log(LogDao logDao, String message, String niveau, String type, Utilisateur declencheur, 
+			Utilisateur utilisateurLie, Grille grilleLiee) {
+		Logger logger = Logger.getInstance();
+		logger.setLogDao(logDao);
+		Log l = new Log();
+		l.LogInit(message, niveau, type, declencheur, utilisateurLie, grilleLiee);
+		logger.privateLog(l);
 	}
 	
 	public static void log(LogDao logDao, String message, String niveau, String type, Utilisateur declencheur, 

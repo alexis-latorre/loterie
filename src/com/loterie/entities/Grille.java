@@ -33,6 +33,8 @@ public class Grille {
 	@JoinColumn(name = "fk_banque_id")
 	private Banque banque;
 	private boolean publique;
+	private boolean visible;
+	private boolean active;
 	@Transient
 	private boolean rejoindre;
 	@Transient
@@ -132,6 +134,22 @@ public class Grille {
 
 	public void setPublique(boolean publique) {
 		this.publique = publique;
+	}
+
+	public boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public boolean getActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public boolean getRejoindre() {

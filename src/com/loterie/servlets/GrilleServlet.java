@@ -1,6 +1,7 @@
 package com.loterie.servlets;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -20,7 +21,9 @@ import com.loterie.dao.LienGUDao;
 import com.loterie.dao.LogDao;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.UtilisateurDao;
+import com.loterie.entities.Grille;
 import com.loterie.entities.Utilisateur;
+import com.loterie.forms.GrilleActivationForm;
 import com.loterie.forms.GrilleAffichageForm;
 import com.loterie.forms.GrilleAlimentationForm;
 import com.loterie.forms.GrilleCreationForm;
@@ -38,7 +41,9 @@ import com.loterie.tools.Logger;
 		Constants.URL_MEMBRE_REJOINDRE_GRILLE,
 		Constants.URL_MEMBRE_QUITTER_GRILLE,
 		Constants.URL_MEMBRE_BANQUE_AJOUT,
-		Constants.URL_MEMBRE_JOUER_GRILLE
+		Constants.URL_MEMBRE_JOUER_GRILLE,
+		Constants.URL_MEMBRE_DESACTIVER_GRILLE,
+		Constants.URL_MEMBRE_ACTIVER_GRILLE
 	})
 public class GrilleServlet extends HttpServlet {
 	private static final long serialVersionUID = 6L;
@@ -104,14 +109,29 @@ public class GrilleServlet extends HttpServlet {
 				} else if (uri.equals(Constants.URL_MEMBRE_REJOINDRE_GRILLE)) {
 					// Permet à l'utilisateur de rejoindre une grille
 					GrilleJointureForm gjf = new GrilleJointureForm(grilleDao, lienGUDao, req);
-					gjf.rejoindre();
+					//TODO: réactiver
+					//gjf.rejoindre();
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 					
 				} else if (uri.equals(Constants.URL_MEMBRE_QUITTER_GRILLE)) {
 					// Permet à l'utilisateur de quitter une grille
 					GrilleJointureForm gjf = new GrilleJointureForm(grilleDao, lienGUDao, req);
-					gjf.quitter();
+					//TODO: réactiver
+					//gjf.quitter();
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
+					return;
+					
+				} else if (uri.equals(Constants.URL_MEMBRE_ACTIVER_GRILLE) || 
+						uri.equals(Constants.URL_MEMBRE_DESACTIVER_GRILLE)) {
+					// Permet à l'utilisateur d'activer ou de désactiver une grille
+					GrilleActivationForm gaf = new GrilleActivationForm(grilleDao, utilisateur, req);
+					
+					if (uri.equals(Constants.URL_MEMBRE_ACTIVER_GRILLE)) {
+						gaf.activer();
+					} else if (uri.equals(Constants.URL_MEMBRE_DESACTIVER_GRILLE)) {
+						gaf.desactiver();
+					}
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 					return;
 					
@@ -141,7 +161,14 @@ public class GrilleServlet extends HttpServlet {
 
 			// Si aucune erreur n'est détectée, crée une nouvlle grille en BDD
 			if (gcf.getErreurs().isEmpty()) {
-				gcf.creer();
+				Map<String, Object> retour = gcf.creer();
+				Logger.log(logDao, "%u a créé la grille %g.", 
+						Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, retour.get("grille"));
+				
+				for (Utilisateur joueur : (List<Utilisateur>) retour.get("joueurs")) {
+					Logger.log(logDao, "%u a lié %j à la grille %g.", 
+							Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, joueur, (Grille)retour.get("grille"));
+				}
 				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 				return;
 			} else {

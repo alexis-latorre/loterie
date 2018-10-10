@@ -85,6 +85,7 @@ public class GrilleCreationForm {
 
 	private void validerForm() {		
 		String nom = this.req.getParameter("nom");
+		String myMillion = this.req.getParameter("myMillion");
 		List<String> numeros = new ArrayList<>();
 		List<String> etoiles = new ArrayList<>();
 		
@@ -117,7 +118,7 @@ public class GrilleCreationForm {
 			grille.setNumeros(numeros);
 			grille.setEtoiles(etoiles);
 			grille.setEtoilePlus(etoilePlus);
-			grille.setMyMillion(null);
+			grille.setMyMillion(myMillion);
 			grille.setJeu(jeu);
 			grille.setUtilisateur(utilisateur);
 			grille.setBanque(banque);
@@ -202,8 +203,11 @@ public class GrilleCreationForm {
 		return req;
 	}
 
-	public void creer() {
+	public Map<String, Object> creer() {
+		Map<String, Object> retour = new HashMap<String, Object>();
 		List<String> joueurs = new ArrayList<>();
+		List<Utilisateur> joueursRetour = new ArrayList<>();
+		retour.put("grille", grille);
 		
 		if (req.getParameterValues("joueurs[]") != null) {
 			joueurs = Arrays.asList(req.getParameterValues("joueurs[]"));
@@ -211,11 +215,15 @@ public class GrilleCreationForm {
 		
 		for (String joueurStr : joueurs) {
 			Utilisateur joueur = utilisateurDao.trouverParId(Long.valueOf(joueurStr));
+			joueursRetour.add(joueur);
 			LienGrilleUtilisateur lienGU = new LienGrilleUtilisateur(); 
 			lienGU.setUtilisateur(joueur);
 			lienGU.setGrille(grille);
 			lienGUDao.creer(lienGU);
-		}		
+		}
+		retour.put("joueurs", joueursRetour);
+		
+		return retour;
 	}
 
 	public void modifier() {
@@ -224,6 +232,8 @@ public class GrilleCreationForm {
 		List<String> numeros = Arrays.asList(req.getParameterValues("numeros[]"));
 		List<String> etoiles = Arrays.asList(req.getParameterValues("etoiles[]"));
 		String myMillion = req.getParameter("myMillion");
+		boolean etoilePlus = this.req.getParameter("etoilePlus") != null 
+				&& this.req.getParameter("etoilePlus").equals("on");
 		Grille grille = grilleDao.trouverParId(Long.valueOf(id));
 		
 		if (nom != null) {
@@ -243,7 +253,7 @@ public class GrilleCreationForm {
 			grille.setNom(nom);
 			grille.setNumeros(numeros);
 			grille.setEtoiles(etoiles);
-			grille.setEtoilePlus(false);
+			grille.setEtoilePlus(etoilePlus);
 			grille.setMyMillion(myMillion);
 			grilleDao.maj(grille);
 		}
@@ -252,6 +262,7 @@ public class GrilleCreationForm {
 	public void supprimer() {
 		String id = req.getParameter("id");
 		Grille grille = grilleDao.trouverParId(Long.valueOf(id));
-		grilleDao.supprimer(grille);
+		grille.setVisible(false);
+		grilleDao.maj(grille);
 	}
 }

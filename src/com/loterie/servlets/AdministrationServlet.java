@@ -17,6 +17,7 @@ import com.loterie.dao.LogDao;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
+import com.loterie.forms.GrilleActivationForm;
 import com.loterie.forms.LogRecuperationForm;
 import com.loterie.forms.UtilisateurCreditForm;
 import com.loterie.forms.UtilisateurRecuperationForm;
@@ -28,7 +29,8 @@ import com.loterie.tools.Logger;
 		Constants.URL_ADMIN_CREDITER,
 		Constants.URL_ADMIN_DETAILS_UTILISATEUR,
 		Constants.URL_ADMIN_DETAILS_UTILISATEURS,
-		Constants.URL_ADMIN_LOGS
+		Constants.URL_ADMIN_LOGS,
+		Constants.URL_ADMIN_RETABLIR_GRILLE
 		})
 public class AdministrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 5L;
@@ -91,6 +93,13 @@ public class AdministrationServlet extends HttpServlet {
 					req.setAttribute("logs", lrf.parseLogs());
 					cible = Constants.URN_ADMIN_LOGS;
 					break;
+				}
+				case Constants.URL_ADMIN_RETABLIR_GRILLE: {
+					GrilleActivationForm gaf = new GrilleActivationForm(grilleDao, utilisateur, req);
+					gaf.retablir();
+					
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
+					return;
 				}
 				default: cible = Constants.URN_ADMIN_ACCUEIL;
 			}

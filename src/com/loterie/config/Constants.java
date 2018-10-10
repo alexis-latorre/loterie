@@ -38,7 +38,7 @@ public interface Constants {
 	public static final int EUROMILLIONS_ETOILES_SELECTION_MIN 				= 2;
 	public static final int EUROMILLIONS_ETOILES_SELECTION_MAX 				= 12;
 	public static final int EUROMILLIONS_NUMEROS_NB_LIGNES 					= 5;
-	public static final int EUROMILLIONS_NUMEROS_NB_PAR_LIGNES 				= 13;
+	public static final int EUROMILLIONS_NUMEROS_NB_PAR_LIGNES 				= 10;
 	public static final int EUROMILLIONS_ETOILES_NB_LIGNES 					= 1;
 	public static final int EUROMILLIONS_ETOILES_NB_PAR_LIGNES 				= 12;
 
@@ -83,10 +83,14 @@ public interface Constants {
 	public static final String URL_MEMBRE_JOUER_GRILLE 						= "/membre/jouerGrille";
 	public static final String URL_MEMBRE_PORTEFEUILLE 						= "/membre/monPortefeuille";
 	public static final String URL_MEMBRE_PORTEFEUILLE_AJOUT				= "/membre/ajouterFonds";
+	public static final String URL_MEMBRE_ACTIVER_GRILLE 					= "/membre/activerGrille";
+	public static final String URL_MEMBRE_DESACTIVER_GRILLE 				= "/membre/desactiverGrille";
+	
 	public static final String URL_ADMIN_ACCUEIL 							= "/admin/accueil";
 	public static final String URL_ADMIN_CREDITER							= "/admin/crediterJoueur";
 	public static final String URL_ADMIN_DETAILS_UTILISATEUR 				= "/admin/detailsUtilisateur";
 	public static final String URL_ADMIN_DETAILS_UTILISATEURS 				= "/admin/detailsUtilisateurs";
+	public static final String URL_ADMIN_RETABLIR_GRILLE	 				= "/admin/retablirGrille";
 	public static final String URL_ADMIN_LOGS				 				= "/admin/logs";
 
 	/**
