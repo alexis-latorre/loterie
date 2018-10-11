@@ -5,6 +5,7 @@ import com.loterie.entities.Grille;
 
 public class GrilleHTML {
 	private Grille g;
+	private String url = "";
 	
 	public GrilleHTML(Grille grille) {
 		setG(grille);
@@ -18,11 +19,14 @@ public class GrilleHTML {
 		this.g = grille;
 	}
 
-	public String getURL() {
-		if (g == null) {
-			return "&lt;grille supprimée&gt;";
+	public String getUrl() {
+		if (url.isEmpty()) {
+			if (g == null) {
+				url = "&lt;grille supprimée&gt;";
+			}
+			String[] params = {g.getId().toString(), g.getNom()};
+			url =  LiensConfig.getLienConfigFormatte(LiensConfig.LIEN_GRILLE, params);
 		}
-		String[] params = {g.getId().toString(), g.getNom()};
-		return LiensConfig.getLienConfigFormatte(LiensConfig.LIEN_GRILLE, params);		
+		return url;
 	}
 }

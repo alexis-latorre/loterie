@@ -1,5 +1,7 @@
 package com.loterie.business;
 
+import java.util.List;
+
 import com.loterie.config.LiensConfig;
 import com.loterie.config.RolesConfig;
 import com.loterie.entities.Utilisateur;
@@ -7,6 +9,7 @@ import com.loterie.entities.Utilisateur;
 public class UtilisateurHTML {
 	private Utilisateur u;
 	private String classRole;
+	private List<GrilleHTML> grilles;
 	
 	public UtilisateurHTML(Utilisateur utilisateur) {
 		setU(utilisateur);
@@ -35,5 +38,13 @@ public class UtilisateurHTML {
 		}
 		String[] params = {u.getId().toString(), u.getPseudo()};
 		return LiensConfig.getLienConfigFormatte(LiensConfig.LIEN_UTILISATEUR, params);		
+	}
+
+	public List<GrilleHTML> getGrilles() {
+		return grilles;
+	}
+
+	public void setGrilles(List<GrilleHTML> grilles) {
+		this.grilles = grilles;
 	}
 }

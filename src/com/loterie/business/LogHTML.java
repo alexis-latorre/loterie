@@ -31,7 +31,7 @@ public class LogHTML {
 			if (message.contains("%g")) {
 				Grille g = log.getGrilleLiee();
 				GrilleHTML gHTML = new GrilleHTML(g);
-				message = message.replaceAll("%g", gHTML.getURL());
+				message = message.replaceAll("%g", gHTML.getUrl());
 			}
 		}
 	}

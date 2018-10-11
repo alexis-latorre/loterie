@@ -41,8 +41,8 @@
 				<td><c:out value="${joueur.u.pseudo}" /></td>
 				<td class="${classeFonds}"><c:out value="${joueur.u.portefeuille.fonds}" /></td>
 				<td>
-				<c:forEach items="${joueur.u.grilles}" var="grille">
-					<c:out value="${grille.nom}" /><br />
+				<c:forEach items="${joueur.grilles}" var="grille">
+					${grille.url}<br />
 				</c:forEach>
 				</td>
 				<td>

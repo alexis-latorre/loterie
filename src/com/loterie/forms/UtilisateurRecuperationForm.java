@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.loterie.business.GrilleHTML;
 import com.loterie.business.UtilisateurHTML;
 import com.loterie.config.RolesConfig;
 import com.loterie.dao.GrilleDao;
@@ -34,11 +35,19 @@ public class UtilisateurRecuperationForm {
 		for (Utilisateur utilisateur : utilisateurs) {
 			utilisateur.setNomRole(Tools.title(RolesConfig.getRole(utilisateur.getNiveau())));
 			List<Grille> grilles = grilleDao.trouverParUtilisateur(utilisateur);
+			UtilisateurHTML joueur = new UtilisateurHTML(utilisateur);
 
 			if (grilles != null) {
 				utilisateur.setGrilles(grilles);
+				
+				List<GrilleHTML> grillesHTML = new ArrayList<GrilleHTML>();
+				
+				for (Grille grille : grilles) {
+					grillesHTML.add(new GrilleHTML(grille));
+				}
+				joueur.setGrilles(grillesHTML);
 			}
-			joueurs.add(new UtilisateurHTML(utilisateur));
+			joueurs.add(joueur);
 		}
 		
 		try {
