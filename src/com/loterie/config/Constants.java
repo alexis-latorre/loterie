@@ -67,6 +67,7 @@ public interface Constants {
 	public static final String URL_PUBLIC_INSCRIPTION 						= "/inscription";
 	public static final String URL_PUBLIC_CONNEXION 						= "/connexion";
 	public static final String URL_PUBLIC_DECONNEXION 						= "/deconnexion";
+	public static final String URL_PUBLIC_RESULTATS 						= "/resultats";
 
 	public static final String URL_CREER_MDP 								= "/creerMotDePasse";
 	public static final String URL_MODIFIER_MDP 							= "/modifierMotDePasse";
@@ -100,6 +101,7 @@ public interface Constants {
 	public static final String URN_CREER_MDP 								= "/WEB-INF/public/set-password.jsp";
 	public static final String URN_INSCRIPTION 								= "/WEB-INF/public/subscriptionPage.jsp";
 	public static final String URN_INSCRIPTION_OK 							= "/WEB-INF/public/subscriptionPage.jsp";
+	public static final String URN_RESULTATS	 							= "/WEB-INF/public/consulterResultats.jsp";
 
 	public static final String URN_MEMBRE_403 								= "/WEB-INF/membre/403.jsp";
 	public static final String URN_MEMBRE_ACCUEIL 							= "/WEB-INF/membre/homePage.jsp";
@@ -140,5 +142,6 @@ public interface Constants {
 	public static final String SELECT_JOUR_DERNIER_JOUE_PAR_GRILLE			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l ON j.lgu = l JOIN Grille g WHERE l.grille = :grille ORDER BY j.dateJour DESC";
 	public static final String SELECT_JEU_PAR_NOM 							= "SELECT j FROM Jeu j WHERE j.nom = :nom";
 	public static final String SELECT_LOG		 							= "SELECT l FROM Log l ORDER BY l.utc DESC";
+	public static final String SELECT_DERNIER_RESULTAT 						= "SELECT r FROM Resultat r ORDER BY r.id DESC";
 
 }
