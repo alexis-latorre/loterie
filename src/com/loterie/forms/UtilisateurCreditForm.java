@@ -74,4 +74,8 @@ public class UtilisateurCreditForm {
 		retour.put("joueur", utilisateur);
 		return retour;
 	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
 }

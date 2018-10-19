@@ -21,7 +21,7 @@ import com.loterie.tools.DevTools;
 import com.loterie.forms.GrilleRecuperationDuMoisForm;
 
 @WebServlet(urlPatterns = {
-		"/clearCache",
+		//"/clearCache",
 		Constants.URL_PUBLIC_ACCUEIL,
 		Constants.URL_PUBLIC_CONNEXION
 		})
@@ -36,6 +36,7 @@ public class ConnexionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		utilisateurDao.clearCache();
 		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		
 		if (uri.equals("/clearCache")) {

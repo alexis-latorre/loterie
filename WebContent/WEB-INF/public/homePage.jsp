@@ -29,6 +29,7 @@
 			</form>
 			</c:when>
 			<c:otherwise>
+				<c:import url="/WEB-INF/membre/resumePortefeuille.jsp" />
 				<c:import url="/WEB-INF/commun/afficherMois.jsp" />
 			</c:otherwise>
 		</c:choose>

@@ -28,7 +28,7 @@ import com.loterie.forms.GrilleAffichageForm;
 import com.loterie.forms.GrilleAlimentationForm;
 import com.loterie.forms.GrilleCreationForm;
 import com.loterie.forms.GrilleJeuForm;
-import com.loterie.forms.GrilleJointureForm;
+//import com.loterie.forms.GrilleJointureForm;
 import com.loterie.tools.Logger;
 
 @WebServlet(urlPatterns = {
@@ -108,7 +108,7 @@ public class GrilleServlet extends HttpServlet {
 					
 				} else if (uri.equals(Constants.URL_MEMBRE_REJOINDRE_GRILLE)) {
 					// Permet à l'utilisateur de rejoindre une grille
-					GrilleJointureForm gjf = new GrilleJointureForm(grilleDao, lienGUDao, req);
+					//GrilleJointureForm gjf = new GrilleJointureForm(grilleDao, lienGUDao, req);
 					//TODO: réactiver
 					//gjf.rejoindre();
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
@@ -116,7 +116,7 @@ public class GrilleServlet extends HttpServlet {
 					
 				} else if (uri.equals(Constants.URL_MEMBRE_QUITTER_GRILLE)) {
 					// Permet à l'utilisateur de quitter une grille
-					GrilleJointureForm gjf = new GrilleJointureForm(grilleDao, lienGUDao, req);
+					//GrilleJointureForm gjf = new GrilleJointureForm(grilleDao, lienGUDao, req);
 					//TODO: réactiver
 					//gjf.quitter();
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);

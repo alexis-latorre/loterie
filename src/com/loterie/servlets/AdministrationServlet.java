@@ -132,6 +132,11 @@ public class AdministrationServlet extends HttpServlet {
 						}
 						UtilisateurCreditForm ucf = new UtilisateurCreditForm(utilisateurDao, portefeuilleDao, req);
 						Map<String, Object> retour = ucf.crediter();
+						Utilisateur joueurCredite = ucf.getUtilisateur();
+						
+						if (utilisateur.getId().equals(joueurCredite.getId())) {
+							session.setAttribute("utilisateur", joueurCredite);
+						}
 						
 						if (ucf.getErreurs().isEmpty()) {
 							Logger.log(logDao, "%u a " + retour.get("action") + " %j de " + retour.get("fonds") + " euros.", 
