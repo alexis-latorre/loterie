@@ -113,7 +113,7 @@ public class UtilisateurDao extends LoterieDao {
 	public List<Utilisateur> trouverParRoleMinimum(Long niveau) {
 		params.clear();
 		params.put("niveau", niveau);
-		return (List<Utilisateur>) super.resultats(Constants.SELECT_UTILISATEURS_PAR_NIVEAU_SUP, params, 
+		return (List<Utilisateur>) super.resultats(Constants.SELECT_UTILISATEURS_PAR_NIVEAU_SUP_ASC, params, 
 				"trouverParRoleMinimum");
 	}
 	

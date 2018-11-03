@@ -4,6 +4,7 @@
 <head>
   <title>Loterie | Détails des utilisateurs</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
+  <c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
 <body>
 	<div class="container">

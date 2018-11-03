@@ -6,17 +6,21 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Loterie | Inscription</title>
   	<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
+  	<c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
 <body class="container">
-	<form action="<c:url value="/inscription" />" method="post">
-		<c:import url="/WEB-INF/commun/header.jsp"></c:import>
-		<h3>Inscription</h3>
-		<c:import url="/WEB-INF/forms/accountForm.jsp"></c:import>
-		<br />
-		<c:import url="/WEB-INF/forms/passwordForm.jsp"></c:import>
-		<br />
-		<input type="submit" value="Valider mes informations" />
-	</form>
+	<c:import url="/WEB-INF/commun/header.jsp"></c:import>
+	<h4 style="text-align: center; margin: 40px;">Créez votre compte en remplissant le formulaire ci-dessous :</h4>
+	<div class="well" style="margin: auto; max-width: 500px;">
+		<form action="<c:url value="/inscription" />" method="post">
+			<c:import url="/WEB-INF/forms/accountForm.jsp"></c:import>
+			<br />
+			<c:import url="/WEB-INF/forms/passwordForm.jsp"></c:import>
+			<br />
+			<br />
+			<input class="btn btn-blue" type="submit" value="Valider mes informations" />
+		</form>
+	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

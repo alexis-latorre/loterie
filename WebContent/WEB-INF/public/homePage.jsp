@@ -5,30 +5,23 @@
   <title>Loterie | Accueil</title>
   <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
   <c:import url="/WEB-INF/css/calendrier.css.jsp" />
+  <c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
 <body>
 	<div class="container">
 		<c:import url="/WEB-INF/commun/header.jsp" />
-	
-		<p>
-		<c:choose>
-			<c:when test="${not loggedIn}">
-				Bienvenue
-			</c:when>
-			<c:otherwise>
-				Bonjour ${utilisateur.prenom}, bienvenue
-			</c:otherwise>
-		</c:choose>
-		sur le suivi de gains du cluster Quadient</p>
 		
 		<c:choose>
 			<c:when test="${not loggedIn}">
 			<h4>Accédez à votre espace membre en vous connectant ci-dessous :</h4>
-			<form method="post" action="<c:url value="/connexion" />">
-				<c:import url="/WEB-INF/forms/loginForm.jsp" />
-			</form>
+			<div class="well" style="margin: auto; max-width: 500px;">
+				<form method="post" action="<c:url value="/connexion" />">
+					<c:import url="/WEB-INF/forms/loginForm.jsp" />
+				</form>
+			</div>
 			</c:when>
 			<c:otherwise>
+				<h4 style="text-align: center;">Résumé de mon compte</h4>
 				<c:import url="/WEB-INF/membre/resumePortefeuille.jsp" />
 				<c:import url="/WEB-INF/commun/afficherMois.jsp" />
 			</c:otherwise>

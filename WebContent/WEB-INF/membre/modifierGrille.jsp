@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loterie | Éditer une grille</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
+  <c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
 <body>
 	<c:import url="/WEB-INF/commun/header.jsp" />

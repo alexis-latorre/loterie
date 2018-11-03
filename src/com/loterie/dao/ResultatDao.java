@@ -1,6 +1,7 @@
 package com.loterie.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateful;
@@ -25,10 +26,18 @@ public class ResultatDao extends LoterieDao {
 	
 	public Resultat trouverDernier() {
 		params.clear();
-		return (Resultat) super.resultats(Constants.SELECT_DERNIER_RESULTAT, params, "trouverDernier").get(0);
+		return (Resultat) super.resultats(Constants.SELECT_RESULTATS_DESC, params, "trouverDernier").get(0);
 	}
 	
 	public void clearCache() {
 		super.clearCache();
+	}
+
+	public List<Resultat> trouverHistorique() {
+		params.clear();
+		List<Resultat> resultats = (List<Resultat>) super.resultats(Constants.SELECT_RESULTATS_DESC, params, 
+				"trouverHistorique");
+		resultats.remove(0);
+		return resultats;
 	}
 }

@@ -37,6 +37,7 @@ public class InscriptionServlet extends HttpServlet {
 			cuf.creerUtilisateur();
 			req.getServletContext().getRequestDispatcher(Constants.URN_INSCRIPTION_OK).forward(req, resp);
 		} else {
+			req.setAttribute("erreurs", erreurs);
 			req.getServletContext().getRequestDispatcher(Constants.URN_INSCRIPTION).forward(req, resp);
 		}
 	}

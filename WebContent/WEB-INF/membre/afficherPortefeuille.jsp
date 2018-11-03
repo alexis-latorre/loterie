@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Loterie | Mon portefeuille</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
+  <c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
 <body>
 	<c:import url="/WEB-INF/commun/header.jsp" />

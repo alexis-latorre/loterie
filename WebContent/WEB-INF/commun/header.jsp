@@ -41,4 +41,5 @@
 		</li>
 		</c:otherwise>
 	</c:choose>
+	<hr class="header-hr" />
 </ul>

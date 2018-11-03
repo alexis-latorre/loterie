@@ -25,6 +25,7 @@ public interface Constants {
 	public static final String LOG_ADMINISTRATION							= "ADMINISTRATION";
 	public static final String LOG_GRILLE									= "GRILLE";
 	public static final String LOG_SERVEUR									= "SERVEUR";
+	public static final int NB_HISTO_PAR_PAGE								= 10;
 
 	/**
 	 * Constantes Euromillions
@@ -126,6 +127,7 @@ public interface Constants {
 	public static final String SELECT_UTILISATEUR_PAR_NOM_PRENOM 			= "SELECT u FROM Utilisateur u WHERE u.nom = :nom AND u.prenom = :prenom";
 	public static final String SELECT_UTILISATEUR_PAR_EMAIL 				= "SELECT u FROM Utilisateur u WHERE u.email = :email";
 	public static final String SELECT_UTILISATEURS_PAR_NIVEAU_SUP 			= "SELECT u FROM Utilisateur u WHERE u.niveau <= :niveau";
+	public static final String SELECT_UTILISATEURS_PAR_NIVEAU_SUP_ASC		= "SELECT u FROM Utilisateur u WHERE u.niveau <= :niveau ORDER BY u.niveau ASC";
 	public static final String SELECT_GRILLES_PAR_CREATEUR 					= "SELECT g FROM Grille g JOIN g.utilisateur u WHERE u = :utilisateur";
 	public static final String SELECT_GRILLES_PAR_UTILISATEUR 				= "SELECT l.grille FROM LienGrilleUtilisateur l WHERE l.utilisateur = :utilisateur";
 	public static final String SELECT_GRILLES_PAR_DATE_ET_UTILISATEUR 		= "SELECT l.grille FROM LienGrilleUtilisateur l, Jour j WHERE l.utilisateur = :utilisateur AND j.dateJour = :dateJour";
@@ -142,6 +144,6 @@ public interface Constants {
 	public static final String SELECT_JOUR_DERNIER_JOUE_PAR_GRILLE			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l ON j.lgu = l JOIN Grille g WHERE l.grille = :grille ORDER BY j.dateJour DESC";
 	public static final String SELECT_JEU_PAR_NOM 							= "SELECT j FROM Jeu j WHERE j.nom = :nom";
 	public static final String SELECT_LOG		 							= "SELECT l FROM Log l ORDER BY l.utc DESC";
-	public static final String SELECT_DERNIER_RESULTAT 						= "SELECT r FROM Resultat r ORDER BY r.id DESC";
+	public static final String SELECT_RESULTATS_DESC 						= "SELECT r FROM Resultat r ORDER BY r.id DESC";
 
 }

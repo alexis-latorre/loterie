@@ -72,7 +72,7 @@ public class ConnexionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String cible = Constants.URN_ACCUEIL;
 		HttpSession session = req.getSession();
-		UtilisateurConnexionForm ucf = new UtilisateurConnexionForm(utilisateurDao, req);
+		UtilisateurConnexionForm ucf = new UtilisateurConnexionForm(utilisateurDao, grilleDao, req);
 		Utilisateur utilisateur = ucf.getUtilisateur();
 		Map<String, String> erreurs = ucf.getErreurs();
 		boolean connexionOK = erreurs.isEmpty();

@@ -1,0 +1,144 @@
+.pointer {
+	cursor: pointer;
+}
+
+.main-text-blue {
+	color: #00368E;
+}
+
+.main-text-gold {
+	color: #FCB749;
+}
+
+.main-background-blue {
+	background-color: #00368E;
+}
+
+.main-background-gold {
+	background-color: #FCB749;
+}
+
+@font-face {
+	font-family: Ubuntu;
+	src: url('font/dm_1529324638_ubuntu-regular.woff') format('woff');
+}
+@font-face {
+	font-family: "Ubuntu Medium";
+	src: url('font/dm_1529324638_ubuntu-medium.woff') format('woff');
+}
+
+@font-face {
+	font-family: "Ubuntu Bold";
+	src: url('font/dm_1529324638_ubuntu-bold.woff') format('woff');
+}
+
+
+* {
+	font-family: Ubuntu;
+}
+
+body {
+	background-color: #00368E;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Ubuntu Medium";
+	color: #FCB749;
+}
+
+.nav-item {
+	padding: 10px;
+}
+
+.nav-link {
+	color: #FCB749;
+}
+
+.nav > li > a:hover, .nav > li > a:focus, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, li.open > a {
+	color: #FCD769;
+	background-color: #2056AE;
+}
+
+.header-hr {
+	border-color: #FCB749;
+	width: 90%;
+	margin: auto;
+	margin-top: 10px;
+}
+
+.well form label {
+	color: #00368E;
+}
+
+.well form input {
+	border: solid 1px #00368E;
+	border-radius: 4px;
+	padding: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 10px;
+}
+
+.btn-blue {
+	border: solid 1px #FCB749;
+	font-family: "Ubuntu";
+	color: #FCB749;
+	background-color: #00368E; 
+	border: solid 1px #FCB749;
+}
+
+.btn-blue:hover {
+	color: #FCD769;
+	background-color: #2056AE;
+}
+
+table {
+	background-color: white;
+}
+
+#table_gagnants * {
+	font-size: 12px;
+}
+
+.boule, .etoile {
+	font-family: "Ubuntu Bold";
+	display: inline-block;
+	padding-top: 10px;
+	height: 40px;
+	width: 40px;
+	text-align: center;
+	margin-right: 20px;
+	font-size: 18px;
+}
+
+.boule {
+	background: url('img/boule.png');
+}
+
+.etoile {
+	background: url('img/etoile.png');
+}
+
+h4 {
+	text-align: center;
+	margin: 40px;
+}
+
+.mymillion .code {
+	font-family: "Ubuntu Bold";
+	color: #2056AE;
+}
+
+.pagination {
+	display: block;
+	text-align: center;
+	width: 100%;
+}
+
+.pagination a {
+	color: #FCB749;
+}
+
+.pagination a:hover {
+	color: #FCD769;
+}

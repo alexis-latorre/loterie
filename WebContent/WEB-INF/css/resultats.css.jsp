@@ -1,0 +1,1 @@
+<link rel="stylesheet" href="/loterie/inc/resultats.css" />

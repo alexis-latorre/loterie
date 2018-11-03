@@ -19,4 +19,7 @@
       <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
     </jsp-property-group>
   </jsp-config>
+  <session-config> 
+    <tracking-mode>COOKIE</tracking-mode> 
+  </session-config> 
 </web-app>
