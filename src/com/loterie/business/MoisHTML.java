@@ -278,27 +278,29 @@ public class MoisHTML {
 			//JourHTML j = trouverJourParDate(jour.getDateJour());
 			String jourSemaine = String.valueOf(jour.getNumeroDansSemaine());
 			
-			for (Grille grille : grilles) {
-				Grille g = (Grille) grille.clone();
-				String[] joursTirage = grille.getJeu().getJourDeTirage();
-				
-				for (int i = 0; i < joursTirage.length; i++) {
-					if (grille.getJeu().getJourDeTirage()[i].equals(jourSemaine)) {
-						boolean paye = false;
-
-						if (jj != null) {
-							for (Jour j : jj) {
-								if (j.getDateJour().equals(jour.getDateJour()) && 
-										j.getLgu().getGrille().getId().equals(g.getId())) {
-									paye = j.getPaye();
-									break;
+			if (grilles != null) {
+				for (Grille grille : grilles) {
+					Grille g = (Grille) grille.clone();
+					String[] joursTirage = grille.getJeu().getJourDeTirage();
+					
+					for (int i = 0; i < joursTirage.length; i++) {
+						if (grille.getJeu().getJourDeTirage()[i].equals(jourSemaine)) {
+							boolean paye = false;
+	
+							if (jj != null) {
+								for (Jour j : jj) {
+									if (j.getDateJour().equals(jour.getDateJour()) && 
+											j.getLgu().getGrille().getId().equals(g.getId())) {
+										paye = j.getPaye();
+										break;
+									}
 								}
 							}
+							// La grille du jour est ajoutée à l'objet métier pour affichage
+							g.setPaye(paye);
+							jour.addGrille(g);
+							break;
 						}
-						// La grille du jour est ajoutée à l'objet métier pour affichage
-						g.setPaye(paye);
-						jour.addGrille(g);
-						break;
 					}
 				}
 			}
