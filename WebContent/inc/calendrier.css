@@ -48,3 +48,19 @@ div.calendrier-case-jour {
 	float: right;
 	color: red;
 }
+
+.calendrier .card {
+	font-size: 14px;
+}
+
+.calendrier .card .grille {
+	font-size: 12px;
+}
+
+.curseur-mois {
+	font-family: "Ubuntu Bold";
+	font-size: 16px;
+	color: #00368E;
+	text-align: center;
+	margin-bottom: 20px;
+}
