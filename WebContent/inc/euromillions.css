@@ -1,3 +1,7 @@
+.well {
+	background-color: white;
+}
+
 .pointer {
 	cursor: pointer;
 }
@@ -94,6 +98,15 @@ h1, h2, h3, h4, h5, h6 {
 
 table {
 	background-color: white;
+}
+
+table td {
+	margin: 0;
+}
+
+table th {
+	color: #FCD769;
+	background-color: #2056AE;
 }
 
 #table_gagnants * {

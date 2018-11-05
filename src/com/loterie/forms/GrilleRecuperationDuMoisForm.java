@@ -7,15 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.joda.time.DateTime;
 
 import com.loterie.business.MoisHTML;
+import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
 import com.loterie.entities.Jour;
 import com.loterie.entities.Utilisateur;
 
 public class GrilleRecuperationDuMoisForm {
 	private JourDao jourDao;
+	private GrilleDao grilleDao;
 	private MoisHTML mois;
 
-	public GrilleRecuperationDuMoisForm(JourDao jourDao, Utilisateur utilisateur, HttpServletRequest req) {
+	public GrilleRecuperationDuMoisForm(JourDao jourDao, GrilleDao grilleDao, Utilisateur utilisateur, HttpServletRequest req) {
 		DateTime moisSurveille = new DateTime();
 		
 		try {
@@ -27,14 +29,13 @@ public class GrilleRecuperationDuMoisForm {
 			}
 		} catch (NumberFormatException e) {
 		}
-		
+
 		this.jourDao = jourDao;
+		this.grilleDao = grilleDao;
 		mois = new MoisHTML(moisSurveille);
+		mois.setGrilles(this.grilleDao.trouverParUtilisateur(utilisateur));
 		List<Jour> jours = this.jourDao.trouverParIntervalleEtUtilisateur(mois.getPremiereDate(), mois.getDerniereDate(), utilisateur);
-		
-		if (jours != null) {
-			mois.combinerJours(jours);
-		}
+		mois.combinerJours(jours);
 	}
 	
 	public MoisHTML getMois() {

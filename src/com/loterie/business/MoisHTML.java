@@ -3,6 +3,7 @@ package com.loterie.business;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import org.joda.time.DateTime;
 
 import com.loterie.entities.Grille;
@@ -22,6 +23,7 @@ public class MoisHTML {
 	private DateTime moisSuivant;
 	private boolean anneeAjd;
 	private boolean moisAjd;
+	private List<Grille> grilles;
 	
 	/**
 	 * <b><i>MoisHTML</i></b><br />
@@ -243,6 +245,14 @@ public class MoisHTML {
 		return moisAjd;
 	}
 	
+	public List<Grille> getGrilles() {
+		return grilles;
+	}
+
+	public void setGrilles(List<Grille> grilles) {
+		this.grilles = grilles;
+	}
+
 	/**
 	 * <b><i>combinerJours</i></b><br />
 	 * <pre>public void combinerJours({@link java.util.List List}<{@link com.loterie.business.JourHTML JourHTML}> jours)</pre>
@@ -250,7 +260,7 @@ public class MoisHTML {
 	 * 
 	 * @param jours - entités récupérées de la BDD
 	 */
-	public void combinerJours(List<Jour> jours) {
+	/*public void combinerJours(List<Jour> jours) {
 		if (jours != null) {
 			for (Jour jour : jours) {
 				// Le jour venant de la BDD est lié à son objet métier par sa date
@@ -259,6 +269,38 @@ public class MoisHTML {
 				grille.setPaye(jour.getPaye());
 				// La grille du jour est ajoutée à l'objet métier pour affichage
 				jourHTML.addGrille(grille);
+			}
+		}
+	}*/
+	public void combinerJours(List<Jour> jj) {
+		for (JourHTML jour : jours) {
+			// Le jour venant de la BDD est lié à son objet métier par sa date
+			//JourHTML j = trouverJourParDate(jour.getDateJour());
+			String jourSemaine = String.valueOf(jour.getNumeroDansSemaine());
+			
+			for (Grille grille : grilles) {
+				Grille g = (Grille) grille.clone();
+				String[] joursTirage = grille.getJeu().getJourDeTirage();
+				
+				for (int i = 0; i < joursTirage.length; i++) {
+					if (grille.getJeu().getJourDeTirage()[i].equals(jourSemaine)) {
+						boolean paye = false;
+
+						if (jj != null) {
+							for (Jour j : jj) {
+								if (j.getDateJour().equals(jour.getDateJour()) && 
+										j.getLgu().getGrille().getId().equals(g.getId())) {
+									paye = j.getPaye();
+									break;
+								}
+							}
+						}
+						// La grille du jour est ajoutée à l'objet métier pour affichage
+						g.setPaye(paye);
+						jour.addGrille(g);
+						break;
+					}
+				}
 			}
 		}
 	}

@@ -13,7 +13,7 @@
 		
 		<c:choose>
 			<c:when test="${not loggedIn}">
-			<h4>Accédez à votre espace membre en vous connectant ci-dessous :</h4>
+			<h4>Accédez à votre espace membre en vous connectant ci-dessous</h4>
 			<div class="well" style="margin: auto; max-width: 500px;">
 				<form method="post" action="<c:url value="/connexion" />">
 					<c:import url="/WEB-INF/forms/loginForm.jsp" />

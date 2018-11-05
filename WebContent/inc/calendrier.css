@@ -16,6 +16,10 @@ table.calendrier tr {
 }
 
 td.calendrier-case {
+	background-color: #f5f5f5;
+}
+
+td.calendrier-case {
 	display: inline-block;
 	width: calc((100% - 30px) / 7);
 	height: 100px;

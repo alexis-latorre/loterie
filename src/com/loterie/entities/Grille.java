@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name = "grille")
-public class Grille {
+public class Grille implements Cloneable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -166,5 +166,21 @@ public class Grille {
 
 	public void setPaye(boolean paye) {
 		this.paye = paye;
+	}
+	
+	public Object clone() {
+		Object o = null;
+		
+		try {
+			// On récupère l'instance à renvoyer par l'appel de la 
+			// méthode super.clone()
+			o = super.clone();
+		} catch(CloneNotSupportedException cnse) {
+			// Ne devrait jamais arriver car nous implémentons 
+			// l'interface Cloneable
+			cnse.printStackTrace(System.err);
+		}
+		// on renvoie le clone
+		return o;
 	}
 }

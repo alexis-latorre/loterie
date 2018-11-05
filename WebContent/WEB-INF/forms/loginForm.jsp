@@ -4,16 +4,17 @@
 		</p>
 		<p>
 			<label for="input-motDePasse">Mot de passe</label><br />
-			<input type="password" name="motDePasse" id="input-motDePasse" value="" />
+			<input type="password" name="motDePasse" id="input-motDePasse" value="" /><br />
+			<!--a href="<c:url value="/oubli-mdp" />">mot de passe oublié ?</a-->
 		</p>
+		<p class="text-danger">
+		&nbsp;
 		<c:if test="${not empty erreursUtilisateur}">
 			<c:if test="${not empty erreursUtilisateur.mdpInvalide}">
-				<p>
-					${erreursUtilisateur.mdpInvalide}
-				</p>
+			<c:out value="${erreursUtilisateur.mdpInvalide}" />
 			</c:if>
 		</c:if>
-		<br />
+		</p>
 		<p>
-			<input class="btn btn-blue" type="submit" value="Se connecter" />
+			<input class="btn btn-blue" type="submit" value="Se connecter" /><a style="margin-left: 10px" href="<c:url value="/inscription" />">S'inscrire</a>
 		</p>

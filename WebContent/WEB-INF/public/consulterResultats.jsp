@@ -28,10 +28,10 @@
 			<table id="table_gagnants" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th id="header_role" class="main-text-blue">Rang</th> 
-						<th id="header_role" class="main-text-blue">Condition</th> 
-						<th id="header_role" class="main-text-blue" style="text-align: right">Gains</th> 
-						<th id="header_role" class="main-text-blue" style="text-align: right">Nombres de gagnants</th> 
+						<th id="header_role">Rang</th> 
+						<th id="header_role">Condition</th> 
+						<th id="header_role" style="text-align: right">Gains</th> 
+						<th id="header_role" style="text-align: right">Nombres de gagnants</th> 
 					</tr>
 				</thead>
 				<tbody>
