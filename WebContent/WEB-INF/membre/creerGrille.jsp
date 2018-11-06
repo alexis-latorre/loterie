@@ -10,13 +10,15 @@
 </head>
 <body class="container">
 	<c:import url="/WEB-INF/commun/header.jsp" />
-	<h3>Ajouter une nouvelle grille</h3>
-	<form id="form-nouvelleGrille" action="<c:url value="/membre/creerGrille" />" method="post">
-		<c:import url="/WEB-INF/forms/grilleForm.jsp" />
-		<c:import url="/WEB-INF/forms/choisirParmiMembresForm.jsp" />
-		<input type="button" onclick="validerJoueurs()" value="Créer la grille" />
-		<!--input type="submit" value="Créer la grille" /-->
-	</form>
+	<h4>Ajouter une nouvelle grille</h4>
+	<div class="well">
+		<form id="form-nouvelleGrille" action="<c:url value="/membre/creerGrille" />" method="post">
+			<c:import url="/WEB-INF/forms/grilleForm.jsp" />
+			<c:import url="/WEB-INF/forms/choisirParmiMembresForm.jsp" />
+			<input class="btn btn-blue" type="button" onclick="validerJoueurs()" value="Créer la grille" />
+			<!--input type="submit" value="Créer la grille" /-->
+		</form>
+	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 	<c:import url="/WEB-INF/js/calendrier.js.jsp" />
 </body>

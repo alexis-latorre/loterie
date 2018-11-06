@@ -4,18 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Loterie | Éditer une grille</title>
+<title>Loterie | Erreur 404</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
   <c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
 <body class="container">
-	<c:import url="/WEB-INF/commun/header.jsp" />
-	<h4>Éditer la grille</h4>
+	<h1>OUPS !</h1>
 	<div class="well">
-		<form action="<c:url value="/membre/editerGrille"><c:param name="id" value="${grille.id}"></c:param></c:url>" method="post">
-			<c:import url="/WEB-INF/forms/grilleForm.jsp" />
-			<input class="btn btn-blue" type="submit" value="Modifier la grille" />
-		</form>
+		<p>La page que vous essayez de visualiser n'est pas disponible.</p>
+		<a href="<c:url value="/accueil" />">Retourner à l'accueil</a>
 	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>

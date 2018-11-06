@@ -1,45 +1,52 @@
-<label>Nom de la grille : <input type="text" name="nom" id="input-nom" value="${requestScope.grille.nom}" /></label><br />
-<h4>Choisir les numéros</h4>
+<h3 class="main-text-blue"><label for="input-nom">Nom de la grille</label></h3>
+<input class="input" type="text" name="nom" id="input-nom" value="${requestScope.grille.nom}" />
+<h3 class="main-text-blue">Choisir les numéros</h3>
 <table class="table">
 <c:forEach items="${tableNumeros}" var="ligneNumeros">
 	<tr>		
 	<c:forEach items="${ligneNumeros}" var="numero">
 		<td>
-			<label>
-				<c:set var="checked" value=""></c:set>
-				<c:if test="${not empty requestScope.grille}">
-					<c:forEach items="${requestScope.grille.numeros}" var="numeroGrille">
-						<c:if test="${numero == numeroGrille}">
-							<c:set var="checked" value='checked="checked"'></c:set>
-						</c:if>
-					</c:forEach>
-				</c:if>
-				<input type="checkbox" name="numeros[]" id="input-numero${numero}" value="${numero}" <c:out value="${checked}" /> />
-				<c:out value="${numero}" />
-			</label>
+			<c:set var="checked" value=""></c:set>
+			<c:if test="${not empty requestScope.grille}">
+				<c:forEach items="${requestScope.grille.numeros}" var="numeroGrille">
+					<c:if test="${numero == numeroGrille}">
+						<c:set var="checked" value='checked="checked"'></c:set>
+					</c:if>
+				</c:forEach>
+			</c:if>
+			<div class="checkbox-boule-container">
+				<label>
+					<input type="checkbox" name="numeros[]" id="input-numero${numero}" value="${numero}" <c:out value="${checked}" /> />
+					<span class="checkmark-boule"></span>
+					<span class="numero"><c:out value="${numero}" /></span>
+				</label>
+			</div>
 		</td>
 	</c:forEach>
 	</tr>
 </c:forEach>
 </table>
-<h4>Choisir les étoiles</h4>
+<h3 class="main-text-blue">Choisir les étoiles</h3>
 <table class="table">
 <c:forEach items="${tableEtoiles}" var="ligneEtoiles">
 	<tr>		
 	<c:forEach items="${ligneEtoiles}" var="etoile">
 		<td>
-			<label>
-				<c:set var="checked" value=""></c:set>
-				<c:if test="${not empty requestScope.grille}">
-					<c:forEach items="${requestScope.grille.etoiles}" var="etoileGrille">
-						<c:if test="${etoile == etoileGrille}">
-							<c:set var="checked" value='checked="checked"'></c:set>
-						</c:if>
-					</c:forEach>
-				</c:if>
-				<input type="checkbox" name="etoiles[]" id="input-etoile${etoile}" value="${etoile}" <c:out value="${checked}" /> />
-				<c:out value="${etoile}" />
-			</label>
+			<c:set var="checked" value=""></c:set>
+			<c:if test="${not empty requestScope.grille}">
+				<c:forEach items="${requestScope.grille.etoiles}" var="etoileGrille">
+					<c:if test="${etoile == etoileGrille}">
+						<c:set var="checked" value='checked="checked"'></c:set>
+					</c:if>
+				</c:forEach>
+			</c:if>
+			<div class="checkbox-etoile-container">
+				<label>
+					<input type="checkbox" name="etoiles[]" id="input-etoile${etoile}" value="${etoile}" <c:out value="${checked}" /> />
+					<span class="checkmark-etoile"></span>
+					<span class="numero"><c:out value="${etoile}" /></span>
+				</label>
+			</div>
 		</td>
 	</c:forEach>
 	</tr>
@@ -50,5 +57,6 @@
 	<c:set var="etoilePlus" value='checked="checked"'></c:set>
 </c:if>
 <label>Étoile + <input type="checkbox" name="etoilePlus" id="input-etoilePlus" <c:out value="${etoilePlus}" /> /></label><br />
-<label>MyMillion : <input type="text" name="myMillion" id="input-mymillion" value="${requestScope.grille.myMillion}" /></label><br />
+<h3><label for="input-mymillion">Code MyMillion</label></h3>
+<input type="text" name="myMillion" id="input-mymillion" value="${requestScope.grille.myMillion}" /><br />
 <br />

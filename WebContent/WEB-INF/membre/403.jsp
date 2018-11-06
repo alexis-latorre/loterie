@@ -9,9 +9,11 @@
   <c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
 <body class="container">
-	<h1>OUPS !</h1>
-	<p>Vous essayez d'accéder à une page qui nécessite d'être connecté.</p>
-	<a href="<c:url value="/accueil" />">Retourner à l'accueil</a>
+	<h1>INTERDIT !</h1>
+	<div class="well">
+		<p>Vous essayez d'accéder à une page qui nécessite d'être connecté.</p>
+		<a href="<c:url value="/accueil" />">Retourner à l'accueil</a>
+	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

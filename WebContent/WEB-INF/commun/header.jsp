@@ -7,17 +7,17 @@
 		<a class="nav-link" href="<c:url value="/resultats" />">Résultats</a>
 	</li>
 	<c:if test="${loggedIn == true}">
-		<li class="nav-item">
+		<!--li class="nav-item">
 		    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Membre<span class="caret"></span></a>
 		    <ul class="dropdown-menu">
-				<li class="dropdown-item"><a href="<c:url value="/membre/profil" />">Mon profil</a></li>
+				<!--li class="dropdown-item"><a href="<c:url value="/membre/profil" />">Mon profil</a></li->
 				<li class="dropdown-item"><a href="<c:url value="/membre/afficherGrilles" />">Afficher mes grilles</a></li>
 				<c:if test="${utilisateur.estAdministrateur() or utilisateur.estModerateur()}">
 				<li class="dropdown-item"><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a></li>
 				</c:if>
-				<!--li class="dropdown-item"><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a></li-->
+				<!--li class="dropdown-item"><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a></li->
 			</ul>
-		</li>
+		</li-->
 		<c:if test="${utilisateur.estAdministrateur() or utilisateur.estModerateur()}">
 		<li class="nav-item">
 		    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Administration<span class="caret"></span></a>

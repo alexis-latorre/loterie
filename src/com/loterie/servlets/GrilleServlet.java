@@ -32,18 +32,18 @@ import com.loterie.forms.GrilleJeuForm;
 import com.loterie.tools.Logger;
 
 @WebServlet(urlPatterns = {
-		Constants.URL_MEMBRE_PROFIL,
+		//Constants.URL_MEMBRE_PROFIL,
 		Constants.URL_MEMBRE_AFFICHER_GRILLES,
-		Constants.URL_MEMBRE_CREER_GRILLE, 
+		//Constants.URL_MEMBRE_CREER_GRILLE, 
 		Constants.URL_MEMBRE_AFFICHER_GRILLE,
 		Constants.URL_MEMBRE_MODIFIER_GRILLE, 
-		Constants.URL_MEMBRE_SUPPRIMER_GRILLE,
-		Constants.URL_MEMBRE_REJOINDRE_GRILLE,
-		Constants.URL_MEMBRE_QUITTER_GRILLE,
-		Constants.URL_MEMBRE_BANQUE_AJOUT,
+		//Constants.URL_MEMBRE_SUPPRIMER_GRILLE,
+		//Constants.URL_MEMBRE_REJOINDRE_GRILLE,
+		//Constants.URL_MEMBRE_QUITTER_GRILLE,
+		//Constants.URL_MEMBRE_BANQUE_AJOUT,
 		Constants.URL_MEMBRE_JOUER_GRILLE,
-		Constants.URL_MEMBRE_DESACTIVER_GRILLE,
-		Constants.URL_MEMBRE_ACTIVER_GRILLE
+		//Constants.URL_MEMBRE_DESACTIVER_GRILLE,
+		//Constants.URL_MEMBRE_ACTIVER_GRILLE
 	})
 public class GrilleServlet extends HttpServlet {
 	private static final long serialVersionUID = 6L;
