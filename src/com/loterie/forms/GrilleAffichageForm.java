@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.loterie.config.Messages;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
+import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jour;
 import com.loterie.entities.Utilisateur;
@@ -32,7 +33,7 @@ public class GrilleAffichageForm {
 		this.req = req;
 	}
 
-	public GrilleAffichageForm(GrilleDao grilleDao, JourDao jourDao, HttpServletRequest req) {
+	public GrilleAffichageForm(GrilleDao grilleDao, JourDao jourDao, UtilisateurDao utilisateurDao, HttpServletRequest req) {
 		session = req.getSession();
 		this.grilleDao = grilleDao;
 		this.req = req;
@@ -40,6 +41,7 @@ public class GrilleAffichageForm {
 		grille = this.grilleDao.trouverParId(id);
 		validerGrille(grille);
 		jour = jourDao.trouverDernierJourJoue(grille);
+		grille.setJoueurs(utilisateurDao.trouverParGrille(grille));
 		utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 	}
 

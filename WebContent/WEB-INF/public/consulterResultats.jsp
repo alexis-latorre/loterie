@@ -21,7 +21,8 @@
 			<span class="boule"><c:out value="${r.dernier.b5}" /></span>
 			<span class="etoile"><c:out value="${r.dernier.e1}" /></span>
 			<span class="etoile"><c:out value="${r.dernier.e2}" /></span></p>
-			<p class="mymillion">Code MyMillion : <span class="code"><c:out value="${r.dernier.myMillion}"></c:out></span></p>
+			<p class="mymillion">Code<c:if test="${fn:length(r.dernier.myMillion) > 9}">s</c:if>
+			 MyMillion : <span class="code"><c:out value="${r.dernier.myMillion}"></c:out></span></p>
 		</div>
 		<h4>Répartition des gains</h4>
 		<div class="well">
@@ -85,7 +86,8 @@
 				<span class="boule"><c:out value="${resultat.b5}" /></span>
 				<span class="etoile"><c:out value="${resultat.e1}" /></span>
 				<span class="etoile"><c:out value="${resultat.e2}" /></span></p>
-				<p class="mymillion">Code MyMillion : <span class="code"><c:out value="${resultat.myMillion}"></c:out></span></p>
+				<p class="mymillion">Code<c:if test="${fn:length(resultat.myMillion) > 9}">s</c:if>
+			 MyMillion : <span class="code"><c:out value="${resultat.myMillion}"></c:out></span></p>
 			</div>
 		</div>
 		</c:if>
@@ -99,6 +101,7 @@
 			<a href="<c:url value="/resultats"><c:param name="p" value="${idSuivant}" /></c:url>#historique" class="main-text-gold"><span class="glyphicon glyphicon-triangle-right"></span></a>
 			<a href="<c:url value="/resultats"><c:param name="p" value="${r.nbPages}" /></c:url>#historique" class="main-text-gold"><span class="glyphicon glyphicon-step-forward"></span></a>
 		</p>
+	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 	<c:import url="/WEB-INF/js/resultats.js.jsp" />
 </body>

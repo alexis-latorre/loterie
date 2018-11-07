@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateful;
+
+import com.loterie.entities.Grille;
 import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;
 
@@ -115,6 +117,13 @@ public class UtilisateurDao extends LoterieDao {
 		params.put("niveau", niveau);
 		return (List<Utilisateur>) super.resultats(Constants.SELECT_UTILISATEURS_PAR_NIVEAU_SUP_ASC, params, 
 				"trouverParRoleMinimum");
+	}
+
+	public List<Utilisateur> trouverParGrille(Grille grille) {
+		params.clear();
+		params.put("grille", grille);
+		return (List<Utilisateur>) super.resultats(Constants.SELECT_UTILISATEURS_PAR_GRILLE, params, 
+				"trouverParGrille");
 	}
 	
 	/**

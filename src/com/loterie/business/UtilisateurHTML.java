@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.loterie.config.LiensConfig;
 import com.loterie.config.RolesConfig;
+import com.loterie.entities.Retard;
 import com.loterie.entities.Utilisateur;
 
 public class UtilisateurHTML {
 	private Utilisateur u;
 	private String classRole;
 	private List<GrilleHTML> grilles;
+	private Retard retard;
 	
 	public UtilisateurHTML(Utilisateur utilisateur) {
 		setU(utilisateur);
@@ -46,5 +48,13 @@ public class UtilisateurHTML {
 
 	public void setGrilles(List<GrilleHTML> grilles) {
 		this.grilles = grilles;
+	}
+
+	public Retard getRetard() {
+		return retard;
+	}
+
+	public void setRetard(Retard retard) {
+		this.retard = retard;
 	}
 }

@@ -41,7 +41,11 @@
 					<td><span class="label label-${joueur.classRole}"><c:out value="${joueur.u.niveau}: ${joueur.u.nomRole}" /></span></td>
 					<td><c:out value="${joueur.u.nom} ${joueur.u.prenom}" /></td>
 					<td><c:out value="${joueur.u.pseudo}" /></td>
-					<td class="${classeFonds}"><c:out value="${joueur.u.portefeuille.fonds}" /></td>
+					<td class="${classeFonds}"><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${joueur.u.portefeuille.fonds}" type="currency"></fmt:formatNumber>
+						<c:if test="${joueur.retard != null}">
+						<a href="#"><span class="text-danger glyphicon glyphicon-bullhorn"></span></a>
+						</c:if>
+					</td>
 					<td>
 					<c:forEach items="${joueur.grilles}" var="grille">
 						${grille.url}<br />

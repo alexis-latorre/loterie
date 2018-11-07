@@ -10,20 +10,24 @@ import com.loterie.business.GrilleHTML;
 import com.loterie.business.UtilisateurHTML;
 import com.loterie.config.RolesConfig;
 import com.loterie.dao.GrilleDao;
+import com.loterie.dao.RetardDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Grille;
+import com.loterie.entities.Retard;
 import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;
 
 public class UtilisateurRecuperationForm {
 	private UtilisateurDao utilisateurDao;
 	private GrilleDao grilleDao;
+	private RetardDao retardDao;
 	private Map<String, String> erreurs = new HashMap<String, String>();
 	private HttpServletRequest req;
 	
-	public UtilisateurRecuperationForm(UtilisateurDao utilisateurDao, GrilleDao grilleDao, HttpServletRequest req) {
+	public UtilisateurRecuperationForm(UtilisateurDao utilisateurDao, GrilleDao grilleDao, RetardDao retardDao, HttpServletRequest req) {
 		this.utilisateurDao = utilisateurDao;
 		this.grilleDao = grilleDao;
+		this.retardDao = retardDao;
 		this.req = req;
 		majErreurs();
 	}
@@ -47,6 +51,12 @@ public class UtilisateurRecuperationForm {
 				}
 				joueur.setGrilles(grillesHTML);
 			}
+			Retard retard = retardDao.trouverParUtilisateur(utilisateur);
+			
+			if (retard != null) {
+				joueur.setRetard(retard);
+			}
+			
 			joueurs.add(joueur);
 		}
 		

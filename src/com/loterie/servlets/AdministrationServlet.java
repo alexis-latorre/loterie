@@ -15,6 +15,7 @@ import com.loterie.config.Constants;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.LogDao;
 import com.loterie.dao.PortefeuilleDao;
+import com.loterie.dao.RetardDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.GrilleActivationForm;
@@ -40,6 +41,8 @@ public class AdministrationServlet extends HttpServlet {
 	@EJB
 	private GrilleDao grilleDao;
 	@EJB
+	private RetardDao retardDao;
+	@EJB
 	private PortefeuilleDao portefeuilleDao;
 	@EJB
 	private LogDao logDao;
@@ -58,7 +61,7 @@ public class AdministrationServlet extends HttpServlet {
 				case Constants.URL_ADMIN_CREDITER: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
-					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, req);
+					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, retardDao, req);
 					String id = req.getParameter("id");
 					
 					if (id != null && !id.isEmpty()) {
@@ -73,7 +76,7 @@ public class AdministrationServlet extends HttpServlet {
 				case Constants.URL_ADMIN_DETAILS_UTILISATEURS: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
-					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, req);
+					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, retardDao, req);
 					urf.recupererRang(Constants.L_UTILISATEUR_ROLE_BASIQUE);
 					cible = Constants.URN_ADMIN_DETAILS_UTILISATEURS;
 					break;
@@ -81,7 +84,7 @@ public class AdministrationServlet extends HttpServlet {
 				case Constants.URL_ADMIN_DETAILS_UTILISATEUR: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
-					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, req);
+					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, retardDao, req);
 					urf.recupererId();
 					cible = Constants.URN_ADMIN_DETAILS_UTILISATEUR;
 					break;

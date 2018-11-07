@@ -76,7 +76,7 @@ public class GrilleServlet extends HttpServlet {
 			if (utilisateur.estMembre()) {
 				if (uri.equals(Constants.URL_MEMBRE_AFFICHER_GRILLE)) {
 					// Affiche le détail d'une grille
-					GrilleAffichageForm gaf = new GrilleAffichageForm(grilleDao, jourDao, req);
+					GrilleAffichageForm gaf = new GrilleAffichageForm(grilleDao, jourDao, utilisateurDao, req);
 					req = gaf.afficherGrille();
 					cible = Constants.URN_MEMBRE_AFFICHER_GRILLE;
 					
