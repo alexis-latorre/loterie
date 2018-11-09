@@ -7,6 +7,7 @@ import javax.ejb.Stateful;
 import com.loterie.config.Constants;
 import com.loterie.entities.Grille;
 import com.loterie.entities.LienGrilleUtilisateur;
+import com.loterie.entities.Utilisateur;
 
 @Stateful
 public class LienGUDao extends LoterieDao {
@@ -63,5 +64,13 @@ public class LienGUDao extends LoterieDao {
 		params.put("grille", grille);
 		return (List<LienGrilleUtilisateur>) super.resultats(Constants.SELECT_LIEN_GU_PAR_GRILLE, params,
 				"trouverParGrille");
+	}
+
+	public LienGrilleUtilisateur trouverParGrilleEtUtilisateur(Grille grille, Utilisateur utilisateur) {
+		params.clear();
+		params.put("grille", grille);
+		params.put("utilisateur", utilisateur);
+		return (LienGrilleUtilisateur) super.resultat(Constants.SELECT_LIEN_GU_PAR_GRILLE_ET_UTILISATEUR, params,
+				"trouverParGrilleEtUtilisateur");
 	}
 }

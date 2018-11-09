@@ -319,6 +319,13 @@ public class Tools {
 			resultats = query.getResultList();
 			
 			if (!(resultats.size() > 0)) {
+				/*System.out.println(query.toString());
+				Object[] keys = params.keySet().toArray();
+				
+				for (Object k : keys) {
+					String key = (String) k;
+					System.out.println(key + " -> " + params.get(key));
+				}*/
 				throw new NoResultException();
 			}
 			

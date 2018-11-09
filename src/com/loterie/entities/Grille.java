@@ -41,6 +41,10 @@ public class Grille implements Cloneable {
 	private boolean paye;
 	@Transient
 	private List<Utilisateur> joueurs;
+	@Transient
+	private Resultat resultat;
+	@Transient
+	private double gains;
 	
 	public Long getId() {
 		return id;
@@ -178,6 +182,22 @@ public class Grille implements Cloneable {
 		this.joueurs = joueurs;
 	}
 	
+	public Resultat getResultat() {
+		return resultat;
+	}
+
+	public void setResultat(Resultat resultat) {
+		this.resultat = resultat;
+	}
+
+	public double getGains() {
+		return gains;
+	}
+
+	public void setGains(double gains) {
+		this.gains = gains;
+	}
+
 	public Object clone() {
 		Object o = null;
 		

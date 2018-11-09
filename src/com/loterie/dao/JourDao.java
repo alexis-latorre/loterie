@@ -113,4 +113,11 @@ public class JourDao extends LoterieDao {
 	public void clearCache() {
 		super.clearCache();
 	}
+
+	public Jour trouverParDateEtLGU(String dateJour, LienGrilleUtilisateur lgu) {
+		params.clear();
+		params.put("dateJour", dateJour);
+		params.put("lgu", lgu);
+		return (Jour) super.resultat(Constants.SELECT_JOUR_PAR_DATE_ET_LGU, params, "trouverParDateEtLGU");
+	}
 }

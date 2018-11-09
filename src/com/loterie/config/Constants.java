@@ -42,6 +42,19 @@ public interface Constants {
 	public static final int EUROMILLIONS_NUMEROS_NB_PAR_LIGNES 				= 10;
 	public static final int EUROMILLIONS_ETOILES_NB_LIGNES 					= 1;
 	public static final int EUROMILLIONS_ETOILES_NB_PAR_LIGNES 				= 12;
+	public static final String EUROMILLIONS_CONDITION_RANG1					= "5:2";
+	public static final String EUROMILLIONS_CONDITION_RANG2					= "5:1";
+	public static final String EUROMILLIONS_CONDITION_RANG3					= "5:0";
+	public static final String EUROMILLIONS_CONDITION_RANG4					= "4:2";
+	public static final String EUROMILLIONS_CONDITION_RANG5					= "4:1";
+	public static final String EUROMILLIONS_CONDITION_RANG6					= "3:2";
+	public static final String EUROMILLIONS_CONDITION_RANG7					= "4:0";
+	public static final String EUROMILLIONS_CONDITION_RANG8					= "2:2";
+	public static final String EUROMILLIONS_CONDITION_RANG9					= "3:1";
+	public static final String EUROMILLIONS_CONDITION_RANG10				= "3:0";
+	public static final String EUROMILLIONS_CONDITION_RANG11				= "1:2";
+	public static final String EUROMILLIONS_CONDITION_RANG12				= "2:1";
+	public static final String EUROMILLIONS_CONDITION_RANG13				= "2:0";
 
 	/**
 	 * Constantes liées aux entités

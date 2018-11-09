@@ -23,6 +23,27 @@
 			<span class="etoile"><c:out value="${r.dernier.e2}" /></span></p>
 			<p class="mymillion">Code<c:if test="${fn:length(r.dernier.myMillion) > 9}">s</c:if>
 			 MyMillion : <span class="code"><c:out value="${r.dernier.myMillion}"></c:out></span></p>
+			<c:if test="${sessionScope.loggedIn}">
+			<c:if test="${not empty utilisateur.grilles}">
+			<h3>Mes gains</h3>
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Nom de la grille</th>
+						<th>Gains</th>
+					</tr>
+				</thead>
+				<tbody>
+				<c:forEach items="${utilisateur.grilles}" var="grille">
+					<tr>
+						<td><c:out value="${grille.nom}"></c:out></td>
+						<td><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${grille.gains}" type="currency"></fmt:formatNumber></td>
+					</tr>
+				</c:forEach>
+				</tbody>
+			</table>
+			</c:if>
+			</c:if>
 		</div>
 		<h4>Répartition des gains</h4>
 		<div class="well">
