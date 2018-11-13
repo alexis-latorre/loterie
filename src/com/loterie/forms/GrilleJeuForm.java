@@ -36,6 +36,7 @@ public class GrilleJeuForm {
 	private List<LienGrilleUtilisateur> lgus;
 	private Grille grille;
 	private Utilisateur utilisateur;
+	private Utilisateur joueur;
 	private HttpSession session;
 	
 	public GrilleJeuForm(LienGUDao lguDao, JourDao jourDao, BanqueDao banqueDao, PortefeuilleDao portefeuilleDao, 
@@ -51,6 +52,13 @@ public class GrilleJeuForm {
 		session = this.req.getSession();
 		grille = (Grille) session.getAttribute("grille");
 		utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		setJoueur(null);
+		
+		try {
+			setJoueur((Utilisateur) this.utilisateurDao.trouverParId(Long.valueOf(req.getParameter("joueur"))));
+		} catch (Exception e) {
+		}
+		
 		lgus = this.lguDao.trouverParGrille(grille);
 		
 		if (periode.length() != 2) {
@@ -102,7 +110,8 @@ public class GrilleJeuForm {
 		if (nbPeriode > 1) {
 			retourPeriode += "s";
 		}
-		
+
+		retour.put("joueur", joueur);
 		retour.put("periode", retourPeriode);
 		
 		DateTime maintenant = new DateTime();
@@ -175,7 +184,7 @@ public class GrilleJeuForm {
 				PortefeuilleCreationForm cpf = new PortefeuilleCreationForm(portefeuilleDao, utilisateurDao, joueur); 
 				portefeuille = cpf.getPortefeuille();
 			}
-			portefeuille.retirerFonds(prixParJoueur);
+			portefeuille.retirerFonds(prixParJoueur);			
 			portefeuilleDao.maj(portefeuille);
 			banque.ajouterFonds(prixParJoueur);
 			banqueDao.maj(banque);
@@ -193,12 +202,20 @@ public class GrilleJeuForm {
 				}
 			}
 		}
-		Utilisateur joueur = utilisateurDao.trouverParPseudo(utilisateur.getPseudo());
+		Utilisateur joueur = utilisateurDao.trouverParId(utilisateur.getId());
 		session.setAttribute("utilisateur", joueur);
 		return retour;
 	}
 	
 	public Long getGrilleId() {
 		return grille.getId();
+	}
+
+	public Utilisateur getJoueur() {
+		return joueur;
+	}
+
+	public void setJoueur(Utilisateur joueur) {
+		this.joueur = joueur;
 	}
 }

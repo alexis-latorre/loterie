@@ -157,7 +157,8 @@ public class GrilleServlet extends HttpServlet {
 		
 		if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
 			// Transmet les données nécessaires à la création d'une grille
-			GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, jeuDao, banqueDao, lienGUDao, utilisateurDao, req);
+			GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, jeuDao, banqueDao, lienGUDao, utilisateurDao, 
+					req);
 
 			// Si aucune erreur n'est détectée, crée une nouvlle grille en BDD
 			if (gcf.getErreurs().isEmpty()) {
@@ -167,7 +168,8 @@ public class GrilleServlet extends HttpServlet {
 				
 				for (Utilisateur joueur : (List<Utilisateur>) retour.get("joueurs")) {
 					Logger.log(logDao, "%u a lié %j à la grille %g.", 
-							Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, joueur, (Grille)retour.get("grille"));
+							Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, joueur, 
+							(Grille)retour.get("grille"));
 				}
 				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 				return;
@@ -206,8 +208,15 @@ public class GrilleServlet extends HttpServlet {
 			// Si aucun problème n'est détecté, la grille est jouée
 			if (jgf.getErreurs().isEmpty())  {
 				Map<String, Object> retour = jgf.jouer();
-				Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
-						Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, retour.get("grille"));
+				
+				if (jgf.getJoueur() != null) {
+					Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
+							Constants.LOG_INFO, Constants.LOG_GRILLE, (Utilisateur) retour.get("joueur"), 
+							retour.get("grille"));
+				} else {
+					Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
+							Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, retour.get("grille"));
+				}
 				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + 
 						"?id=" + jgf.getGrilleId());
 				return;

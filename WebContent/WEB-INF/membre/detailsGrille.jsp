@@ -32,51 +32,47 @@
 			</c:if> 
 		</div>
 		<div class="col-md-6">
-			<div class="col-md-12">
-				<span class="titre-grille main-text-gold">Joueurs liés à la grille</span>
-			</div>
-			<div class="col-md-12">
-				<div class="col-md-1"></div>
-				<div class="col-md-6">
-					<c:forEach items="${grille.joueurs}" var="joueur">
-						<br />
+			<span class="titre-grille main-text-gold">Joueurs liés à la grille</span>
+				<table class="table">
+					<tbody>
+						<c:forEach items="${grille.joueurs}" var="joueur">
 						<c:choose>
-							<c:when test="${utilisateur.estAdministrateur()}">
-							<a href="<c:url value="/admin/detailsUtilisateur"><c:param name="id" value="${joueur.id}" /></c:url>">
-							<c:out value="${joueur.prenom} ${joueur.nom}" />
-							</a>
+							<c:when test="${joueur.portefeuille != null}">
+								<c:choose>
+								<c:when test="${joueur.portefeuille.fonds >= 0}">
+								<c:set var="classeSolde" value="text-success" />
+								</c:when>
+								<c:otherwise>
+								<c:set var="classeSolde" value="danger text-danger" />
+								</c:otherwise>
+								</c:choose>
+								<c:set var="solde" value="${joueur.portefeuille.fonds}" />
 							</c:when>
 							<c:otherwise>
-							<c:out value="${joueur.prenom} ${joueur.nom}" />
+								<c:set var="solde" value="0" />
 							</c:otherwise>
 						</c:choose>
-					</c:forEach>
-				</div>
-				<div class="col-md-3" style="text-align: right;">
-					<c:forEach items="${grille.joueurs}" var="joueur">
-						<c:choose>
-						<c:when test="${joueur.portefeuille != null}">
+						<tr>
+							<td class="${classeSolde}">
 							<c:choose>
-							<c:when test="${joueur.portefeuille.fonds >= 0}">
-							<c:set var="classeSolde" value="text-success" />
-							</c:when>
-							<c:otherwise>
-							<c:set var="classeSolde" value="text-danger" />
-							</c:otherwise>
+								<c:when test="${utilisateur.estAdministrateur()}">
+								<a href="<c:url value="/admin/detailsUtilisateur"><c:param name="id" value="${joueur.id}" /></c:url>">
+								<c:out value="${joueur.prenom} ${joueur.nom}" />
+								</a>
+								</c:when>
+								<c:otherwise>
+								<c:out value="${joueur.prenom} ${joueur.nom}" />
+								</c:otherwise>
 							</c:choose>
-							<c:set var="solde" value="${joueur.portefeuille.fonds}" />
-						</c:when>
-						<c:otherwise>
-							<c:set var="solde" value="0" />
-						</c:otherwise>
-						</c:choose>
-						<br />
-						<span class="${classeSolde}"><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${solde}" type="currency"></fmt:formatNumber></span>
-					</c:forEach>
-				</div>
-				<div class="col-md-2"></div>
+							</td>
+							<td class="${classeSolde}">
+								<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${solde}" type="currency"></fmt:formatNumber>
+							</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
-		</div>
 		<div class="col-md-12">
 			<c:if test="${utilisateur != null and utilisateur.estModerateur()}">
 				<c:if test="${false}">
@@ -92,12 +88,12 @@
 				<c:if test="${utilisateur != null and utilisateur.estModerateur()}">
 				<form action='<c:url value="/membre/jouerGrille" />' method="post">
 					<h3>Jouer la grille</h3> 
-					<label class="radio premier"><input type="radio" name="periode" id="input-periode" value="1j" checked="checked" /> 1 jour</label>
-					<label class="radio"><input type="radio" name="periode" id="input-periode" value="1s" /> 1 semaine</label>
-					<label class="radio"><input type="radio" name="periode" id="input-periode" value="2s" /> 2 semaines</label>
-					<label class="radio"><input type="radio" name="periode" id="input-periode" value="3s" /> 3 semaines</label>
-					<label class="radio"><input type="radio" name="periode" id="input-periode" value="4s" /> 4 semaines</label>
-					<label class="radio"><input type="radio" name="periode" id="input-periode" value="5s" /> 5 semaines</label>
+					<label class="radio premier"><input type="radio" name="periode" id="input-periode-1j" value="1j" checked="checked" /> 1 jour</label>
+					<label class="radio"><input type="radio" name="periode" id="input-periode-1s" value="1s" /> 1 semaine</label>
+					<label class="radio"><input type="radio" name="periode" id="input-periode-2s" value="2s" /> 2 semaines</label>
+					<label class="radio"><input type="radio" name="periode" id="input-periode-3s" value="3s" /> 3 semaines</label>
+					<label class="radio"><input type="radio" name="periode" id="input-periode-4s" value="4s" /> 4 semaines</label>
+					<label class="radio"><input type="radio" name="periode" id="input-periode-5s" value="5s" /> 5 semaines</label>
 					<br />
 					<br />
 					<c:if test="${not empty erreurs}">
@@ -108,6 +104,23 @@
 							<span class="text-danger">${erreurs.grille}</span><br />
 						</c:if>
 					</c:if>
+					<p>Grille validée par
+					<select name="joueur">
+						<c:forEach items="${grille.joueurs}" var="joueur">
+						<c:set var="selected" value="" />
+						<c:choose>
+							<c:when test="${joueur.id == utilisateur.id}">
+							<c:set var="selected" value=' selected="selected"' />
+							</c:when>
+							<c:otherwise>
+							<c:set var="selected" value='' />
+							</c:otherwise>
+						</c:choose>
+						<option id="input-joueur-${joueur.id}" value="${joueur.id}" ${selected}>${joueur.prenom} ${joueur.nom}</option>
+						</c:forEach>
+					</select>
+					</p>
+					<br />
 					<input class="btn-blue" type="submit" value="Jouer" />
 				</form>
 				</c:if>
