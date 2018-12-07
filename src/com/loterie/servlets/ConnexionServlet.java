@@ -93,6 +93,7 @@ public class ConnexionServlet extends HttpServlet {
 					req.setAttribute("utilisateur", utilisateur);
 					// L'utilisateur est redirigé vers la page d'accueil
 					// TODO: Rediriger vers la page demandée par l'utilisateur 
+					cible = Constants.URN_ACCUEIL;
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_PUBLIC_ACCUEIL);
 					return;
 				} else {
