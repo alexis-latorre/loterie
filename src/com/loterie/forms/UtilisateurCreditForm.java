@@ -20,7 +20,8 @@ public class UtilisateurCreditForm {
 	private Map<String, String> erreurs = new HashMap<String, String>();
 	private HttpServletRequest req;
 
-	public UtilisateurCreditForm(UtilisateurDao utilisateurDao, PortefeuilleDao portefeuilleDao, HttpServletRequest req) {
+	public UtilisateurCreditForm(UtilisateurDao utilisateurDao, PortefeuilleDao portefeuilleDao, 
+			HttpServletRequest req) {
 		this.utilisateurDao = utilisateurDao;
 		this.portefeuilleDao = portefeuilleDao;
 		this.req = req;

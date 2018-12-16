@@ -13,9 +13,9 @@
 	<h4 style="text-align: center; margin: 40px;">Créez votre compte en remplissant le formulaire ci-dessous :</h4>
 	<div class="well" style="margin: auto; max-width: 500px;">
 		<form action="<c:url value="/inscription" />" method="post">
-			<c:import url="/WEB-INF/forms/accountForm.jsp"></c:import>
+			<c:import url="/WEB-INF/forms/utilisateur/accountForm.jsp"></c:import>
 			<br />
-			<c:import url="/WEB-INF/forms/passwordForm.jsp"></c:import>
+			<c:import url="/WEB-INF/forms/utilisateur/passwordForm.jsp"></c:import>
 			<br />
 			<br />
 			<input class="btn btn-blue" type="submit" value="Valider mes informations" />

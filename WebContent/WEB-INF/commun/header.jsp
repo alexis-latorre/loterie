@@ -7,6 +7,9 @@
 		<a class="nav-link" href="<c:url value="/resultats" />">Résultats</a>
 	</li>
 	<c:if test="${loggedIn == true}">
+		<li class="nav-item">
+			<a class="nav-link" href="<c:url value="/membre/profil" />">Mon profil</a>
+		</li>
 		<!--li class="nav-item">
 		    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Membre<span class="caret"></span></a>
 		    <ul class="dropdown-menu">

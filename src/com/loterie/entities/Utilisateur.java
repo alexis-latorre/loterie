@@ -32,6 +32,9 @@ public class Utilisateur {
 	@ManyToOne
 	@JoinColumn(name = "fk_portefeuille_id")
 	private Portefeuille portefeuille;
+	@ManyToOne
+	@JoinColumn(name = "fk_privilege_id")
+	private Privilege privilege;
 	@Transient
 	private List<Grille> grilles;
 	@Transient
@@ -139,5 +142,9 @@ public class Utilisateur {
 	
 	public boolean estBasique() {
 		return this.niveau <= Constants.L_UTILISATEUR_ROLE_BASIQUE;
+	}
+	
+	public boolean checkPrivilege(String priv) {
+		return privilege.checkPrivilege(priv);
 	}
 }

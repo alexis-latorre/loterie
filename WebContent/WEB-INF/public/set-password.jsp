@@ -10,7 +10,7 @@
 </head>
 <body class="container">
 	<form method="post" action="<c:url value="/updatePassword" />">
-		<c:import url="/WEB-INF/forms/passwordForm.jsp"></c:import>
+		<c:import url="/WEB-INF/forms/utilisateur/passwordForm.jsp"></c:import>
 		<br />
 		<input type="submit" value="Mettre à jour" />
 	</form>

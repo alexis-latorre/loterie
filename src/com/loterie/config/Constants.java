@@ -87,6 +87,7 @@ public interface Constants {
 	public static final String URL_MODIFIER_MDP 							= "/modifierMotDePasse";
 
 	public static final String URL_MEMBRE_PROFIL 							= "/membre/profil";
+	public static final String URL_MEMBRE_MODIFIER_PROFIL 					= "/membre/modifierInformation";
 	public static final String URL_MEMBRE_AFFICHER_GRILLES 					= "/membre/afficherGrilles";
 	public static final String URL_MEMBRE_CREER_GRILLE 						= "/membre/creerGrille";
 	public static final String URL_MEMBRE_AFFICHER_GRILLE 					= "/membre/afficherGrille";
@@ -119,6 +120,7 @@ public interface Constants {
 
 	public static final String URN_MEMBRE_403 								= "/WEB-INF/membre/403.jsp";
 	public static final String URN_MEMBRE_ACCUEIL 							= "/WEB-INF/membre/homePage.jsp";
+	public static final String URN_MEMBRE_PROFIL 							= "/WEB-INF/membre/afficherProfil.jsp";
 	public static final String URN_MEMBRE_AFFICHER_GRILLES 					= "/WEB-INF/membre/afficherGrilles.jsp";
 	public static final String URN_MEMBRE_AFFICHER_GRILLE 					= "/WEB-INF/membre/detailsGrille.jsp";
 	public static final String URN_MEMBRE_CREER_GRILLE 						= "/WEB-INF/membre/creerGrille.jsp";

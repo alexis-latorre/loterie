@@ -10,6 +10,7 @@ public interface Messages {
 	public static final String MSG_ID_INVALIDE			 			= "l'ID renseigné n'est pas valide";
 	public static final String MSG_ID_INTROUVABLE 					= "l'objet demandé est introuvable";
 	public static final String MSG_CREDIT_INVALIDE 					= "le montant renseigné n'est pas un nombre valide";
+	public static final String MSG_CHAMP_VIDE		 				= "le champ ne peut être vide";
 			
 	/**
 	 * Messages de la console
