@@ -1,0 +1,1 @@
+<script src="/loterie/inc/js/form.js"></script>

@@ -39,10 +39,6 @@ public class MembreServlet extends HttpServlet {
 		// Si l'utilisateur est authentifié, son espace membre lui est montré
 		if (loggedIn) {
 			cible = Constants.URN_MEMBRE_PROFIL;
-			// L'utilisateur n'est récupéré que s'il est authentifié, pas besoin de le récupérer avant
-			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-			
-			
 		}
 		// Transmet l'information de connexion à la page JSP
 		req.setAttribute("loggedIn", loggedIn);

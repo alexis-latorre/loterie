@@ -260,3 +260,17 @@ h4 {
 .titre-grille {
 	font-size: 2em;
 }
+
+.modifiable {
+	cursor: pointer;
+}
+
+.btn-edit-container {
+	display: inline-block;
+	min-width: 20px;
+	margin-left: 1em;
+}
+
+.btn-edit {
+	color: #2056AE;
+}

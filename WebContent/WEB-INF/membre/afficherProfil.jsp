@@ -10,7 +10,7 @@
 	<div class="container">
 		<c:import url="/WEB-INF/commun/header.jsp" />
 		<h4>Mon profil</h4>
-		<form action="<c:url value="/membre/modifierInformation"><c:param name="id" value="${utilisateur.id}"></c:param></c:url>" method="post">
+		<form class="form-inline" action="<c:url value="/membre/modifierInformation"><c:param name="id" value="${utilisateur.id}"></c:param></c:url>" method="post">
 			<div class="col-md-12">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
@@ -25,13 +25,13 @@
 										<td>Pseudo : </td><td><c:out value="${utilisateur.pseudo}" /></td>
 									</tr>
 									<tr>
-										<td>Nom : </td><td><c:out value="${utilisateur.nom}" /></td>
+										<td>Nom : </td><td id="nom" class="modifiable"><span id="placeholder-nom"><c:out value="${utilisateur.nom}" /></span><span class="btn-edit-container"><span style="display: none" class="btn-edit glyphicon glyphicon-pencil"></span></span></td>
 									</tr>
 									<tr>
-										<td>Prénom : </td><td><c:out value="${utilisateur.prenom}" /></td>
+										<td>Prénom : </td><td id="prenom" class="modifiable"><span id="placeholder-prenom"><c:out value="${utilisateur.prenom}" /></span><span class="btn-edit-container"><span style="display: none" class="btn-edit glyphicon glyphicon-pencil"></span></span></td>
 									</tr>
 									<tr>
-										<td>E-mail : </td><td><c:out value="${utilisateur.email}" /></td>
+										<td>E-mail : </td><td id="email" class="modifiable"><span id="placeholder-email"><c:out value="${utilisateur.email}" /></span><span class="btn-edit-container"><span style="display: none" class="btn-edit glyphicon glyphicon-pencil"></span></span></td>
 									</tr>
 									<tr>
 										<td>Inscrit depuis le  : </td><td><c:out value="" /></td>
@@ -46,5 +46,6 @@
 		</form>
 	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
+	<c:import url="/WEB-INF/js/form.js.jsp" />
 </body>
 </html>
