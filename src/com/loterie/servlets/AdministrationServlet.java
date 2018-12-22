@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.loterie.config.Constants;
+import com.loterie.config.Privileges;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.LogDao;
 import com.loterie.dao.PortefeuilleDao;
+import com.loterie.dao.PrivilegeDao;
 import com.loterie.dao.RetardDao;
 import com.loterie.dao.UtilisateurDao;
+import com.loterie.entities.Privilege;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.GrilleActivationForm;
 import com.loterie.forms.LogRecuperationForm;
@@ -46,6 +49,8 @@ public class AdministrationServlet extends HttpServlet {
 	private PortefeuilleDao portefeuilleDao;
 	@EJB
 	private LogDao logDao;
+	@EJB
+	private PrivilegeDao privilegeDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -86,6 +91,7 @@ public class AdministrationServlet extends HttpServlet {
 					
 					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, retardDao, req);
 					urf.recupererId();
+					req.setAttribute("privileges", Privileges.PRIVILEGES);
 					cible = Constants.URN_ADMIN_DETAILS_UTILISATEUR;
 					break;
 				}

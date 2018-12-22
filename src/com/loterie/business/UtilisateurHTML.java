@@ -1,6 +1,7 @@
 package com.loterie.business;
 
 import java.util.List;
+import java.util.Map;
 
 import com.loterie.config.LiensConfig;
 import com.loterie.config.RolesConfig;
@@ -12,10 +13,12 @@ public class UtilisateurHTML {
 	private String classRole;
 	private List<GrilleHTML> grilles;
 	private Retard retard;
+	private Map<String, String> privileges;
 	
 	public UtilisateurHTML(Utilisateur utilisateur) {
 		setU(utilisateur);
 		setClassRole(utilisateur.getNomRole());
+		setPrivileges(utilisateur.getPrivilege().getPrivileges());
 	}
 
 	public Utilisateur getU() {
@@ -56,5 +59,16 @@ public class UtilisateurHTML {
 
 	public void setRetard(Retard retard) {
 		this.retard = retard;
+	}
+
+	public Map<String, String> getPrivileges() {
+		return privileges;
+	}
+
+	public void setPrivileges(Map<String, String> privileges) {
+		if (null == privileges) System.out.println("priv null");
+		else
+		System.out.println(privileges.toString());
+		this.privileges = privileges;
 	}
 }

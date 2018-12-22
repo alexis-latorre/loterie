@@ -13,6 +13,7 @@ import com.loterie.dao.GrilleDao;
 import com.loterie.dao.RetardDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Grille;
+import com.loterie.entities.Privilege;
 import com.loterie.entities.Retard;
 import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;

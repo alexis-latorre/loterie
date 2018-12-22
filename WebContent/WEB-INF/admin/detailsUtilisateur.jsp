@@ -46,6 +46,21 @@
 				<div class="col-md-2"></div>
 			</div>
 		</div>
+		<h4>Gérer les privilèges de '<c:out value="${joueur.u.pseudo}"></c:out>'</h4>
+		<div class="well col-md-12">
+			<table class="table table-bordered table-striped">
+				<tr>
+					<th>Nom du privilège</th>
+					<th>Tout sélectionner <input type="checkbox" /></th>
+				</tr>
+				<c:forEach items="${privileges}" var="privilege">
+				<tr>
+					<td><c:out value="${privilege}" /></td>
+					<td><c:out value="${joueur.u.checkPrivilege(privilege)}"></c:out></td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
 	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 	<c:import url="/WEB-INF/js/tablesorter.js.jsp" />

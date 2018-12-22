@@ -261,7 +261,7 @@ h4 {
 	font-size: 2em;
 }
 
-.modifiable {
+.placeholder {
 	cursor: pointer;
 }
 
@@ -273,4 +273,12 @@ h4 {
 
 .btn-edit {
 	color: #2056AE;
+}
+
+.btn-confirm, .btn-cancel {
+	margin-left: 10px;
+}
+
+.modifiable .form-control {
+	min-width: 60%;
 }

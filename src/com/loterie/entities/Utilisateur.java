@@ -1,6 +1,7 @@
 package com.loterie.entities;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,6 +36,8 @@ public class Utilisateur {
 	@ManyToOne
 	@JoinColumn(name = "fk_privilege_id")
 	private Privilege privilege;
+	@Transient
+	private String privileges = null;
 	@Transient
 	private List<Grille> grilles;
 	@Transient
@@ -144,7 +147,14 @@ public class Utilisateur {
 		return this.niveau <= Constants.L_UTILISATEUR_ROLE_BASIQUE;
 	}
 	
+	public Privilege getPrivilege() {
+		return this.privilege;
+	}
+	
 	public boolean checkPrivilege(String priv) {
+		if (null == privileges) {
+			privileges = privilege.getPrivilege();
+		}
 		return privilege.checkPrivilege(priv);
 	}
 }

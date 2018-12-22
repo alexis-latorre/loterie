@@ -3,6 +3,7 @@ package com.loterie.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Privilege {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(name = "privileges")
 	private String privilege;
 	@Transient
 	private Map<String, String> privileges = null;
@@ -36,7 +38,14 @@ public class Privilege {
 				}
 			}
 		}
-		return privilege;
+		return this.privilege;
+	}
+	
+	public Map<String, String> getPrivileges() {
+		if (null == this.privilege) {
+			this.privilege = getPrivilege();
+		}
+		return this.privileges;
 	}
 	
 	public void setPrivilege(String privilege) {
