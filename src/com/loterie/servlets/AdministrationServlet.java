@@ -1,6 +1,7 @@
 package com.loterie.servlets;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -19,10 +20,10 @@ import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.PrivilegeDao;
 import com.loterie.dao.RetardDao;
 import com.loterie.dao.UtilisateurDao;
-import com.loterie.entities.Privilege;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.GrilleActivationForm;
 import com.loterie.forms.LogRecuperationForm;
+import com.loterie.forms.PrivilegesModificationForm;
 import com.loterie.forms.UtilisateurCreditForm;
 import com.loterie.forms.UtilisateurRecuperationForm;
 import com.loterie.tools.DevTools;
@@ -34,7 +35,8 @@ import com.loterie.tools.Logger;
 		Constants.URL_ADMIN_DETAILS_UTILISATEUR,
 		Constants.URL_ADMIN_DETAILS_UTILISATEURS,
 		Constants.URL_ADMIN_LOGS,
-		Constants.URL_ADMIN_RETABLIR_GRILLE
+		Constants.URL_ADMIN_RETABLIR_GRILLE,
+		Constants.URL_ADMIN_MODIFIER_PRIVILEGES
 		})
 public class AdministrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 5L;
@@ -91,7 +93,20 @@ public class AdministrationServlet extends HttpServlet {
 					
 					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, retardDao, req);
 					urf.recupererId();
-					req.setAttribute("privileges", Privileges.PRIVILEGES);
+					Map<String, String[]> privileges = new HashMap<String, String[]>();
+					privileges.put("banque", Privileges.BANQUE);
+					privileges.put("grille", Privileges.GRILLE);
+					privileges.put("jeu", Privileges.JEU);
+					privileges.put("jour", Privileges.JOUR);
+					privileges.put("lien-grille_utilisateur", Privileges.LGU);
+					privileges.put("log", Privileges.LOG);
+					privileges.put("portefeuille", Privileges.PORTEFEUILLE);
+					privileges.put("privilege", Privileges.PRIVILEGE);
+					privileges.put("resultat_euromillions", Privileges.RESULTAT);
+					privileges.put("retard", Privileges.RETARD);
+					privileges.put("utilisateur", Privileges.UTILISATEUR);
+					req.setAttribute("privileges", privileges);
+					session.setAttribute("idJoueur", req.getParameter("id"));
 					cible = Constants.URN_ADMIN_DETAILS_UTILISATEUR;
 					break;
 				}
@@ -134,7 +149,7 @@ public class AdministrationServlet extends HttpServlet {
 						String id = req.getParameter("joueur");
 						
 						if (id == null || id.isEmpty()) {
-							req.setAttribute("joueur", req.getSession().getAttribute("joueurAcrediter"));
+							req.setAttribute("joueur", session.getAttribute("joueurAcrediter"));
 							req.getSession().setAttribute("joueurAcrediter", null);
 						} else {
 							req.setAttribute("joueur", id);
@@ -153,6 +168,21 @@ public class AdministrationServlet extends HttpServlet {
 									(Utilisateur)retour.get("joueur"));
 						}
 						resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_ADMIN_CREDITER);
+						return;
+					}
+					case Constants.URL_ADMIN_MODIFIER_PRIVILEGES: {
+						Utilisateur joueur = utilisateurDao.trouverParId(Long.valueOf((String) session.getAttribute("idJoueur")));
+						PrivilegesModificationForm pmf = new PrivilegesModificationForm(joueur.getPrivilege(), privilegeDao, req);
+						pmf.valider();
+						Map<String, String> erreurs = pmf.getErreurs();
+						
+						if (erreurs.size() == 0) {
+							pmf.maj();
+							privilegeDao.clearCache();
+							utilisateurDao.clearCache();
+						}
+						
+						resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_ADMIN_DETAILS_UTILISATEURS);
 						return;
 					}
 					default: cible = Constants.URN_ADMIN_ACCUEIL;

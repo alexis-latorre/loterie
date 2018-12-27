@@ -90,4 +90,8 @@ public class UtilisateurRecuperationForm {
 			majErreurs();
 		}
 	}
+	
+	public Utilisateur getUtilisateur() {
+		return utilisateurDao.trouverParId(Long.valueOf(req.getParameter("id")));
+	}
 }

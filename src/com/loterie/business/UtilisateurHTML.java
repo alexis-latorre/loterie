@@ -66,9 +66,6 @@ public class UtilisateurHTML {
 	}
 
 	public void setPrivileges(Map<String, String> privileges) {
-		if (null == privileges) System.out.println("priv null");
-		else
-		System.out.println(privileges.toString());
 		this.privileges = privileges;
 	}
 }

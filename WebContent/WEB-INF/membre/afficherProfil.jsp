@@ -17,7 +17,6 @@
 					<div class="panel panel-default">
 				  		<div class="panel-heading">
 							<span class="main-text-blue" style="font-size: 20px; font-weight: bold;">Carte de visite</span>
-							<br />${utilisateur.checkPrivilege("change_own_name")}
 						</div>
 						<div class="panel-body">
 							<table class="table table-bordered table-striped">
@@ -27,44 +26,72 @@
 									</tr>
 									<tr>
 										<td class="col-md-3">Nom : </td>
-										<td id="nom" class="modifiable col-md-9">
-											<span class="placeholder" id="valeurInitiale-nom"><c:out value="${utilisateur.nom}" /></span>
-											<span id="inputContainer-nom" style="display: none">
-												<input class="form-control" type="text" id="input-nom" name="nom" value="<c:out value="${utilisateur.nom}" />" />
-												<span id="confirmer-nom" class="btn btn-s btn-primary btn-confirm">Confirmer</span>
-												<span id="cancel-nom" class="btn btn-xs btn-danger btn-cancel">Annuler</span>
-											</span>
-											<span class="btn-edit-container">
-												<span id="iconeEdition-nom" style="display: none" class="btn-edit glyphicon glyphicon-pencil"></span>
-											</span>
-										</td>
+										<c:choose>
+											<c:when test='${utilisateur.checkPrivilege("utilisateur-prop-modifier-nom")}'>
+											<td id="nom" class="modifiable col-md-9">
+												<span class="placeholder" id="valeurInitiale-nom"><c:out value="${utilisateur.nom}" /></span>
+												<span id="inputContainer-nom" style="display: none">
+													<input class="form-control" type="text" id="input-nom" name="nom" value="<c:out value="${utilisateur.nom}" />" />
+													<span id="confirmer-nom" class="btn btn-s btn-primary btn-confirm">Confirmer</span>
+													<span id="cancel-nom" class="btn btn-xs btn-danger btn-cancel">Annuler</span>
+												</span>
+												<span class="btn-edit-container">
+													<span id="iconeEdition-nom" class="btn-edit glyphicon glyphicon-pencil"></span>
+												</span>
+											</td>
+											</c:when>
+											<c:otherwise>
+											<td class="col-md-9">
+												<c:out value="${utilisateur.nom}" />
+											</td>
+											</c:otherwise>
+										</c:choose>
 									</tr>
 									<tr>
 										<td class="col-md-3">Prénom : </td>
-										<td id="prenom" class="modifiable col-md-9">
-											<span class="placeholder" id="valeurInitiale-prenom"><c:out value="${utilisateur.prenom}" /></span>
-											<span id="inputContainer-prenom" style="display: none">
-												<input class="form-control" type="text" id="input-prenom" name="prenom" value="<c:out value="${utilisateur.prenom}" />" />
-												<span id="confirmer-prenom" class="btn btn-s btn-primary btn-confirm">Confirmer</span>
-												<span id="cancel-prenom" class="btn btn-xs btn-danger btn-cancel">Annuler</span>
-											</span>
-											<span class="btn-edit-container">
-												<span id="iconeEdition-prenom" style="display: none" class="btn-edit glyphicon glyphicon-pencil"></span>
-											</span>
-										</td>
+										<c:choose>
+											<c:when test='${utilisateur.checkPrivilege("utilisateur-prop-modifier-prenom")}'>
+											<td id="prenom" class="modifiable col-md-9">
+												<span class="placeholder" id="valeurInitiale-prenom"><c:out value="${utilisateur.prenom}" /></span>
+												<span id="inputContainer-prenom" style="display: none">
+													<input class="form-control" type="text" id="input-prenom" name="prenom" value="<c:out value="${utilisateur.prenom}" />" />
+													<span id="confirmer-prenom" class="btn btn-s btn-primary btn-confirm">Confirmer</span>
+													<span id="cancel-prenom" class="btn btn-xs btn-danger btn-cancel">Annuler</span>
+												</span>
+												<span class="btn-edit-container">
+													<span id="iconeEdition-prenom" class="btn-edit glyphicon glyphicon-pencil"></span>
+												</span>
+											</td>
+											</c:when>
+											<c:otherwise>
+											<td class="col-md-9">
+												<c:out value="${utilisateur.prenom}" />
+											</td>
+											</c:otherwise>
+										</c:choose>
 									</tr>
 									<tr>
 										<td class="col-md-3">E-mail : </td>
-										<td id="email" class="modifiable col-md-9">
-											<span class="placeholder" id="valeurInitiale-email"><c:out value="${utilisateur.email}" /></span>
-											<span id="inputContainer-email" style="display: none" >
-												<input class="form-control" type="text" id="input-email" name="email" value="<c:out value="${utilisateur.email}" />" />
-												<span id="confirmer-email" class="btn btn-s btn-primary btn-confirm">Confirmer</span>
-												<span id="cancel-email" class="btn btn-xs btn-danger btn-cancel">Annuler</span>
-											</span>
-											<span class="btn-edit-container">
-												<span id="iconeEdition-email" style="display: none" class="btn-edit glyphicon glyphicon-pencil"></span>
-											</span>
+										<c:choose>
+											<c:when test='${utilisateur.checkPrivilege("utilisateur-prop-modifier-email")}'>
+											<td id="email" class="modifiable col-md-9">
+												<span class="placeholder" id="valeurInitiale-email"><c:out value="${utilisateur.email}" /></span>
+												<span id="inputContainer-email" style="display: none" >
+													<input class="form-control" type="text" id="input-email" name="email" value="<c:out value="${utilisateur.email}" />" />
+													<span id="confirmer-email" class="btn btn-s btn-primary btn-confirm">Confirmer</span>
+													<span id="cancel-email" class="btn btn-xs btn-danger btn-cancel">Annuler</span>
+												</span>
+												<span class="btn-edit-container">
+													<span id="iconeEdition-email" class="btn-edit glyphicon glyphicon-pencil"></span>
+												</span>
+											</td>
+											</c:when>
+											<c:otherwise>
+											<td class="col-md-9">
+												<c:out value="${utilisateur.email}" />
+											</td>
+											</c:otherwise>
+										</c:choose>
 									</tr>
 									<tr>
 										<td>Inscrit depuis le  : </td><td><c:out value="" /></td>

@@ -48,18 +48,34 @@
 		</div>
 		<h4>Gérer les privilèges de '<c:out value="${joueur.u.pseudo}"></c:out>'</h4>
 		<div class="well col-md-12">
-			<table class="table table-bordered table-striped">
-				<tr>
-					<th>Nom du privilège</th>
-					<th>Tout sélectionner <input type="checkbox" /></th>
-				</tr>
-				<c:forEach items="${privileges}" var="privilege">
-				<tr>
-					<td><c:out value="${privilege}" /></td>
-					<td><c:out value="${joueur.u.checkPrivilege(privilege)}"></c:out></td>
-				</tr>
-				</c:forEach>
-			</table>
+			<form method="post" action='<c:url value="/admin/modifierPrivileges"></c:url>'>
+				<table class="table table-bordered table-striped">
+					<tr>
+						<th>Nom du privilège</th>
+						<th>Tout sélectionner <input type="checkbox" /></th>
+					</tr>
+					<c:forEach items="${privileges}" var="privilege">
+					<tr>
+						<th>Table '<c:out value="${privilege.key}" />'</th>
+						<th>Tout sélectionner <input type="checkbox" /></th>
+					</tr>
+					<c:forEach items="${privilege.value}" var="nomPrivilege">
+					<tr>
+						<td><c:out value="${nomPrivilege}"></c:out></td>
+						<c:choose>
+						<c:when test="${joueur.u.checkPrivilege(nomPrivilege) == true}">
+						<td class="success"><input name="${nomPrivilege}" type="checkbox" checked="checked" /></td>
+						</c:when>
+						<c:otherwise>
+						<td class="danger"><input name="${nomPrivilege}" type="checkbox" /></td>
+						</c:otherwise>
+						</c:choose>
+					</tr>
+					</c:forEach>
+					</c:forEach>
+				</table>
+				<input class="btn btn-blue" type="submit" value="Mettre à jour" />
+			</form>
 		</div>
 	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />

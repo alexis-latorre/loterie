@@ -36,7 +36,7 @@ public class ConnexionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		utilisateurDao.clearCache();
+		//utilisateurDao.clearCache();
 		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		
 		if (uri.equals("/clearCache")) {

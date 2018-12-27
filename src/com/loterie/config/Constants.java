@@ -107,6 +107,7 @@ public interface Constants {
 	public static final String URL_ADMIN_DETAILS_UTILISATEUR 				= "/admin/detailsUtilisateur";
 	public static final String URL_ADMIN_DETAILS_UTILISATEURS 				= "/admin/detailsUtilisateurs";
 	public static final String URL_ADMIN_RETABLIR_GRILLE	 				= "/admin/retablirGrille";
+	public static final String URL_ADMIN_MODIFIER_PRIVILEGES 				= "/admin/modifierPrivileges";
 	public static final String URL_ADMIN_LOGS				 				= "/admin/logs";
 
 	/**

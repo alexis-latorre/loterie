@@ -1,12 +1,12 @@
 package com.loterie.dao;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.loterie.entities.Privilege;
 
-@Stateful
+@Stateless
 public class PrivilegeDao extends LoterieDao {
 	@PersistenceContext(name = "loterie_PU")
 	private EntityManager em;

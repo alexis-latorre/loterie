@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.loterie.config.Messages;
+import com.loterie.config.Privileges;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 
@@ -33,11 +34,11 @@ public class UtilisateurModificationForm {
 	}
 	
 	public void valider() {
-		validerParametre("nom");
-		validerParametre("prenom");
+		validerParametre("nom", Privileges.UTILISATEUR_PROP_MODIFIER_NOM);
+		validerParametre("prenom", Privileges.UTILISATEUR_PROP_MODIFIER_PRENOM);
 	}
 
-	private void validerParametre(String nom) {
+	private void validerParametre(String nom, String priv) {
 		Enumeration<String> params = req.getParameterNames();
 		
 		while (params.hasMoreElements()) {
@@ -46,6 +47,8 @@ public class UtilisateurModificationForm {
 				
 				if (param.isEmpty()) {
 					erreurs.put(nom, Messages.MSG_CHAMP_VIDE);
+				} else if (!utilisateur.checkPrivilege(priv)) {
+					erreurs.put(nom, Messages.MSG_PRIVILEGE_MANQUANT);
 				} else {
 					switch (nom) {
 						case "nom":

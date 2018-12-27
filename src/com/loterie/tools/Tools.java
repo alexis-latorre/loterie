@@ -362,4 +362,26 @@ public class Tools {
 	public static String getHeure() {
 		return NOW.getHourOfDay() + ":" + NOW.getMinuteOfHour() + ":" + NOW.getSecondOfMinute();
 	}
+	
+	public static String[] concatenerString(String[] ... arrays) {
+		int taille = 0;
+		int pos = 0;
+		
+		for (String[] array : arrays) {
+			taille += array.length;
+		}
+		
+		if (taille == 0) {
+			return null;
+		} else {
+			String[] resultat = new String[taille];
+			
+			for (String[] array : arrays) {
+				int length = array.length;
+				System.arraycopy(array, 0, resultat, pos, length);
+				pos += length;
+			}
+			return resultat;
+		}
+	}
 }
