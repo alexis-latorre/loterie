@@ -1,1 +1,0 @@
-<script src="/loterie/inc/js/calendrier.js"></script>

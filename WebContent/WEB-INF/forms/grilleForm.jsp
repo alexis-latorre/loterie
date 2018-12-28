@@ -1,5 +1,9 @@
 <h3 class="main-text-blue"><label for="input-nom">Nom de la grille</label></h3>
-<input class="input" type="text" name="nom" id="input-nom" value="${requestScope.grille.nom}" />
+<c:set var="nomDisabled" value=' disabled' />
+<c:if test='${utilisateur.checkPrivilege("grille-modifier-nom")}'>
+	<c:set var="nomDisabled" value='' />
+</c:if>
+<input class="input"${nomDisabled} type="text" name="nom" id="input-nom" value="${requestScope.grille.nom}" />
 <h3 class="main-text-blue">Choisir les numéros</h3>
 <table class="table">
 <c:forEach items="${tableNumeros}" var="ligneNumeros">
@@ -16,9 +20,13 @@
 			</c:if>
 			<div class="checkbox-boule-container">
 				<label>
-					<input type="checkbox" name="numeros[]" id="input-numero${numero}" value="${numero}" <c:out value="${checked}" /> />
+					<c:set var="numerosDisabled" value=' disabled' />
+					<c:if test='${utilisateur.checkPrivilege("grille-modifier-numeros")}'>
+						<c:set var="numerosDisabled" value='' />
+					</c:if>
+					<input type="checkbox"${numerosDisabled} name="numeros[]" id="input-numero${numero}" value="${numero}" <c:out value="${checked}" /> />
 					<span class="checkmark-boule"></span>
-					<span class="numero"><c:out value="${numero}" /></span>
+					<span class="numero${numerosDisabled}"><c:out value="${numero}" /></span>
 				</label>
 			</div>
 		</td>
@@ -42,9 +50,13 @@
 			</c:if>
 			<div class="checkbox-etoile-container">
 				<label>
-					<input type="checkbox" name="etoiles[]" id="input-etoile${etoile}" value="${etoile}" <c:out value="${checked}" /> />
+					<c:set var="etoilesDisabled" value=' disabled' />
+					<c:if test='${utilisateur.checkPrivilege("grille-modifier-etoiles")}'>
+						<c:set var="etoilesDisabled" value='' />
+					</c:if>
+					<input type="checkbox"${etoilesDisabled} name="etoiles[]" id="input-etoile${etoile}" value="${etoile}" <c:out value="${checked}" /> />
 					<span class="checkmark-etoile"></span>
-					<span class="numero"><c:out value="${etoile}" /></span>
+					<span class="numero${etoilesDisabled}"><c:out value="${etoile}" /></span>
 				</label>
 			</div>
 		</td>
@@ -53,10 +65,18 @@
 </c:forEach>
 </table>
 <c:set var="etoilePlus" value=""></c:set>
+<c:set var="etoilePlusDisabled" value=' disabled' />
+<c:if test='${utilisateur.checkPrivilege("grille-modifier-etoile_plus")}'>
+	<c:set var="etoilePlusDisabled" value='' />
+</c:if>
 <c:if test="${requestScope.grille.etoilePlus}">
 	<c:set var="etoilePlus" value='checked="checked"'></c:set>
 </c:if>
-<label>Étoile + <input type="checkbox" name="etoilePlus" id="input-etoilePlus" <c:out value="${etoilePlus}" /> /></label><br />
+<label>Étoile + <input type="checkbox"${etoilePlusDisabled} name="etoilePlus" id="input-etoilePlus" <c:out value="${etoilePlus}" /> /></label><br />
 <h3><label for="input-mymillion">Code MyMillion</label></h3>
-<input type="text" name="myMillion" id="input-mymillion" value="${requestScope.grille.myMillion}" /><br />
+<c:set var="myMillionDisabled" value=' disabled' />
+<c:if test='${utilisateur.checkPrivilege("grille-modifier-mymillion")}'>
+	<c:set var="myMillionDisabled" value='' />
+</c:if>
+<input type="text"${myMillionDisabled} name="myMillion" id="input-mymillion" value="${requestScope.grille.myMillion}" /><br />
 <br />

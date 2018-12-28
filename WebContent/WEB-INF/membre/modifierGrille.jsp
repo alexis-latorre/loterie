@@ -12,9 +12,17 @@
 	<c:import url="/WEB-INF/commun/header.jsp" />
 	<h4>Éditer la grille</h4>
 	<div class="well">
-		<form action="<c:url value="/membre/editerGrille"><c:param name="id" value="${grille.id}"></c:param></c:url>" method="post">
+		<form id="form-grille" action="<c:url value="/membre/editerGrille"><c:param name="id" value="${grille.id}"></c:param></c:url>" method="post">
 			<c:import url="/WEB-INF/forms/grilleForm.jsp" />
+			<c:choose>
+			<c:when test='${utilisateur.checkPrivilege("lien_grille_utilisateur-modifier-fk_utilisateur_id")}'>
+			<c:import url="/WEB-INF/forms/choisirParmiMembresForm.jsp" />
+			<input class="btn btn-blue" type="button" onclick="validerJoueurs()" value="Modifier la grille" />
+			</c:when>
+			<c:otherwise>
 			<input class="btn btn-blue" type="submit" value="Modifier la grille" />
+			</c:otherwise>
+			</c:choose>
 		</form>
 	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />

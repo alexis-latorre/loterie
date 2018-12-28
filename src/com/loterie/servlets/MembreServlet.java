@@ -27,7 +27,7 @@ public class MembreServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String cible = Constants.URN_MEMBRE_403;
-		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
+		// String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		HttpSession session = req.getSession();
 		boolean loggedIn = false;
 
@@ -49,7 +49,7 @@ public class MembreServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String cible = Constants.URN_MEMBRE_403;
-		String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
+		// String uri = req.getRequestURI().replace(Constants.CONTEXTE, "");
 		HttpSession session = req.getSession();
 		boolean loggedIn = false;
 

@@ -78,22 +78,18 @@ public class PublicServlet extends HttpServlet {
 		
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = null;
-		System.out.println("#############");
+
 		try {			
 			if ((boolean) session.getAttribute("loggedIn")) {
 				utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				String dateJeu = dernier.getDate().substring(6, 10) + "-" + dernier.getDate().substring(3, 5) + "-" + dernier.getDate().substring(0, 2) + " 12:00:00";
-				System.out.println("date jeu = " + dateJeu);
 				
 				if (utilisateur != null) {
-					System.out.println("ok");
 					for (Grille grille : utilisateur.getGrilles()) {
-						System.out.println("grille = " + grille.getNom());
 						Jour jour = jourDao.trouverParDateEtLGU(dateJeu, 
 								lienGuDao.trouverParGrilleEtUtilisateur(grille, utilisateur));
 						
 						if (jour != null) {
-							System.out.println(jour.getDateJour());
 							List<String> numeros = Arrays.asList(grille.getNumeros());
 							List<String> etoiles = Arrays.asList(grille.getEtoiles());
 							int nbNumeros = 0;
@@ -159,7 +155,6 @@ public class PublicServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("#############");	
 		
 		ResultatStruct r = new ResultatStruct();
 		r.setDernier(dernier);

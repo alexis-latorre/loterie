@@ -83,7 +83,7 @@ public class GrilleCreationForm {
 		validerForm();
 	}
 
-	private void validerForm() {		
+	public void validerForm() {		
 		String nom = this.req.getParameter("nom");
 		String myMillion = this.req.getParameter("myMillion");
 		List<String> numeros = new ArrayList<>();
@@ -122,9 +122,16 @@ public class GrilleCreationForm {
 			grille.setJeu(jeu);
 			grille.setUtilisateur(utilisateur);
 			grille.setBanque(banque);
-			this.grilleDao.creer(grille);
 			this.grille = grille;
 		}
+	}
+	
+	public void ajouter() {
+		this.grilleDao.creer(grille);
+	}
+	
+	public void maj() {
+		this.grilleDao.maj(grille);
 	}
 
 	public Map<String, String> getErreurs() {
@@ -163,7 +170,15 @@ public class GrilleCreationForm {
 		List<List<Integer>> tableNumeros = new ArrayList<List<Integer>>();
 		// Seuls les membres peuvent jouer
 		List<Utilisateur> utilisateurs = utilisateurDao.trouverParRoleMinimum(Constants.L_UTILISATEUR_ROLE_MEMBRE);
-		req.setAttribute("utilisateurs", utilisateurs);
+		List<Utilisateur> utilisateursEligibles = new ArrayList<Utilisateur>();
+		List<Utilisateur> joueurs = utilisateurDao.trouverParGrille(grille);
+		
+		for (Utilisateur joueur : utilisateurs) {
+			if (null == lienGUDao.trouverParGrilleEtUtilisateur(grille, joueur)) {
+				utilisateursEligibles.add(joueur);
+			}
+		}
+		req.setAttribute("utilisateurs", utilisateursEligibles);
 		
 		for (int i = 0; i < Constants.EUROMILLIONS_NUMEROS_NB_LIGNES; i++) {
 			List<Integer> ligne = new ArrayList<Integer>();
@@ -198,6 +213,7 @@ public class GrilleCreationForm {
 		
 		if (id != null) {
 			req.setAttribute("grille", grille);
+			req.setAttribute("joueurs", joueurs);
 		}
 		
 		return req;
@@ -226,15 +242,23 @@ public class GrilleCreationForm {
 		return retour;
 	}
 
-	public void modifier() {
+	public Map<String, Object> modifier() {
+		Map<String, Object> retour = new HashMap<String, Object>();
 		String id = req.getParameter("id");
 		String nom = req.getParameter("nom");
 		List<String> numeros = Arrays.asList(req.getParameterValues("numeros[]"));
 		List<String> etoiles = Arrays.asList(req.getParameterValues("etoiles[]"));
+		List<String> joueursIds = Arrays.asList(req.getParameterValues("joueurs[]"));
 		String myMillion = req.getParameter("myMillion");
 		boolean etoilePlus = this.req.getParameter("etoilePlus") != null 
 				&& this.req.getParameter("etoilePlus").equals("on");
 		Grille grille = grilleDao.trouverParId(Long.valueOf(id));
+		List<String> joueursGrille = new ArrayList<String>(); 
+		List<LienGrilleUtilisateur> lgus = lienGUDao.trouverParGrille(grille);
+		
+		for (LienGrilleUtilisateur lgu : lgus) {
+			joueursGrille.add(lgu.getUtilisateur().getId().toString());
+		}
 		
 		if (nom != null) {
 			nom = nom.trim();
@@ -257,6 +281,34 @@ public class GrilleCreationForm {
 			grille.setMyMillion(myMillion);
 			grilleDao.maj(grille);
 		}
+
+		List<Utilisateur> joueursAjoutes = new ArrayList<Utilisateur>();
+		List<Utilisateur> joueursRetires = new ArrayList<Utilisateur>();
+		
+		for (String joueurGrille : joueursGrille) {
+			if (!joueursIds.contains(joueurGrille)) {
+				Utilisateur joueurRetire = utilisateurDao.trouverParId(Long.valueOf(joueurGrille));
+				lienGUDao.supprimer(lienGUDao.trouverParGrilleEtUtilisateur(grille, joueurRetire));
+				joueursRetires.add(joueurRetire);
+			}
+		}
+		
+		for (String idJoueur : joueursIds) {
+			if (!joueursGrille.contains(idJoueur)) {
+				Utilisateur joueurAjoute = utilisateurDao.trouverParId(Long.valueOf(idJoueur));
+				LienGrilleUtilisateur lgu = new LienGrilleUtilisateur();
+				lgu.setGrille(grille);
+				lgu.setUtilisateur(joueurAjoute);
+				lienGUDao.creer(lgu);
+				joueursAjoutes.add(joueurAjoute);
+			}
+		}
+
+		retour.put("joueursRetires", joueursRetires);
+		retour.put("joueursAjoutes", joueursAjoutes);
+		retour.put("grille", grille);
+		
+		return retour;
 	}
 
 	public void supprimer() {

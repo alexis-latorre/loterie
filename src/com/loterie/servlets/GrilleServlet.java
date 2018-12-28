@@ -89,7 +89,7 @@ public class GrilleServlet extends HttpServlet {
 				} else if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
 					// Affiche le formulaire pour créer une nouvelle grille
 					GrilleCreationForm gcf = new GrilleCreationForm(utilisateurDao, req);
-					req = gcf.getFormulaire();					
+					req = gcf.getFormulaire();		
 					cible = Constants.URN_MEMBRE_CREER_GRILLE;
 					
 				} else if (uri.equals(Constants.URL_MEMBRE_SUPPRIMER_GRILLE)) {
@@ -102,7 +102,8 @@ public class GrilleServlet extends HttpServlet {
 					
 				} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 					// Affiche le formulaire pour modifier la grille
-					GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, utilisateurDao, req);
+					GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, jeuDao, banqueDao,
+							lienGUDao, utilisateurDao, req);
 					req = gcf.getFormulaire(req.getParameter("id"));
 					cible = Constants.URN_MEMBRE_MODIFIER_GRILLE;
 					
@@ -179,8 +180,23 @@ public class GrilleServlet extends HttpServlet {
 			
 		} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 			// Transmet les données nécessaires à la modification d'une grille
-			GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, req);
-			gcf.modifier();
+			GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, jeuDao, banqueDao, lienGUDao, utilisateurDao, 
+					req);
+			Map<String, Object> retour = gcf.modifier();
+			
+			for (Utilisateur joueurRetire : (List<Utilisateur>)retour.get("joueursRetires")) {
+				Logger.log(logDao, "%u a retiré le joueur %j de la grille %g.", 
+						Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, joueurRetire, 
+						(Grille)retour.get("grille"));
+			}
+			
+			for (Utilisateur joueurAjoute : (List<Utilisateur>)retour.get("joueursAjoutes")) {
+				Logger.log(logDao, "%u a ajouté le joueur %j à la grille %g.", 
+						Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, joueurAjoute, 
+						(Grille)retour.get("grille"));
+			}
+			Logger.log(logDao, "%u a modifié la grille %g.", 
+					Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, (Grille)retour.get("grille"));
 			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;
 			
