@@ -1,3 +1,8 @@
+var regChiffre = /[0-9]+/g;
+var regMin = /[a-z]+/g;
+var regMaj = /[A-Z]+/g;
+var regTaille = /.{8}.*/gi;
+
 var valeurInitiales = [];
 var editionEnCours = [];
 var selection = "";
@@ -53,4 +58,50 @@ $(".form-control").keypress(function(key) {
 	if (key.which == 13) {
 		$("#formSubmit").submit();
 	}
+});
+
+$("#input-motDePasse").keyup(function() {
+	var mdp = $(this).val();
+	var regex = mdp.match(regChiffre) && mdp.match(regMin) && 
+		mdp.match(regMaj) && mdp.match(regTaille);
+	var erreurs = "";
+
+	if (mdp.length > 0) {
+		if (!mdp.match(regChiffre)) {
+			erreurs += "<span class='text-danger'>Il faut au moins un chiffre dans le mot de passe</span><br />";
+		} else {
+			erreurs += "<span class='text-success'>Il faut au moins un chiffre dans le mot de passe</span><br />";
+		}
+		if (!mdp.match(regMin)) {
+			erreurs += "<span class='text-danger'>Il faut au moins une minuscule dans le mot de passe</span><br />";
+		} else {
+			erreurs += "<span class='text-success'>Il faut au moins une minuscule dans le mot de passe</span><br />";
+		}
+		if (!mdp.match(regMaj)) {
+			erreurs += "<span class='text-danger'>Il faut au moins une majuscule dans le mot de passe</span><br />";
+		} else {
+			erreurs += "<span class='text-success'>Il faut au moins une majuscule dans le mot de passe</span><br />";
+		}
+		if (!mdp.match(regTaille)) {
+			erreurs += "<span class='text-danger'>Le mot de passe doit faire 8 caractères au minimum</span><br />";
+		} else {
+			erreurs += "<span class='text-success'>Le mot de passe doit faire 8 caractères au minimum</span><br />";
+		}
+	}
+	$("#erreursMDP").html(erreurs);
+});
+
+$("#input-motDePasseConfirmation").keyup(function() {
+	var mdp = $("#input-motDePasse").val();
+	var confirm = $(this).val();
+	var erreurs = "";
+
+	if (confirm.length > 0) {
+		if (confirm != mdp) {
+			erreurs = "<span class='text-danger'>Le mot de passe de confirmation doit être égal au mot de passe saisi</span>";
+		} else {
+			erreurs = "<span class='text-success'>Le mot de passe de confirmation doit être égal au mot de passe saisi</span>";
+		}
+	}
+	$("#erreursConfirmationMDP").html(erreurs);
 });

@@ -98,12 +98,14 @@
 										<td class="col-md-3">Mot de passe : </td>
 										<td id="motDePasse" class="col-md-9">
 											<input class="form-control" type="password" id="input-motDePasse" name="motDePasse" value="" />
+											<p id="erreursMDP"></p>
 										</td>
 									</tr>
 									<tr>
 										<td class="col-md-3">Confirmation du mot de passe : </td>
-										<td id="motDePasse" class="col-md-9">
+										<td id="motDePasseConfirmation" class="col-md-9">
 											<input class="form-control" type="password" name="motDePasseConfirmation" id="input-motDePasseConfirmation" />
+											<p id="erreursConfirmationMDP"></p>
 										</td>
 									</tr>
 									</c:if>
