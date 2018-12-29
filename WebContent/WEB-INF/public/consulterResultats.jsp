@@ -35,7 +35,11 @@
 				</thead>
 				<tbody>
 				<c:forEach items="${utilisateur.grilles}" var="grille">
-					<tr>
+					<c:set var="gains" value=""></c:set>
+					<c:if test="${grille.gains > 0}">
+					<c:set var="gains" value="success text-success"></c:set>
+					</c:if>
+					<tr class="${gains}">
 						<td><c:out value="${grille.nom}"></c:out></td>
 						<td><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${grille.gains}" type="currency"></fmt:formatNumber></td>
 					</tr>

@@ -10,7 +10,7 @@
 	<div class="container">
 		<c:import url="/WEB-INF/commun/header.jsp" />
 		<h4>Mon profil</h4>
-		<form id="formSubmit" class="form-inline" accept-charset="ISO-8859-1" action="<c:url value="/membre/modifierInformation"></c:url>" method="post">
+		<form role="form" data-toggle="validator" id="formSubmit" class="form-inline" accept-charset="ISO-8859-1" action="<c:url value="/membre/modifierInformation"></c:url>" method="post">
 			<div class="col-md-12">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
@@ -93,11 +93,27 @@
 											</c:otherwise>
 										</c:choose>
 									</tr>
+									<c:if test='${utilisateur.checkPrivilege("utilisateur-prop-modifier-mot_de_passe")}'>
 									<tr>
-										<td>Inscrit depuis le  : </td><td><c:out value="" /></td>
+										<td class="col-md-3">Mot de passe : </td>
+										<td id="motDePasse" class="col-md-9">
+											<input class="form-control" type="password" id="input-motDePasse" name="motDePasse" value="" />
+										</td>
 									</tr>
+									<tr>
+										<td class="col-md-3">Confirmation du mot de passe : </td>
+										<td id="motDePasse" class="col-md-9">
+											<input class="form-control" type="password" name="motDePasseConfirmation" id="input-motDePasseConfirmation" />
+										</td>
+									</tr>
+									</c:if>
+									<!--tr>
+										<td>Inscrit depuis le  : </td><td><c:out value="" /></td>
+									</tr-->
 								</tbody>
 							</table>
+							<br />
+							<input class="btn btn-blue" type="submit" value="Mettre à jour mes informations" />
 						</div>
 					</div>
 					<div class="col-md-2"></div>
@@ -107,5 +123,6 @@
 	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 	<c:import url="/WEB-INF/js/form.js.jsp" />
+	<c:import url="/WEB-INF/js/validator.js.jsp" />
 </body>
 </html>

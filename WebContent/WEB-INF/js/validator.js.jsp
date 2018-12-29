@@ -1,0 +1,1 @@
+<script src="/loterie/inc/js/validator.js"></script>
