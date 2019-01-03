@@ -28,7 +28,7 @@ public class Tools {
 	 * @return <tt>true</tt> si s1 = s2 et qu'aucune des deux chaînes n'est <tt>null</tt>.
 	 */
 	public static boolean comparerChainesNonNull(String s1, String s2) {
-		boolean result = s1 != null && s1.equals(s2);
+		boolean result = s1 != null && s1.trim().length() > 0 && s1.equals(s2);
 		
 		if (!result) {
 			if (s1 == null) {
@@ -74,10 +74,10 @@ public class Tools {
 			if (option == VERIF_TAILLE) {
 				checkpoint = motDePasse.length() >= (int) criteres[i];
 				// Concatène le resultat du checkpoint à la vérification globale
-				resultat &= checkpoint;
+				resultat = resultat && checkpoint;
 				
 				// Lève une exception si le checkpoint est invalide
-				if (! checkpoint) {
+				if (!checkpoint) {
 					System.out.printf(Messages.E_INTEGRITE_ETAPE_MANQUEE, "VERIF_TAILLE");
 				}
 			}
@@ -383,5 +383,19 @@ public class Tools {
 			}
 			return resultat;
 		}
+	}
+
+	public static String capitalize(String param) {
+		String r = "";
+		
+		if (param.length() > 0) {
+			r = param.substring(0, 1).toUpperCase();
+		}
+		
+		if (param.length() > 1) {
+			r += param.substring(1);
+		}
+		
+		return r;
 	}
 }

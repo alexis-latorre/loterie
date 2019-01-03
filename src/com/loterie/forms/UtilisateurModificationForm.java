@@ -1,15 +1,20 @@
 package com.loterie.forms;
 
+import static com.loterie.tools.Tools.comparerChainesNonNull;
+import static com.loterie.tools.Tools.motDePasseValide;
+
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.loterie.config.Constants;
 import com.loterie.config.Messages;
 import com.loterie.config.Privileges;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
+import com.loterie.tools.Tools;
 
 public class UtilisateurModificationForm {
 	private UtilisateurDao utilisateurDao;
@@ -30,12 +35,26 @@ public class UtilisateurModificationForm {
 	public void modifier() {		
 		if (erreurs.size() == 0) {
 			utilisateurDao.maj(utilisateur);
+			utilisateurDao.clearCache();
 		}
 	}
 	
 	public void valider() {
-		validerParametre("nom", Privileges.UTILISATEUR_PROP_MODIFIER_NOM);
-		validerParametre("prenom", Privileges.UTILISATEUR_PROP_MODIFIER_PRENOM);
+		String nom = req.getParameter("nom").trim().replaceAll("  ", " ");
+		String prenom = req.getParameter("prenom").trim().replaceAll("  ", " ");
+		String mdp = req.getParameter("motDePasse").trim().replaceAll("  ", " ");
+		
+		if (null != nom && nom.length() > 0) {
+			validerParametre("nom", Privileges.UTILISATEUR_PROP_MODIFIER_NOM);
+		}
+		
+		if (null != prenom && prenom.length() > 0) {
+			validerParametre("prenom", Privileges.UTILISATEUR_PROP_MODIFIER_PRENOM);
+		}
+		
+		if (null != mdp && mdp.length() > 0) {
+			validerParametre("motDePasse", Privileges.UTILISATEUR_PROP_MODIFIER_MOT_DE_PASSE);
+		}
 	}
 
 	private void validerParametre(String nom, String priv) {
@@ -52,9 +71,42 @@ public class UtilisateurModificationForm {
 				} else {
 					switch (nom) {
 						case "nom":
-							utilisateur.setNom(param);
+							utilisateur.setNom(Tools.capitalize(param));
+							break;
 						case "prenom":
-							utilisateur.setPrenom(param);
+							utilisateur.setPrenom(Tools.capitalize(param));
+							break;
+						case "motDePasse": {
+							boolean err = false;
+							String mdp = param;
+							String mdpc = req.getParameter("motDePasseConfirmation").trim().replaceAll("  ", " ");
+							int[] listeControles = {
+									Tools.VERIF_TAILLE
+							};
+							
+							Object[] listeParametres = {
+									Constants.MDP_TAILLE_MIN
+							};
+							
+							try {
+								if (!motDePasseValide(mdp, listeControles, listeParametres)) {
+									erreurs.put("motDePasse", Messages.MSG_ERREUR_MDP);
+									err = true;
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							
+							if (!comparerChainesNonNull(mdp, mdpc)) {
+								erreurs.put("motDePasse", Messages.MSG_ERREUR_MDPC);
+								err = true;
+							}
+
+							if (!err) {
+								utilisateur.setMotDePasse(Tools.encoderSHA256(mdp));
+								utilisateurDao.changerGrainDeSel(utilisateur, mdp);
+							}
+						}
 						break;
 					}
 				}

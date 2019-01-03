@@ -149,6 +149,10 @@ public class Utilisateur {
 		return this.privilege;
 	}
 	
+	public void setPrivilege(Privilege privilege) {
+		this.privilege = privilege;
+	}
+	
 	public boolean checkPrivilege(String priv) {
 		if (null == privileges) {
 			privileges = privilege.getPrivilege();

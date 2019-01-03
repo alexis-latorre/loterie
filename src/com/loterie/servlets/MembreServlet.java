@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.loterie.config.Constants;
+import com.loterie.dao.LogDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.UtilisateurModificationForm;
+import com.loterie.tools.Logger;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_MEMBRE_PROFIL,
@@ -23,6 +25,8 @@ public class MembreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private UtilisateurDao utilisateurDao;
+	@EJB
+	private LogDao logDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -62,7 +66,7 @@ public class MembreServlet extends HttpServlet {
 			cible = Constants.URN_MEMBRE_PROFIL;
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 			
-			if (utilisateur.estMembre()) {
+			if (utilisateur.estBasique()) {
 				UtilisateurModificationForm umf = new UtilisateurModificationForm(utilisateur, utilisateurDao, req);
 				umf.valider();				
 				Map<String, String> erreurs = umf.getErreurs();
@@ -71,6 +75,9 @@ public class MembreServlet extends HttpServlet {
 					req.setAttribute("erreurs", erreurs);
 				} else {
 					umf.modifier();
+					Logger.log(logDao, "%u a modifié ses informations de profil.", Constants.LOG_INFO, 
+							Constants.LOG_COMPTE, utilisateur);
+					req.setAttribute("messageSucces", "Informations mises à jour avec succès");
 				}
 			}
 		}

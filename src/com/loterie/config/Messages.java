@@ -12,6 +12,11 @@ public interface Messages {
 	public static final String MSG_CREDIT_INVALIDE 					= "le montant renseigné n'est pas un nombre valide";
 	public static final String MSG_CHAMP_VIDE		 				= "le champ ne peut être vide";
 	public static final String MSG_PRIVILEGE_MANQUANT 				= "privilèges insuffisants pour modifier ce champ";
+	public static final String MSG_PSEUDO_EXISTANT 					= "Le pseudo choisi existe déjà.";
+	public static final String MSG_UTILISATEUR_EXISTANT 			= "L'utilisateur est déjà affilié à un compte.";
+	public static final String MSG_EMAIL_EXISTANT 					= "Cette adresse email est déjà utilisée par un autre compte.";
+	public static final String MSG_ERREUR_MDP 						= "Le mot de passe entré n'est pas valide.";
+	public static final String MSG_ERREUR_MDPC 						= "Les mots de passe entrés sont différents.";
 			
 	/**
 	 * Messages de la console

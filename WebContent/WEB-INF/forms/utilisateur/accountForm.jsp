@@ -1,5 +1,5 @@
 <label for="input-pseudo">Pseudo</label><br />
-<input type="text" name="pseudo" id="input-pseudo" />
+<input type="text" name="pseudo" id="input-pseudo" value="${champs.pseudo}" />
 <c:if test="${not empty erreurs and not empty erreurs.pseudo}">
 <span class="text-danger"><c:out value="${erreurs.pseudo}"></c:out></span>
 </c:if>

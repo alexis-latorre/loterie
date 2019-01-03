@@ -290,3 +290,19 @@ h4 {
 .modifiable .form-control {
 	min-width: 60%;
 }
+
+.popupSucces {
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+	display: block;
+	min-width: 20%;
+	height: 3em;
+	padding: 1em;
+	background-color: #DFF0D8;
+	border: solid 1px #3C763D;
+	border-radius: 4px;
+	vertical-align: middle;
+	cursor: pointer;
+	display: none;
+}
