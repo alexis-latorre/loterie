@@ -148,6 +148,9 @@ public class PublicServlet extends HttpServlet {
 							} else {
 								grille.setGains(0);
 							}
+							grille.setJouee(true);
+						} else {
+							grille.setJouee(false);
 						}
 					}
 				}

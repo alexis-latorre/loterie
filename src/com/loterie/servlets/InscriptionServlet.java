@@ -38,6 +38,7 @@ public class InscriptionServlet extends HttpServlet {
 		// Si aucune erreur n'est décelée, l'utilisateur est inscrit en base
 		if (erreurs.isEmpty()) {
 			cuf.creerUtilisateur();
+			req.setAttribute("messageSucces", "Vous êtes à présent inscrit(e).");
 			req.getServletContext().getRequestDispatcher(Constants.URN_ACCUEIL).forward(req, resp);
 		} else {
 			req.setAttribute("champs", cuf.getChamps());

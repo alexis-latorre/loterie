@@ -40,8 +40,15 @@
 					<c:set var="gains" value="success text-success"></c:set>
 					</c:if>
 					<tr class="${gains}">
-						<td><c:out value="${grille.nom}"></c:out></td>
+						<td><c:out value="${grille.nom}" /></td>
+						<c:choose>
+						<c:when test="${grille.jouee}">
 						<td><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${grille.gains}" type="currency"></fmt:formatNumber></td>
+						</c:when>
+						<c:otherwise>
+						<td>Non jouée</td>
+						</c:otherwise>
+						</c:choose>
 					</tr>
 				</c:forEach>
 				</tbody>
