@@ -164,5 +164,7 @@ public interface Constants {
 	public static final String SELECT_RESULTATS_DESC 						= "SELECT r FROM Resultat r ORDER BY r.id DESC";
 	public static final String SELECT_RETARDS 								= "SELECT r FROM Retard r WHERE r.relance = true";
 	public static final String SELECT_RETARD_PAR_UTILISATEUR 				= "SELECT r FROM Retard r WHERE r.utilisateur = :utilisateur";
+	public static final String SELECT_GAINS_PAR_JOUR_ET_UTILISATEUR			= "SELECT g FROM Gain g WHERE g.dateJour = :date AND g.idUtilisateur = :id ORDER BY g.dateJour DESC";
+	public static final String SELECT_GAINS_PAR_PERIODE_ET_UTILISATEUR		= "SELECT g FROM Gain g WHERE (g.dateJour BETWEEN :date_debut AND :date_fin) AND g.idUtilisateur = :id ORDER BY g.dateJour DESC";
 
 }

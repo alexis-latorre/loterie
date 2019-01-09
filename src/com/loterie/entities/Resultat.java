@@ -1,9 +1,12 @@
 package com.loterie.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "resultat_euromillions")
@@ -81,6 +84,8 @@ public class Resultat {
 	private String gainsRang13;
 	@Column(name = "mymillion")
 	private String myMillion;
+	@Transient
+	private Double gains;
 	
 	public Long getId() {
 		return id;
@@ -368,5 +373,13 @@ public class Resultat {
 
 	public void setMyMillion(String myMillion) {
 		this.myMillion = myMillion;
+	}
+
+	public Double getGains() {
+		return gains;
+	}
+
+	public void setGains(Double gains) {
+		this.gains = gains;
 	}
 }

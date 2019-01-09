@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.loterie.config.Constants;
+import com.loterie.dao.GainDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.dao.ResultatDao;
+import com.loterie.entities.Gain;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jour;
 import com.loterie.entities.Resultat;
@@ -32,6 +34,8 @@ public class PublicServlet extends HttpServlet {
 	private JourDao jourDao;
 	@EJB
 	private LienGUDao lienGuDao;
+	@EJB
+	private GainDao gainDao;
 	
 	public class ResultatStruct {
 		private Resultat dernier;
@@ -79,8 +83,8 @@ public class PublicServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = null;
 
-		try {			
-			if ((boolean) session.getAttribute("loggedIn")) {
+		try {
+			if (null != session && (boolean) session.getAttribute("loggedIn")) {
 				utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 				String dateJeu = dernier.getDate().substring(6, 10) + "-" + dernier.getDate().substring(3, 5) + "-" + dernier.getDate().substring(0, 2) + " 12:00:00";
 				
@@ -156,7 +160,7 @@ public class PublicServlet extends HttpServlet {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			// TODO: handle exception
 		}
 		
 		ResultatStruct r = new ResultatStruct();
@@ -177,6 +181,36 @@ public class PublicServlet extends HttpServlet {
 			idPage = nbPages;
 		} else if (idPage < 1) {
 			idPage = 1;
+		}
+
+		try {
+			if (null != session && (boolean) session.getAttribute("loggedIn") && null != utilisateur) {
+				int from = (idPage - 1) * Constants.NB_HISTO_PAR_PAGE;
+				int to = idPage * Constants.NB_HISTO_PAR_PAGE;
+				String d1 = historique.get(to - 1).getDate();
+				String d2 = historique.get(from).getDate();
+				String dateD = d1.substring(6, 10) + "-" + d1.substring(3, 5) + "-" + d1.substring(0, 2) + " 12:00:00";
+				String dateF = d2.substring(6, 10) + "-" + d2.substring(3, 5) + "-" + d2.substring(0, 2) + " 12:00:00";
+				List<Gain> gains = gainDao.trouverParPeriodeEtUtilisateur(dateD, dateF, utilisateur.getId());
+				
+				for (int i = from; i < to; i++) {
+					Resultat res = historique.get(i);
+					String d = res.getDate();
+					String date = d.substring(6, 10) + "-" + d.substring(3, 5) + "-" + d.substring(0, 2) + " 12:00:00";
+					Double totalGains = 0D;
+
+					if (null != gains) {						
+						for (Gain gain : gains) {
+							if (gain.getDateJour().substring(0, 10).equals(date.substring(0, 10))) {
+								totalGains += gain.getGains();
+							}
+						}
+					}
+					res.setGains(totalGains);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		r.setNbPages(nbPages);
 		r.setIdPage(idPage);

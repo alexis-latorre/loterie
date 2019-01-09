@@ -96,20 +96,24 @@
 		<c:set var="idSuivant" value="${idPage + 1}" />
 		<c:set var="i" value="1" />
 		<c:set var="premierHisto" value="${(idPage - 1) * 10 + 1}" />
-		<c:set var="dernierHisto" value="${(idPage - 1) * 10 + 10}" />
-		
+		<c:set var="dernierHisto" value="${(idPage - 1) * 10 + 10}" />		
 		<p class="pagination">
 			<a href="<c:url value="/resultats"><c:param name="p" value="1" /></c:url>#historique" class="main-text-gold"><span class="glyphicon glyphicon-step-backward"></span></a>
 			<a href="<c:url value="/resultats"><c:param name="p" value="${idPrecedent}" /></c:url>#historique" class="main-text-gold"><span class="glyphicon glyphicon-triangle-left"></span></a>
 			<span class="main-text-gold">Page <c:out value="${idPage} / ${r.nbPages}" /></span>
 			<a href="<c:url value="/resultats"><c:param name="p" value="${idSuivant}" /></c:url>#historique" class="main-text-gold"><span class="glyphicon glyphicon-triangle-right"></span></a>
 			<a href="<c:url value="/resultats"><c:param name="p" value="${r.nbPages}" /></c:url>#historique" class="main-text-gold"><span class="glyphicon glyphicon-step-forward"></span></a>
-		</p>
-			
+		</p>			
 		<c:forEach items="${r.historique}" var="resultat">
 		<c:if test="${i >= premierHisto and i <= dernierHisto}">
 		<div class="well resultatsWell" onclick="toggle('r-${resultat.id}')">
-			<h5 class="main-text-blue pointer">Résultats du <c:out value="${resultat.date}" /></h5>
+			<h5 class="main-text-blue pointer">Résultats du <c:out value="${resultat.date}" />
+				<c:if test="${not empty resultat.gains}">
+				<c:if test="${resultat.gains > 0}">
+				<span class="success text-success" style="margin-left: 2em"><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${resultat.gains}" type="currency"></fmt:formatNumber></span>
+				</c:if>
+				</c:if>
+			</h5>
 			<div id="r-${resultat.id}" style="display: none;">
 				<p><span class="boule"><c:out value="${resultat.b1}" /></span>
 				<span class="boule"><c:out value="${resultat.b2}" /></span>
@@ -124,8 +128,7 @@
 		</div>
 		</c:if>
 		<c:set var="i" value="${i + 1}" />
-		</c:forEach>
-		
+		</c:forEach>		
 		<p class="pagination">
 			<a href="<c:url value="/resultats"><c:param name="p" value="1" /></c:url>#historique" class="main-text-gold"><span class="glyphicon glyphicon-step-backward"></span></a>
 			<a href="<c:url value="/resultats"><c:param name="p" value="${idPrecedent}" /></c:url>#historique" class="main-text-gold"><span class="glyphicon glyphicon-triangle-left"></span></a>
