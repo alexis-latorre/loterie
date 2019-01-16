@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `jour` (
   `fk_lien_gu_id` int(4) DEFAULT NULL,
   `paye` tinyint(1) NOT NULL DEFAULT '0',
   `gains` double NOT NULL DEFAULT '0',
+  `nb_joueurs` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `numero_fk_lien_gu_id` (`date_jour`,`fk_lien_gu_id`),
   KEY `FK_semaine_liens_grille_utilisateur` (`fk_lien_gu_id`),
@@ -193,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `retard` (
   PRIMARY KEY (`id`),
   KEY `fk_joueur` (`fk_joueur_id`),
   CONSTRAINT `FK_retard_utilisateur` FOREIGN KEY (`fk_joueur_id`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table loterie_dev. utilisateur
