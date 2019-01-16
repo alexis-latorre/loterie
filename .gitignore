@@ -1,3 +1,7 @@
 *.classpath
 /doc/*
 /build/
+
+/euromillionsParser/.project
+/euromillionsParser/.settings/org.eclipse.jdt.core.prefs
+/euromillionsParser/bin/.gitignore
