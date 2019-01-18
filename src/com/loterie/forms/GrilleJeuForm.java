@@ -196,6 +196,7 @@ public class GrilleJeuForm {
 			
 			for (Jour jour : joursAjouer) {
 				try {
+					jour.setGains(0D);
 					jourDao.creer(jour);
 				} catch (Exception e) {
 					// TODO: handle exception

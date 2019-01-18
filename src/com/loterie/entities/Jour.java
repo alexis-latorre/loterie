@@ -28,6 +28,9 @@ public class Jour {
 	@JoinColumn(name = "fk_lien_gu_id")
 	private LienGrilleUtilisateur lgu;
 	private Long paye;
+	private Double gains;
+	@Column(name = "nb_joueurs")
+	private Long nbJoueurs;
 	@Transient
 	private Date date = null;
 	
@@ -66,6 +69,22 @@ public class Jour {
 	
 	public void setPaye(boolean paye) {
 		this.paye = paye ? 1L : 0L;
+	}
+
+	public Double getGains() {
+		return gains;
+	}
+
+	public void setGains(Double gains) {
+		this.gains = gains;
+	}
+
+	public Long getNbJoueurs() {
+		return nbJoueurs;
+	}
+
+	public void setNbJoueurs(Long nbJoueurs) {
+		this.nbJoueurs = nbJoueurs;
 	}
 
 	public Date getDate() {

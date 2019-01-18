@@ -5,3 +5,6 @@
 /euromillionsParser/.project
 /euromillionsParser/.settings/org.eclipse.jdt.core.prefs
 /euromillionsParser/bin/.gitignore
+/euromillionsParser/bin/com/ale/euromillions/EuromillionsParser.class
+/euromillionsParser/bin/com/ale/euromillions/EuromillionsUpdateDB.class
+/euromillionsParser/bin/com/ale/euromillions/Mkdirs.class
