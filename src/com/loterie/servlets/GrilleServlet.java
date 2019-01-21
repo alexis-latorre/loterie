@@ -225,21 +225,24 @@ public class GrilleServlet extends HttpServlet {
 			// Si aucun problème n'est détecté, la grille est jouée
 			if (erreurs.isEmpty()) {
 				Map<String, Object> retour = jgf.jouer();
+				Object messageEchec = retour.get("messageEchec");
 				
-				if (jgf.getJoueur() != null) {
-					Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
-							Constants.LOG_INFO, Constants.LOG_GRILLE, (Utilisateur) retour.get("joueur"), 
-							retour.get("grille"));
+				if (null != messageEchec && !((String) messageEchec).isEmpty()) {
+					req.setAttribute("messageEchec", messageEchec);
 				} else {
-					Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
-							Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, retour.get("grille"));
+					if (jgf.getJoueur() != null) {
+						Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
+								Constants.LOG_INFO, Constants.LOG_GRILLE, (Utilisateur) retour.get("joueur"), 
+								retour.get("grille"));
+					} else {
+						Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
+								Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, retour.get("grille"));
+					}
+					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + 
+							"?id=" + jgf.getGrilleId());
+					return;
 				}
-			} else {
-				req.setAttribute("messageEchec", erreurs.get("messageEchec"));
 			}
-			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + 
-					"?id=" + jgf.getGrilleId());
-			return;
 		}
 		req.getServletContext().getRequestDispatcher(cible).forward(req, resp);
 	}

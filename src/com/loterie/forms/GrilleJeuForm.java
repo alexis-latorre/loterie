@@ -25,8 +25,6 @@ import com.loterie.entities.Portefeuille;
 import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;
 
-import sun.awt.CausedFocusEvent.Cause;
-
 public class GrilleJeuForm {
 	private LienGUDao lguDao;
 	private JourDao jourDao;
@@ -215,7 +213,7 @@ public class GrilleJeuForm {
 						}
 						
 						if (cause.getClass().equals(SQLIntegrityConstraintViolationException.class)) {
-							erreurs.put("messageEchec", cause.getMessage());
+							retour.put("messageEchec", "Grille déjà jouée pour cette période");
 						}
 					}
 					commit = false;
