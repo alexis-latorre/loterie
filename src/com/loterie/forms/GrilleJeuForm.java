@@ -1,5 +1,6 @@
 package com.loterie.forms;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,8 @@ import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Portefeuille;
 import com.loterie.entities.Utilisateur;
 import com.loterie.tools.Tools;
+
+import sun.awt.CausedFocusEvent.Cause;
 
 public class GrilleJeuForm {
 	private LienGUDao lguDao;
@@ -97,7 +100,7 @@ public class GrilleJeuForm {
 		if (typePeriode.equals("j")) {
 			retourPeriode = nbPeriode + " jour";
 			
-			for (int i = 1; i < jours.length; i++) {
+			for (int i = 0; i < jours.length; i++) {
 				if (Integer.parseInt(jours[i]) >= ajd.getDayOfWeek()) {
 					prochainJourDeJeu = Integer.parseInt(jours[i]);
 					idJour = i;
@@ -175,7 +178,9 @@ public class GrilleJeuForm {
 			}
 		}
 		prix = prixTirage * datesTotalesJouees.size();
-		Double prixParJoueur = prix / joueurs.size();
+		int nbJoueurs = joueurs.size();
+		Double prixParJoueur = prix / nbJoueurs;
+		List<Portefeuille> portefeuilles = new ArrayList<Portefeuille>();
 		
 		for (Utilisateur joueur : joueurs) {			
 			Portefeuille portefeuille = joueur.getPortefeuille();
@@ -184,24 +189,45 @@ public class GrilleJeuForm {
 				PortefeuilleCreationForm cpf = new PortefeuilleCreationForm(portefeuilleDao, utilisateurDao, joueur); 
 				portefeuille = cpf.getPortefeuille();
 			}
-			portefeuille.retirerFonds(prixParJoueur);			
-			portefeuilleDao.maj(portefeuille);
+			portefeuille.retirerFonds(prixParJoueur);
+			portefeuilles.add(portefeuille);
 			banque.ajouterFonds(prixParJoueur);
-			banqueDao.maj(banque);
 		}
+		boolean commit = true;
 		
 		if (prix <= banque.getFonds()) {
 			banque.retirerFonds(prix);
-			banqueDao.maj(banque);
 			
 			for (Jour jour : joursAjouer) {
+				jour.setGains(0D);
+				jour.setNbJoueurs((long) nbJoueurs);
 				try {
-					jour.setGains(0D);
 					jourDao.creer(jour);
 				} catch (Exception e) {
-					// TODO: handle exception
+					Throwable cause = e.getCause();
+					boolean derniereCause = false;
+					 
+					while (!derniereCause) {
+						if (null != cause.getCause()) {
+							cause = cause.getCause();
+						} else {
+							derniereCause = true;
+						}
+						
+						if (cause.getClass().equals(SQLIntegrityConstraintViolationException.class)) {
+							erreurs.put("messageEchec", cause.getMessage());
+						}
+					}
+					commit = false;
 				}
 			}
+		}
+		
+		if (commit) {
+			for (Portefeuille portefeuille : portefeuilles) {	
+				portefeuilleDao.maj(portefeuille);
+			}
+			banqueDao.maj(banque);
 		}
 		Utilisateur joueur = utilisateurDao.trouverParId(utilisateur.getId());
 		session.setAttribute("utilisateur", joueur);

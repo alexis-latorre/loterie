@@ -220,9 +220,10 @@ public class GrilleServlet extends HttpServlet {
 			cible = Constants.URN_MEMBRE_AFFICHER_GRILLE;
 			
 			GrilleJeuForm jgf = new GrilleJeuForm(lienGUDao, jourDao, banqueDao, portefeuilleDao, utilisateurDao, req);
+			Map<String, String> erreurs = jgf.getErreurs();
 			
 			// Si aucun problème n'est détecté, la grille est jouée
-			if (jgf.getErreurs().isEmpty())  {
+			if (erreurs.isEmpty()) {
 				Map<String, Object> retour = jgf.jouer();
 				
 				if (jgf.getJoueur() != null) {
@@ -233,10 +234,12 @@ public class GrilleServlet extends HttpServlet {
 					Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
 							Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, retour.get("grille"));
 				}
-				resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + 
-						"?id=" + jgf.getGrilleId());
-				return;
+			} else {
+				req.setAttribute("messageEchec", erreurs.get("messageEchec"));
 			}
+			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + 
+					"?id=" + jgf.getGrilleId());
+			return;
 		}
 		req.getServletContext().getRequestDispatcher(cible).forward(req, resp);
 	}

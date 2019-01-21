@@ -291,7 +291,7 @@ h4 {
 	min-width: 60%;
 }
 
-.popupSucces {
+.popupSucces, .popupEchec {
 	position: absolute;
 	right: 20px;
 	bottom: 20px;
@@ -299,10 +299,18 @@ h4 {
 	min-width: 20%;
 	height: 3em;
 	padding: 1em;
-	background-color: #DFF0D8;
-	border: solid 1px #3C763D;
 	border-radius: 4px;
 	vertical-align: middle;
 	cursor: pointer;
 	display: none;
+}
+
+.popupEchec {
+	background-color: #f2dede;
+	border: solid 1px #a94442;
+}
+
+.popupSucces {
+	background-color: #DFF0D8;
+	border: solid 1px #3C763D;
 }
