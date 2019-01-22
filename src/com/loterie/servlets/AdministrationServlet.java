@@ -26,7 +26,6 @@ import com.loterie.forms.LogRecuperationForm;
 import com.loterie.forms.PrivilegesModificationForm;
 import com.loterie.forms.UtilisateurCreditForm;
 import com.loterie.forms.UtilisateurRecuperationForm;
-import com.loterie.tools.DevTools;
 import com.loterie.tools.Logger;
 
 @WebServlet(urlPatterns = {
@@ -68,7 +67,8 @@ public class AdministrationServlet extends HttpServlet {
 				case Constants.URL_ADMIN_CREDITER: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
-					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, retardDao, req);
+					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, 
+							retardDao, req);
 					String id = req.getParameter("id");
 					
 					if (id != null && !id.isEmpty()) {
@@ -83,7 +83,8 @@ public class AdministrationServlet extends HttpServlet {
 				case Constants.URL_ADMIN_DETAILS_UTILISATEURS: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
-					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, retardDao, req);
+					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, 
+							retardDao, req);
 					urf.recupererRang(Constants.L_UTILISATEUR_ROLE_BASIQUE);
 					cible = Constants.URN_ADMIN_DETAILS_UTILISATEURS;
 					break;
@@ -91,8 +92,10 @@ public class AdministrationServlet extends HttpServlet {
 				case Constants.URL_ADMIN_DETAILS_UTILISATEUR: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 					
-					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, retardDao, req);
+					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, 
+							retardDao, req);
 					urf.recupererId();
+					//TODO: bouger cette portion
 					Map<String, String[]> privileges = new HashMap<String, String[]>();
 					privileges.put("banque", Privileges.BANQUE);
 					privileges.put("grille", Privileges.GRILLE);
@@ -145,7 +148,7 @@ public class AdministrationServlet extends HttpServlet {
 			if (utilisateur.estModerateur() || utilisateur.estAdministrateur()) {
 				switch (uri) {
 					case Constants.URL_ADMIN_CREDITER: {
-						DevTools.dumpSession(req);
+						//DevTools.dumpSession(req);
 						String id = req.getParameter("joueur");
 						
 						if (id == null || id.isEmpty()) {
@@ -161,18 +164,20 @@ public class AdministrationServlet extends HttpServlet {
 						if (utilisateur.getId().equals(joueurCredite.getId())) {
 							session.setAttribute("utilisateur", joueurCredite);
 						}
-						
+
 						if (ucf.getErreurs().isEmpty()) {
-							Logger.log(logDao, "%u a " + retour.get("action") + " %j de " + retour.get("fonds") + " euros.", 
-									Constants.LOG_INFO, Constants.LOG_FINANCE, utilisateur, 
+							Logger.log(logDao, "%u a " + retour.get("action") + " %j de " + retour.get("fonds") + 
+									" euros.", Constants.LOG_INFO, Constants.LOG_FINANCE, utilisateur, 
 									(Utilisateur)retour.get("joueur"));
 						}
 						resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_ADMIN_CREDITER);
 						return;
 					}
 					case Constants.URL_ADMIN_MODIFIER_PRIVILEGES: {
-						Utilisateur joueur = utilisateurDao.trouverParId(Long.valueOf((String) session.getAttribute("idJoueur")));
-						PrivilegesModificationForm pmf = new PrivilegesModificationForm(joueur.getPrivilege(), privilegeDao, req);
+						String idJoueur = (String) session.getAttribute("idJoueur");
+						Utilisateur joueur = utilisateurDao.trouverParId(Long.valueOf(idJoueur));
+						PrivilegesModificationForm pmf = new PrivilegesModificationForm(joueur.getPrivilege(), 
+								privilegeDao, req);
 						pmf.valider();
 						Map<String, String> erreurs = pmf.getErreurs();
 						
@@ -182,7 +187,8 @@ public class AdministrationServlet extends HttpServlet {
 							utilisateurDao.clearCache();
 						}
 						
-						resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_ADMIN_DETAILS_UTILISATEURS);
+						resp.sendRedirect(req.getServletContext().getContextPath() + 
+								Constants.URL_ADMIN_DETAILS_UTILISATEURS);
 						return;
 					}
 					default: cible = Constants.URN_ADMIN_ACCUEIL;

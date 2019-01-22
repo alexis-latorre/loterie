@@ -71,10 +71,10 @@ public class UtilisateurModificationForm {
 				} else {
 					switch (nom) {
 						case "nom":
-							utilisateur.setNom(Tools.capitalize(param));
+							utilisateur.setNom(Tools.titre(param));
 							break;
 						case "prenom":
-							utilisateur.setPrenom(Tools.capitalize(param));
+							utilisateur.setPrenom(Tools.titre(param));
 							break;
 						case "motDePasse": {
 							boolean err = false;

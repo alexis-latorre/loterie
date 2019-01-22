@@ -83,6 +83,7 @@ public class PublicServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = null;
 
+		//TODO: bouger cette grosse portion
 		try {
 			if (null != session && (boolean) session.getAttribute("loggedIn")) {
 				utilisateur = (Utilisateur) session.getAttribute("utilisateur");

@@ -7,6 +7,14 @@ public class GrilleHTML {
 	private Grille g;
 	private String url = "";
 	
+	/**
+	 * <b><i>GrilleHTML</i></b><br />
+	 * <pre>public GrilleHTML({@link com.loterie.entities.Grille Grille} grille)</pre>
+	 * Construit un objet métier à afficher à l'utilisateur 
+	 * 
+	 * @param grille - grille liée à l'objet métier 
+	 * @return l'objet construit
+	 */
 	public GrilleHTML(Grille grille) {
 		setG(grille);
 	}

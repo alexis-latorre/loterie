@@ -221,7 +221,8 @@ public class GrilleServlet extends HttpServlet {
 			
 			GrilleJeuForm jgf = new GrilleJeuForm(lienGUDao, jourDao, banqueDao, portefeuilleDao, utilisateurDao, req);
 			Map<String, String> erreurs = jgf.getErreurs();
-			
+
+			//TODO: bouger cette portion
 			// Si aucun problème n'est détecté, la grille est jouée
 			if (erreurs.isEmpty()) {
 				Map<String, Object> retour = jgf.jouer();

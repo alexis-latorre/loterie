@@ -25,7 +25,7 @@ public class PrivilegesModificationForm {
 	
 	public void valider() {
 		privileges = "";
-		String[] tousPrivileges = (String[]) Tools.concatenerString(Privileges.BANQUE, Privileges.GRILLE, Privileges.JEU, 
+		String[] tousPrivileges = (String[]) Tools.concatenerTableauxString(Privileges.BANQUE, Privileges.GRILLE, Privileges.JEU, 
 				Privileges.JOUR, Privileges.LGU, Privileges.LOG, Privileges.PORTEFEUILLE, Privileges.PRIVILEGE, 
 				Privileges.RESULTAT, Privileges.RETARD, Privileges.UTILISATEUR);
 		

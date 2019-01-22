@@ -58,6 +58,7 @@ public class ConnexionServlet extends HttpServlet {
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");			
 			// Récupère les grilles du mois pour lequel l'utilisateur participe ou celles qu'il a créées
 			GrilleRecuperationDuMoisForm gdmf = new GrilleRecuperationDuMoisForm(jourDao, grilleDao, utilisateur, req);
+			//TODO: bouger cette portion
 			req.setAttribute("mois", gdmf.getMois());
 			req.setAttribute("anneeAjd", gdmf.getMois().isAnneeAjd());
 			req.setAttribute("moisAjd", gdmf.getMois().isMoisAjd());

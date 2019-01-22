@@ -37,7 +37,7 @@ public class UtilisateurRecuperationForm {
 		List<UtilisateurHTML> joueurs = new ArrayList<UtilisateurHTML>();
 		
 		for (Utilisateur utilisateur : utilisateurs) {
-			utilisateur.setNomRole(Tools.title(RolesConfig.getRole(utilisateur.getNiveau())));
+			utilisateur.setNomRole(Tools.titre(RolesConfig.getRole(utilisateur.getNiveau())));
 			List<Grille> grilles = grilleDao.trouverParUtilisateur(utilisateur);
 			UtilisateurHTML joueur = new UtilisateurHTML(utilisateur);
 
@@ -80,7 +80,7 @@ public class UtilisateurRecuperationForm {
 	public void recupererId() {
 		try {
 			Utilisateur joueur = utilisateurDao.trouverParId(Long.valueOf(req.getParameter("id")));
-			joueur.setNomRole(Tools.title(RolesConfig.getRole(joueur.getNiveau())));
+			joueur.setNomRole(Tools.titre(RolesConfig.getRole(joueur.getNiveau())));
 			req.setAttribute("joueur", new UtilisateurHTML(joueur));
 		} catch (Exception e) {
 			// TODO: Implémenter le message

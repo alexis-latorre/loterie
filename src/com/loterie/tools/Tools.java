@@ -16,7 +16,6 @@ import com.loterie.config.Messages;
 public class Tools {	
 	public static final int VERIF_TAILLE 		= 1;
 	public static final int VERIF_REGEXP 		= 2;
-	private static final DateTime NOW			= new DateTime();
 
 	/**
 	 * <b><i>comparerChainesNonNull</i></b><br />
@@ -344,26 +343,51 @@ public class Tools {
 		
 		return null;
 	}
-	
-	public static String title(String str) {
-		if (str == null || str.isEmpty()) {
-			return "";
-		} else if (str.length() < 2) {
-			return str.toUpperCase();
-		} else {
-			return str.substring(0, 1).toUpperCase() + str.substring(1);
-		}
+
+	/**
+	 * <b><i>getDateSlash</i></b><br />
+	 * <pre>public static {@link java.lang.String String} getDateSlash()</pre>
+	 * Retourne la date du moment
+	 * 
+	 * @return la date du moment au format jj/mm/aaaa
+	 */
+	public static String getDateSlash() {
+		DateTime now = new DateTime();
+		return now.getDayOfMonth() + "/" + now.getMonthOfYear() + "/" + now.getYear();
 	}
 
-	public static String getDate() {
-		return NOW.getYear() + "-" + NOW.getMonthOfYear() + "-" + NOW.getDayOfMonth();
+	/**
+	 * <b><i>getDateTiret</i></b><br />
+	 * <pre>public static {@link java.lang.String String} getDateTiret()</pre>
+	 * Retourne la date du moment
+	 * 
+	 * @return la date du moment au format aaaa-mm-jj
+	 */
+	public static String getDateTiret() {
+		DateTime now = new DateTime();
+		return now.getYear() + "-" + now.getMonthOfYear() + "-" + now.getDayOfMonth();
 	}
 
+	/**
+	 * <b><i>getHeure</i></b><br />
+	 * <pre>public static {@link java.lang.String String} getHeure()</pre>
+	 * Retourne l'heure du moment
+	 * 
+	 * @return l'heure du moment au format hh:mm:ss
+	 */
 	public static String getHeure() {
-		return NOW.getHourOfDay() + ":" + NOW.getMinuteOfHour() + ":" + NOW.getSecondOfMinute();
+		DateTime now = new DateTime();
+		return now.getHourOfDay() + ":" + now.getMinuteOfHour() + ":" + now.getSecondOfMinute();
 	}
 	
-	public static String[] concatenerString(String[] ... arrays) {
+	/**
+	 * <b><i>concatenerTableauxString</i></b><br />
+	 * <pre>public static {@link java.lang.String String}[] concatenerTableauxString()</pre>
+	 * 
+	 * @param arrays
+	 * @return
+	 */
+	public static String[] concatenerTableauxString(String[] ... arrays) {
 		int taille = 0;
 		int pos = 0;
 		
@@ -384,8 +408,16 @@ public class Tools {
 			return resultat;
 		}
 	}
-
-	public static String capitalize(String param) {
+	
+	/**
+	 * <b><i>titre</i></b><br />
+	 * <pre>public static {@link java.lang.String String} titre({@link java.lang.String String} str)</pre>
+	 * Permet de mettre le première lettre d'une chaîne en majuscule
+	 * 
+	 * @param str - chaîne à mettre en titre
+	 * @return la chaîne mise en titre
+	 */
+	public static String titre(String param) {
 		String r = "";
 		
 		if (param.length() > 0) {

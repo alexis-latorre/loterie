@@ -69,6 +69,7 @@ public class MembreServlet extends HttpServlet {
 			if (utilisateur.estBasique()) {
 				UtilisateurModificationForm umf = new UtilisateurModificationForm(utilisateur, utilisateurDao, req);
 				umf.valider();				
+				//TODO: bouger cette portion
 				Map<String, String> erreurs = umf.getErreurs();
 				
 				if (erreurs.size() > 0) {
