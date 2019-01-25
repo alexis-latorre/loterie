@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.loterie.config.Constants;
+import com.loterie.config.Messages;
 import com.loterie.dao.BanqueDao;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JeuDao;
@@ -164,11 +165,11 @@ public class GrilleServlet extends HttpServlet {
 			// Si aucune erreur n'est détectée, crée une nouvlle grille en BDD
 			if (gcf.getErreurs().isEmpty()) {
 				Map<String, Object> retour = gcf.creer();
-				Logger.log(logDao, "%u a créé la grille %g.", 
+				Logger.log(logDao, Messages.LOG_CREER_GRILLE, 
 						Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, retour.get("grille"));
 				
 				for (Utilisateur joueur : (List<Utilisateur>) retour.get("joueurs")) {
-					Logger.log(logDao, "%u a lié %j à la grille %g.", 
+					Logger.log(logDao, Messages.LOG_AJOUTER_JOUEUR_GRILLE, 
 							Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, joueur, 
 							(Grille)retour.get("grille"));
 				}
@@ -185,17 +186,17 @@ public class GrilleServlet extends HttpServlet {
 			Map<String, Object> retour = gcf.modifier();
 			
 			for (Utilisateur joueurRetire : (List<Utilisateur>)retour.get("joueursRetires")) {
-				Logger.log(logDao, "%u a retiré le joueur %j de la grille %g.", 
+				Logger.log(logDao, Messages.LOG_RETIRER_JOUEUR_GRILLE, 
 						Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, joueurRetire, 
 						(Grille)retour.get("grille"));
 			}
 			
 			for (Utilisateur joueurAjoute : (List<Utilisateur>)retour.get("joueursAjoutes")) {
-				Logger.log(logDao, "%u a ajouté le joueur %j à la grille %g.", 
+				Logger.log(logDao, Messages.LOG_AJOUTER_JOUEUR_GRILLE, 
 						Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, joueurAjoute, 
 						(Grille)retour.get("grille"));
 			}
-			Logger.log(logDao, "%u a modifié la grille %g.", 
+			Logger.log(logDao, Messages.LOG_MODIFIER_GRILLE, 
 					Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, (Grille)retour.get("grille"));
 			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
 			return;

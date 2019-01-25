@@ -17,6 +17,15 @@ public interface Messages {
 	public static final String MSG_EMAIL_EXISTANT 					= "Cette adresse email est déjà utilisée par un autre compte.";
 	public static final String MSG_ERREUR_MDP 						= "Le mot de passe entré n'est pas valide.";
 	public static final String MSG_ERREUR_MDPC 						= "Les mots de passe entrés sont différents.";
+	
+	/**
+	 * Messages de log
+	 */
+	public static final String LOG_CREER_GRILLE						= "%u a créé la grille %g.";
+	public static final String LOG_AJOUTER_JOUEUR_GRILLE			= "%u a ajouté le joueur %j à la grille %g.";
+	public static final String LOG_RETIRER_JOUEUR_GRILLE			= "%u a retiré le joueur %j de la grille %g.";
+	public static final String LOG_MODIFIER_GRILLE					= "%u a modifié la grille %g.";
+	public static final String LOG_MODIFIER_PROFIL					= "%u a modifié ses informations de profil.";
 			
 	/**
 	 * Messages de la console

@@ -38,7 +38,7 @@ public class Log {
 	public void LogInit(String message, String niveau, String type, Utilisateur declencheur, 
 			Object entiteLiee) {
 		this.message = message;
-		this.jour = Date.valueOf(Tools.getDateSlash());
+		this.jour = Date.valueOf(Tools.getDateTiret());
 		this.heure = Time.valueOf(Tools.getHeure());
 		this.niveau = niveau;
 		this.type = type;
@@ -56,7 +56,7 @@ public class Log {
 	public void LogInit(String message, String niveau, String type, Utilisateur declencheur,
 			Utilisateur utilisateurLie, Grille grilleLiee) {
 		this.message = message;
-		this.jour = Date.valueOf(Tools.getDateSlash());
+		this.jour = Date.valueOf(Tools.getDateTiret());
 		this.heure = Time.valueOf(Tools.getHeure());
 		this.niveau = niveau;
 		this.type = type;

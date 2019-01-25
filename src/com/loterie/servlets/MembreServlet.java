@@ -15,7 +15,6 @@ import com.loterie.dao.LogDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.UtilisateurModificationForm;
-import com.loterie.tools.Logger;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_MEMBRE_PROFIL,
@@ -67,18 +66,15 @@ public class MembreServlet extends HttpServlet {
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 			
 			if (utilisateur.estBasique()) {
-				UtilisateurModificationForm umf = new UtilisateurModificationForm(utilisateur, utilisateurDao, req);
-				umf.valider();				
-				//TODO: bouger cette portion
+				UtilisateurModificationForm umf = new UtilisateurModificationForm(utilisateur, utilisateurDao, logDao,
+						req);
+				umf.valider();
 				Map<String, String> erreurs = umf.getErreurs();
 				
 				if (erreurs.size() > 0) {
 					req.setAttribute("erreurs", erreurs);
 				} else {
 					umf.modifier();
-					Logger.log(logDao, "%u a modifié ses informations de profil.", Constants.LOG_INFO, 
-							Constants.LOG_COMPTE, utilisateur);
-					req.setAttribute("messageSucces", "Informations mises à jour avec succès");
 				}
 			}
 		}

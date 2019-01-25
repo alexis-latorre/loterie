@@ -12,19 +12,24 @@ import javax.servlet.http.HttpServletRequest;
 import com.loterie.config.Constants;
 import com.loterie.config.Messages;
 import com.loterie.config.Privileges;
+import com.loterie.dao.LogDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
+import com.loterie.tools.Logger;
 import com.loterie.tools.Tools;
 
 public class UtilisateurModificationForm {
 	private UtilisateurDao utilisateurDao;
+	private LogDao logDao;
 	private Utilisateur utilisateur;
 	private Map<String, String> erreurs = new HashMap<String, String>();
 	private HttpServletRequest req;
 	
-	public UtilisateurModificationForm(Utilisateur utilisateur, UtilisateurDao utilisateurDao, HttpServletRequest req) {
+	public UtilisateurModificationForm(Utilisateur utilisateur, UtilisateurDao utilisateurDao, LogDao logDao,
+			HttpServletRequest req) {
 		this.utilisateur = utilisateur;
 		this.utilisateurDao = utilisateurDao;
+		this.logDao = logDao;
 		this.req = req;
 	}
 	
@@ -36,6 +41,9 @@ public class UtilisateurModificationForm {
 		if (erreurs.size() == 0) {
 			utilisateurDao.maj(utilisateur);
 			utilisateurDao.clearCache();
+			Logger.log(logDao, Messages.LOG_MODIFIER_PROFIL, Constants.LOG_INFO, 
+					Constants.LOG_COMPTE, utilisateur);
+			req.setAttribute("messageSucces", "Informations mises à jour avec succès");
 		}
 	}
 	
