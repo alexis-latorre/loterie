@@ -55,6 +55,7 @@
 			<a href="<c:url value="/membre/creerGrille" />">Créer une grille</a></p>
 		</c:otherwise>
 	</c:choose>
+	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

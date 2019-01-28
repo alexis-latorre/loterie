@@ -123,6 +123,7 @@
 			</div>
 		</form>
 	</div>
+	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 	<c:import url="/WEB-INF/js/form.js.jsp" />
 	<c:import url="/WEB-INF/js/validator.js.jsp" />

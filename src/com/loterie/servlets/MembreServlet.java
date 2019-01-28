@@ -41,6 +41,7 @@ public class MembreServlet extends HttpServlet {
 		
 		// Si l'utilisateur est authentifié, son espace membre lui est montré
 		if (loggedIn) {
+			req.setAttribute("titrePage", "profile");
 			cible = Constants.URN_MEMBRE_PROFIL;
 		}
 		// Transmet l'information de connexion à la page JSP
@@ -62,6 +63,7 @@ public class MembreServlet extends HttpServlet {
 		}
 		
 		if (loggedIn) {
+			req.setAttribute("titrePage", "profile");
 			cible = Constants.URN_MEMBRE_PROFIL;
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 			

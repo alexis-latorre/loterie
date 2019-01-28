@@ -14,8 +14,8 @@
 	<c:set var="solde" value="0" />
 </c:otherwise>
 </c:choose>
-<div class="well col-md-12">
-	<div class="col-md-6 main-text-blue">
+<div class="well row">
+	<div class="col-md-6">
 		<span>Mon solde</span>
 		<br />
 		<span class="${classeSolde}"><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${solde}" type="currency"></fmt:formatNumber></span>

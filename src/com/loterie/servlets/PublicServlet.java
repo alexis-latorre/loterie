@@ -78,6 +78,7 @@ public class PublicServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("titrePage", "results");
 		Resultat dernier = resultatDao.trouverDernier();
 		
 		HttpSession session = req.getSession();

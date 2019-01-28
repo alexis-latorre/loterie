@@ -16,6 +16,7 @@
 		<li><a href="<c:url value="/membre/creerGrille" />">Créer une grille</a>
 		<!--li><a href="<c:url value="/membre/monPortefeuille" />">Accéder à mon portefeuille</a-->
 	</ul>
+	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

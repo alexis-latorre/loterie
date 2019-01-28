@@ -1,0 +1,1 @@
+<span class="glyphicon glyphicon-signal">&nbsp;</span>Résultats

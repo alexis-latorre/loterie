@@ -137,6 +137,7 @@
 			<a href="<c:url value="/resultats"><c:param name="p" value="${r.nbPages}" /></c:url>#historique" class="main-text-gold"><span class="glyphicon glyphicon-step-forward"></span></a>
 		</p>
 	</div>
+	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 	<c:import url="/WEB-INF/js/resultats.js.jsp" />
 </body>

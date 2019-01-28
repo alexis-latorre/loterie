@@ -19,11 +19,17 @@ td.calendrier-case {
 	background-color: #f5f5f5;
 }
 
-td.calendrier-case {
+table.calendrier td, table.calendrier th {
 	display: inline-block;
 	width: calc((100% - 30px) / 7);
-	height: 100px;
 	margin-bottom: 6px;
+}
+
+td.calendrier-case-header {
+	display: inline-block;
+	width: 40px;
+	margin-bottom: 6px;
+	text-align: center;
 }
 
 td.mois-courant {
@@ -36,8 +42,8 @@ td.aujourdhui {
 	
 td.calendrier-case div.card {
 	display: inline-block;
-	width: 100%;
-	height: 100%;
+	width: 40px;
+	height: 40px;
 }
 
 div.calendrier-case-contenu {
@@ -45,7 +51,7 @@ div.calendrier-case-contenu {
 }
 
 div.calendrier-case-jour {
-	float: right;
+	text-align: center;
 	color: red;
 }
 

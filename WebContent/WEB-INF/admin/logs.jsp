@@ -57,6 +57,7 @@
 			</tbody>
 		</table>
 	</div>
+	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 	<c:import url="/WEB-INF/js/tablesorter.js.jsp" />
 	<script type="text/javascript">
