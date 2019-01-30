@@ -1,1 +1,1 @@
-<span class="glyphicon glyphicon-signal">&nbsp;</span>Résultats
+<span class="glyphicon glyphicon-time">&nbsp;</span>Résultats

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav id="navbarHeader" class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="row">
 			<div id="logo" class="col-sm-3 col-md-2">
@@ -26,7 +26,8 @@
 								<li><a href="<c:url value="/admin/" />"><span class="glyphicon glyphicon-briefcase">&nbsp;</span>Administration</a></li>
 							</c:if>
 							<li><a href="<c:url value="/accueil" />"><span class="glyphicon glyphicon-home">&nbsp;</span>Tableau de bord</a></li>
-							<li><a href="<c:url value="/resultats" />"><span class="glyphicon glyphicon-signal">&nbsp;</span>Résultats</a></li>
+							<li><a href="<c:url value="/resultats" />"><span class="glyphicon glyphicon-time">&nbsp;</span>Résultats</a></li>
+							<!--li><a href="<c:url value="/statistiques" />"><span class="glyphicon glyphicon-signal">&nbsp;</span>Statistiques</a></li-->
 							<c:if test="${loggedIn}">
 								<li><a href="<c:url value="/membre/profil" />"><span class="glyphicon glyphicon-cog">&nbsp;</span>Mon profil</a></li>
 							</c:if>
@@ -72,4 +73,4 @@
 				</ul>
 			</c:if>
 		</div>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<div id="main" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

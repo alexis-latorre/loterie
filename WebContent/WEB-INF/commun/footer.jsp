@@ -1,6 +1,6 @@
 		</div>
 	</div>
-</div>		
+</div>	
 <c:if test="${not empty messageSucces}">
 <div id="popupSucces" class="popupSucces text-success">
 	<c:out value="${messageSucces}" />
@@ -13,3 +13,4 @@
 	<c:import url="/WEB-INF/js/popupError.js.jsp" />
 </div>
 </c:if>
+<c:import url="/WEB-INF/js/scrollspy.js.jsp" />	
