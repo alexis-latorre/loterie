@@ -102,6 +102,8 @@ public interface Constants {
 	public static final String URL_MEMBRE_ACTIVER_GRILLE 					= "/membre/activerGrille";
 	public static final String URL_MEMBRE_DESACTIVER_GRILLE 				= "/membre/desactiverGrille";
 	
+	public static final String URL_JOUR_AFFICHER_DETAILS					= "/jour/detailsJour";
+	
 	public static final String URL_ADMIN_ACCUEIL 							= "/admin/accueil";
 	public static final String URL_ADMIN_CREDITER							= "/admin/crediterJoueur";
 	public static final String URL_ADMIN_DETAILS_UTILISATEUR 				= "/admin/detailsUtilisateur";
@@ -127,6 +129,8 @@ public interface Constants {
 	public static final String URN_MEMBRE_CREER_GRILLE 						= "/WEB-INF/membre/creerGrille.jsp";
 	public static final String URN_MEMBRE_MODIFIER_GRILLE 					= "/WEB-INF/membre/modifierGrille.jsp";
 	public static final String URN_MEMBRE_PORTEFEUILLE 						= "/WEB-INF/membre/afficherPortefeuille.jsp";
+	
+	public static final String URN_JOUR_AFFICHER_DETAILS 					= "/WEB-INF/jour/details.jsp";
 
 	public static final String URN_ADMIN_403 								= "/WEB-INF/admin/403.jsp";
 	public static final String URN_ADMIN_ACCUEIL 							= "/WEB-INF/admin/homePage.jsp";
@@ -152,6 +156,7 @@ public interface Constants {
 	public static final String SELECT_GRILLE_PAR_ID 						= "SELECT g FROM Grille g WHERE g.id = :id";
 	public static final String SELECT_LIEN_GU_PAR_ID 						= "SELECT l FROM LienGrilleUtilisateur l WHERE l.id = :id";
 	public static final String SELECT_LIEN_GU_PAR_GRILLE 					= "SELECT l FROM LienGrilleUtilisateur l WHERE l.grille = :grille";
+	public static final String SELECT_LIEN_GU_PAR_UTILISATEUR 				= "SELECT l FROM LienGrilleUtilisateur l WHERE l.utilisateur = :utilisateur";
 	public static final String SELECT_LIEN_GU_PAR_GRILLE_ET_UTILISATEUR 	= "SELECT l FROM LienGrilleUtilisateur l WHERE l.grille = :grille AND l.utilisateur = :utilisateur";
 	public static final String SELECT_JOUR_PAR_DATE 						= "SELECT j FROM Jour j WHERE j.dateJour = :dateJour";
 	public static final String SELECT_JOUR_PAR_LGU 							= "SELECT j FROM Jour j WHERE j.lgu = :lgu";

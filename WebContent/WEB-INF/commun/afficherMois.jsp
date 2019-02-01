@@ -38,21 +38,46 @@
 							<c:set var="aujourdhui" value=""></c:set>
 						</c:otherwise>
 					</c:choose>
+					<td class="calendrier-case ${moisCourant}${aujourdhui}">
+						<div class="card">
+							<div class="calendrier-case-contenu">
+								<div class="calendrier-case-jour">
+									<c:choose>
+										<c:when test="${not empty jour.grilles}">
+											<c:set var="nbOK" value="0" />
+											<c:set var="nbGrilles" value="0" />
+											<c:forEach items="${jour.grilles}" var="grille">
+												<c:if test="${grille.paye}">
+													<c:set var="nbOK" value="${nbOK + 1}" />
+												</c:if>
+												<c:set var="nbGrilles" value="${nbGrilles + 1}" />
+											</c:forEach>
+											<c:choose>
+												<c:when test="${nbOK == nbGrilles}">
+													<c:set var="classeCase" value=" grilleOK" />
+												</c:when>
+												<c:when test="${nbOK == 0}">
+													<c:set var="classeCase" value=" grilleKO" />
+												</c:when>
+												<c:otherwise>
+													<c:set var="classeCase" value=" grilleMid" />
+												</c:otherwise>									
+											</c:choose>
+										</c:when>
+										<c:otherwise>
+											<c:set var="classeCase" value="" />
+										</c:otherwise>
+									</c:choose>
+									<a onclick="chargerDetailJour('<c:out value="${mois.annee}-${mois.numero}-${jour.numeroDansMois}" />')" href="#details?id=<c:out value="${mois.annee}-${mois.numero}-${jour.numeroDansMois}" />" class="detailGrille<c:out value="${classeCase}" />"><c:out value="${jour.numeroDansMois}" /></a>
+								</div>
+							</div>
+						</div>
+					</td>
 				</c:when>
 				<c:otherwise>
-					<c:set var="moisCourant" value=""></c:set>
-					<c:set var="aujourdhui" value=""></c:set>
+					<td></td>
 				</c:otherwise>
 			</c:choose>
-			<td class="calendrier-case ${moisCourant}${aujourdhui}">
-				<div class="card">
-					<div class="calendrier-case-contenu">
-						<div class="calendrier-case-jour">
-							<c:out value="${jour.numeroDansMois}"></c:out>
-						</div>
-					</div>
-				</div>
-			</td>
 		</c:forEach>
 		</tr>
 		<c:set var="ligneCourante" value="${ligneCourante + 1}"></c:set>
@@ -60,3 +85,4 @@
 	</table>
 </div>
 <br />
+<c:import url="/WEB-INF/js/ajax.js.jsp" />

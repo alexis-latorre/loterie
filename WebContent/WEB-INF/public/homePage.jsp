@@ -21,13 +21,14 @@
 		<c:otherwise>
 			<h4 style="text-align: center;">Résumé de mon compte</h4>
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-7">
-						<c:import url="/WEB-INF/membre/resumePortefeuille.jsp" />
-					</div>
-					<div class="col-md-5">
-						<c:import url="/WEB-INF/commun/afficherMois.jsp" />
-					</div>
+				<div class="col-md-7">
+					<c:import url="/WEB-INF/membre/resumePortefeuille.jsp" />
+				</div>
+				<div class="col-md-5">
+					<c:import url="/WEB-INF/commun/afficherMois.jsp" />
+				</div>
+				<div id="detailJour" class="well col-md-7">
+					<c:import url="/WEB-INF/jour/details.jsp" />
 				</div>
 			</div>
 		</c:otherwise>

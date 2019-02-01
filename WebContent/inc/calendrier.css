@@ -16,7 +16,7 @@ table.calendrier tr {
 }
 
 td.calendrier-case {
-	background-color: #E5E5E5;
+	background-color: #EEE;
 	display: inline-block;
 	width: 40px;
 	height: 40px;
@@ -39,11 +39,6 @@ td.calendrier-case-header {
 td.mois-courant {
 	background-color: white;
 }
-
-td.aujourdhui {
-	border: solid 2px #f0ece0;
-	border-radius: 100px;
-}
 	
 td.calendrier-case div.card {
 	display: inline-block;
@@ -58,16 +53,11 @@ div.calendrier-case-contenu {
 }
 
 div.calendrier-case-jour {
-	padding: 10px 0 10px 0;
 	display: block;
 	width: 100%;
 	text-align: center;
 	line-height: 20px;
 	color: #024b8a;
-}
-
-td.aujourdhui div.calendrier-case-jour {
-	padding: 8px 0 12px 0;
 }
 
 .calendrier .card {
@@ -84,4 +74,31 @@ td.aujourdhui div.calendrier-case-jour {
 	color: #00368E;
 	text-align: center;
 	margin-bottom: 20px;
+}
+
+a.detailGrille {
+	margin: 5px;
+	padding: 5px 0 5px 0;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	border-radius: 20px;
+}
+
+a.grilleOK {
+	background-color: #7eea73;
+}
+
+a.grilleKO {
+	background-color: #f18588;
+}
+
+a.grilleMid {
+	background-color: #ffee8a;
+}
+
+td.aujourdhui a {
+	border: solid 2px #024b8a;
+	padding-left: 0px;
+	padding-top: 3px;
 }
