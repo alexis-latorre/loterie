@@ -350,22 +350,6 @@ h4 {
 	line-height: 20px;
 }
 
-.white {
-	background-color: white;
-}
-
-.blue {
-	background-color: #5050FF;
-}
-
-.yellow {
-	background-color: yellow;
-}
-
-.green {
-	background-color: #50C050;
-}
-
-.red {
-	background-color: red;
+.subnav li a {
+	padding-left: 60px;
 }

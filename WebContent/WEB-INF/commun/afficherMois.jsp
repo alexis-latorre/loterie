@@ -68,7 +68,7 @@
 											<c:set var="classeCase" value="" />
 										</c:otherwise>
 									</c:choose>
-									<a onclick="chargerDetailJour('<c:out value="${mois.annee}-${mois.numero}-${jour.numeroDansMois}" />')" href="#details?id=<c:out value="${mois.annee}-${mois.numero}-${jour.numeroDansMois}" />" class="detailGrille<c:out value="${classeCase}" />"><c:out value="${jour.numeroDansMois}" /></a>
+									<a onclick="chargerDetailJour('<c:out value="${mois.annee}-${mois.numero}-${jour.numeroDansMois}" />')" href="#detailsJour" class="detailGrille<c:out value="${classeCase}" />"><c:out value="${jour.numeroDansMois}" /></a>
 								</div>
 							</div>
 						</div>

@@ -27,8 +27,8 @@
 				<div class="col-md-5">
 					<c:import url="/WEB-INF/commun/afficherMois.jsp" />
 				</div>
-				<div id="detailJour" class="well col-md-7">
-					<c:import url="/WEB-INF/jour/details.jsp" />
+				<div id="detailsJour" class="well col-md-7">
+					<c:import url="/WEB-INF/jour/detailsJour.jsp" />
 				</div>
 			</div>
 		</c:otherwise>

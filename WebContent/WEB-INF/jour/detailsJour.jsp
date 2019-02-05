@@ -16,3 +16,4 @@
 		<p>Pas de grille</p>
 	</c:otherwise>
 </c:choose>
+<p>

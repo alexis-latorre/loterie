@@ -1,0 +1,1 @@
+<span></span><span class="glyphicon glyphicon-piggy-bank">&nbsp;</span>Créditer un joueur

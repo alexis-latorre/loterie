@@ -14,10 +14,12 @@ import javax.servlet.http.HttpSession;
 
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
+import com.loterie.dao.LienGUDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.UtilisateurConnexionForm;
 import com.loterie.tools.DevTools;
+import com.loterie.forms.GrilleRecuperationDuJourForm;
 import com.loterie.forms.GrilleRecuperationDuMoisForm;
 
 @WebServlet(urlPatterns = {
@@ -33,6 +35,8 @@ public class ConnexionServlet extends HttpServlet {
 	private JourDao jourDao;
 	@EJB
 	private GrilleDao grilleDao;
+	@EJB
+	private LienGUDao lguDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -59,10 +63,12 @@ public class ConnexionServlet extends HttpServlet {
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");			
 			// Récupère les grilles du mois pour lequel l'utilisateur participe ou celles qu'il a créées
 			GrilleRecuperationDuMoisForm gdmf = new GrilleRecuperationDuMoisForm(jourDao, grilleDao, utilisateur, req);
+			GrilleRecuperationDuJourForm gdjf = new GrilleRecuperationDuJourForm(lguDao, jourDao, utilisateur, req);
 			//TODO: bouger cette portion
 			req.setAttribute("mois", gdmf.getMois());
 			req.setAttribute("anneeAjd", gdmf.getMois().isAnneeAjd());
 			req.setAttribute("moisAjd", gdmf.getMois().isMoisAjd());
+			req.setAttribute("jour", gdjf.getJour());
 		} else {
 			req.setAttribute("titrePage", "connection");
 		}

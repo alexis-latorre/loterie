@@ -1,5 +1,7 @@
 package com.loterie.forms;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,11 @@ public class GrilleRecuperationDuJourForm {
 			HttpServletRequest req) {		
 		try {
 			String id = req.getParameter("id");
+			
+			if (null == id) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+				id = sdf.format(new Date());
+			}
 			String[] parameters = id.split("-");
 			int jourId = Integer.valueOf(parameters[2]);
 			int mois = Integer.valueOf(parameters[1]);
@@ -32,8 +39,19 @@ public class GrilleRecuperationDuJourForm {
 			for (LienGrilleUtilisateur lgu : lgus) {
 				Jour j = jourDao.trouverParDateEtLGU(jour.getDateJour() + " 12:00:00", lgu);
 				Grille grille = lgu.getGrille();
-				grille.setPaye(null != j && j.getPaye());
-				jour.addGrille(grille);
+				
+				if (null != j) {
+					grille.setPaye(j.getPaye());
+					jour.addGrille(grille);
+				} else {
+					String[] joursDeJeu = grille.getJeu().getJourDeTirage();
+					
+					for (String jourDeJeu : joursDeJeu) {
+						if (jourDeJeu.equals(String.valueOf(jour.getNumeroDansSemaine()))) {
+							jour.addGrille(grille);
+						}
+					}
+				}
 			}
 		} catch (NumberFormatException e) {
 		}

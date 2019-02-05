@@ -66,6 +66,8 @@ public class AdministrationServlet extends HttpServlet {
 			switch (uri) {
 				case Constants.URL_ADMIN_CREDITER: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
+
+					req.setAttribute("titrePage", "creditPlayer");
 					
 					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, 
 							retardDao, req);
@@ -82,7 +84,8 @@ public class AdministrationServlet extends HttpServlet {
 				}
 				case Constants.URL_ADMIN_DETAILS_UTILISATEURS: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
-					
+
+					req.setAttribute("titrePage", "listUsers");
 					UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, 
 							retardDao, req);
 					urf.recupererRang(Constants.L_UTILISATEUR_ROLE_BASIQUE);
@@ -115,7 +118,8 @@ public class AdministrationServlet extends HttpServlet {
 				}
 				case Constants.URL_ADMIN_LOGS: {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
-					
+
+					req.setAttribute("titrePage", "viewLogs");
 					LogRecuperationForm lrf = new LogRecuperationForm(logDao);
 					req.setAttribute("logs", lrf.parseLogs());
 					cible = Constants.URN_ADMIN_LOGS;

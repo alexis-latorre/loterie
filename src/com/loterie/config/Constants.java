@@ -130,7 +130,7 @@ public interface Constants {
 	public static final String URN_MEMBRE_MODIFIER_GRILLE 					= "/WEB-INF/membre/modifierGrille.jsp";
 	public static final String URN_MEMBRE_PORTEFEUILLE 						= "/WEB-INF/membre/afficherPortefeuille.jsp";
 	
-	public static final String URN_JOUR_AFFICHER_DETAILS 					= "/WEB-INF/jour/details.jsp";
+	public static final String URN_JOUR_AFFICHER_DETAILS 					= "/WEB-INF/jour/detailsJour.jsp";
 
 	public static final String URN_ADMIN_403 								= "/WEB-INF/admin/403.jsp";
 	public static final String URN_ADMIN_ACCUEIL 							= "/WEB-INF/admin/homePage.jsp";

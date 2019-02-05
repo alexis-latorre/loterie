@@ -23,7 +23,11 @@
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="hidden-sm hidden-md hidden-lg nav navbar-nav navbar-right">
 							<c:if test="${utilisateur.estAdministrateur() or utilisateur.estModerateur()}">
-								<li><a href="<c:url value="/admin/" />"><span class="glyphicon glyphicon-briefcase">&nbsp;</span>Administration</a></li>
+								<li><span class="glyphicon glyphicon-briefcase">&nbsp;</span>Administration</li>
+								<li><a href="<c:url value="/admin/crediterJoueur" />"><span class="glyphicon glyphicon-piggy-bank">&nbsp;</span>Créditer un joueur</a></li>
+								<li><a href="<c:url value="/admin/detailsUtilisateurs" />"><span class="glyphicon glyphicon-th-list">&nbsp;</span>Afficher les utilisateurs</a></li>
+								<li><a href="<c:url value="/admin/logs" />"><span class="glyphicon glyphicon-duplicate">&nbsp;</span>Consulter les logs</a></li>
+								<hr />
 							</c:if>
 							<li><a href="<c:url value="/accueil" />"><span class="glyphicon glyphicon-home">&nbsp;</span>Tableau de bord</a></li>
 							<li><a href="<c:url value="/resultats" />"><span class="glyphicon glyphicon-time">&nbsp;</span>Résultats</a></li>
@@ -51,8 +55,24 @@
 		<div class="col-sm-3 col-md-2 sidebar">
 			<c:if test="${utilisateur.estAdministrateur() or utilisateur.estModerateur()}">
 				<ul class="nav nav-sidebar">
-					<c:choose><c:when test="${titrePage == 'administration'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
-					<li class="${active}"><a href="<c:url value="/admin/" />"><span class="glyphicon glyphicon-briefcase">&nbsp;</span>Administration</a></li>
+					<li>
+						<c:set var="expanded" value="false" />
+						<c:set var="in" value="" />
+						<c:if test="${titrePage == 'creditPlayer' or titrePage == 'listUsers' or titrePage == 'viewLogs'}">
+							<c:set var="expanded" value="true" /><c:set var="in" value=" in" />
+						</c:if>
+						<a role="button" data-toggle="collapse" href="#adminLinks" aria-expanded="${expanded}" aria-controls="adminLinks"><span class="glyphicon glyphicon-briefcase">&nbsp;</span>Administration</a>
+						<div id="adminLinks" class="collapse${in}">
+							<ul class="nav nav-sidebar subnav">
+								<c:choose><c:when test="${titrePage == 'creditPlayer'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
+								<li class="${active}"><a href="<c:url value="/admin/crediterJoueur" />"><span class="glyphicon glyphicon-piggy-bank">&nbsp;</span>Créditer un joueur</a></li>
+								<c:choose><c:when test="${titrePage == 'listUsers'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
+								<li class="${active}"><a href="<c:url value="/admin/detailsUtilisateurs" />"><span class="glyphicon glyphicon-th-list">&nbsp;</span>Afficher les utilisateurs</a></li>
+								<c:choose><c:when test="${titrePage == 'viewLogs'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
+								<li class="${active}"><a href="<c:url value="/admin/logs" />"><span class="glyphicon glyphicon-duplicate">&nbsp;</span>Consulter les logs</a></li>
+							</ul>
+						</div>
+					</li>
 				</ul>
 				<hr />
 			</c:if>
