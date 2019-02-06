@@ -353,3 +353,16 @@ h4 {
 .subnav li a {
 	padding-left: 60px;
 }
+
+.moisEtoileGain {
+	display: inline-block;
+	background: url('img/etoile.png') #D02020 2px 2px no-repeat;
+	border-radius: 14px;
+	background-size: 14px;
+	min-height: 18px;
+	min-width: 18px;
+	position: relative;
+	top: -30px;
+	left: 12px;
+	margin-left: 5px;
+}

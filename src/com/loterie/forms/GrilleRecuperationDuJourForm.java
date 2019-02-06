@@ -35,6 +35,7 @@ public class GrilleRecuperationDuJourForm {
 			int annee = Integer.valueOf(parameters[0]);
 			lgus = lguDao.trouverParUtilisateur(utilisateur);			
 			jour = new JourHTML(new DateTime().withYear(annee).withMonthOfYear(mois).withDayOfMonth(jourId));
+			double gains = 0.0D;
 			
 			for (LienGrilleUtilisateur lgu : lgus) {
 				Jour j = jourDao.trouverParDateEtLGU(jour.getDateJour() + " 12:00:00", lgu);
@@ -42,6 +43,7 @@ public class GrilleRecuperationDuJourForm {
 				
 				if (null != j) {
 					grille.setPaye(j.getPaye());
+					gains += j.getGains();
 					jour.addGrille(grille);
 				} else {
 					String[] joursDeJeu = grille.getJeu().getJourDeTirage();
@@ -53,6 +55,7 @@ public class GrilleRecuperationDuJourForm {
 					}
 				}
 			}
+			jour.setGains(gains);
 		} catch (NumberFormatException e) {
 		}
 	}
