@@ -16,6 +16,6 @@
 		</c:if>
 		</p>
 		<p>
-			<input class="btn btn-blue" type="submit" value="Se connecter" />
+			<input class="btn btn-blue" type="submit" value="Connexion" />
 			<a class="main-text-blue" style="margin-left: 24px; display: inline-block; margin-top: -24px" href="<c:url value="/inscription" />">Inscription</a>
 		</p>
