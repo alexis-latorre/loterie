@@ -9,7 +9,7 @@
 <body>
 	<div class="container">
 		<c:import url="/WEB-INF/commun/header.jsp" />
-		<h4>Mon profil</h4>
+		<h4>Profil</h4>
 		<form role="form" data-toggle="validator" id="formSubmit" class="form-inline" accept-charset="ISO-8859-1" action="<c:url value="/membre/modifierInformation"></c:url>" method="post">
 			<div class="col-md-12">
 				<div class="col-md-2"></div>

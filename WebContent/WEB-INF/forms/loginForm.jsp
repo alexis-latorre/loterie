@@ -17,5 +17,5 @@
 		</p>
 		<p>
 			<input class="btn btn-blue" type="submit" value="Se connecter" />
-			<a class="main-text-blue" style="margin-left: 24px; display: inline-block; margin-top: -24px" href="<c:url value="/inscription" />">S'inscrire</a>
+			<a class="main-text-blue" style="margin-left: 24px; display: inline-block; margin-top: -24px" href="<c:url value="/inscription" />">Inscription</a>
 		</p>

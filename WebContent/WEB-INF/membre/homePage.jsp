@@ -2,14 +2,14 @@
 
 <html>
 <head>
-  <title>Loterie | Mon profil</title>
+  <title>Loterie | Profil</title>
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
   <c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
 <body class="container">
 	<c:import url="/WEB-INF/commun/header.jsp" />
 
-	<h3>Mon profil</h3>
+	<h3>Profil</h3>
 	
 	<ul>
 		<li><a href="<c:url value="/membre/afficherGrilles" />">Afficher mes grilles</a>

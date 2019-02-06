@@ -1,1 +1,1 @@
-<span class="glyphicon glyphicon-cog">&nbsp;</span>Mon profil
+<span class="glyphicon glyphicon-cog">&nbsp;</span>Profil

@@ -25,7 +25,7 @@
 			 MyMillion : <span class="code"><c:out value="${r.dernier.myMillion}"></c:out></span></p>
 			<c:if test="${sessionScope.loggedIn}">
 			<c:if test="${not empty utilisateur.grilles}">
-			<h3>Mes gains</h3>
+			<h3>Gains</h3>
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
