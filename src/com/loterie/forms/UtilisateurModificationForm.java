@@ -50,6 +50,7 @@ public class UtilisateurModificationForm {
 	public void valider() {
 		String nom = req.getParameter("nom").trim().replaceAll("  ", " ");
 		String prenom = req.getParameter("prenom").trim().replaceAll("  ", " ");
+		String email = req.getParameter("email").trim().replaceAll("  ", " ");
 		String mdp = req.getParameter("motDePasse").trim().replaceAll("  ", " ");
 		
 		if (null != nom && nom.length() > 0) {
@@ -58,6 +59,10 @@ public class UtilisateurModificationForm {
 		
 		if (null != prenom && prenom.length() > 0) {
 			validerParametre("prenom", Privileges.UTILISATEUR_PROP_MODIFIER_PRENOM);
+		}
+		
+		if (null != email && email.length() > 0) {
+			validerParametre("email", Privileges.UTILISATEUR_PROP_MODIFIER_EMAIL);
 		}
 		
 		if (null != mdp && mdp.length() > 0) {
@@ -83,6 +88,9 @@ public class UtilisateurModificationForm {
 							break;
 						case "prenom":
 							utilisateur.setPrenom(Tools.titre(param));
+							break;
+						case "email":
+							utilisateur.setEmail(param);
 							break;
 						case "motDePasse": {
 							boolean err = false;

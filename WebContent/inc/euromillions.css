@@ -117,7 +117,7 @@ label.radio.premier {
 	background-color: #2056AE;
 }
 
-table {
+/*table {
 	background-color: white;
 }
 
@@ -128,7 +128,7 @@ table td {
 table th {
 	color: #FCB749;
 	background-color: #024B8A;
-}
+}*/
 
 #table_gagnants *, #table_logs * {
 	font-size: 12px;
@@ -167,14 +167,6 @@ h4 {
 	display: block;
 	text-align: center;
 	width: 100%;
-}
-
-.pagination a {
-	color: #FCB749;
-}
-
-.pagination a:hover {
-	color: #FCD769;
 }
 
 .checkbox-boule-container, .checkbox-etoile-container {
@@ -377,4 +369,17 @@ h4 {
 	font-size: 2.5em;
 	font-style: italic;
 	color: #f84518;
+}
+
+.monospace *{
+	font-family: monospace;
+}
+
+#tableauGainsGrilles {
+	display: none;
+}
+
+.detailHistorique {
+	float: right;
+	margin-right: 1em;
 }

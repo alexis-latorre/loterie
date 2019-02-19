@@ -11,11 +11,19 @@
 	<c:import url="/WEB-INF/commun/header.jsp" />		
 	<c:choose>
 		<c:when test="${not loggedIn}">
-		<h4>Accédez à votre espace membre en vous connectant ci-dessous</h4>
-		<div class="well" style="margin: auto; max-width: 500px;">
-			<form method="post" action="<c:url value="/connexion" />">
-				<c:import url="/WEB-INF/forms/loginForm.jsp" />
-			</form>
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Formulaire de connexion
+					</h3>
+				</div>
+				<div class="panel-body">
+					<form role="form" data-toggle="validator" accept-charset="ISO-8859-1" method="post" action="<c:url value="/connexion" />">
+						<c:import url="/WEB-INF/forms/loginForm.jsp" />
+					</form>
+				</div>
+			</div>
 		</div>
 		</c:when>
 		<c:otherwise>
