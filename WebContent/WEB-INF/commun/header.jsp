@@ -80,7 +80,7 @@
 				<c:choose><c:when test="${titrePage == 'dashboard'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
 				<li class="${active}"><a href="<c:url value="/accueil" />"><span class="glyphicon glyphicon-home">&nbsp;</span>Tableau de bord</a></li>
 				<c:choose><c:when test="${titrePage == 'results'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
-				<li class="${active}"><a href="<c:url value="/resultats" />"><span class="glyphicon glyphicon-signal">&nbsp;</span>Résultats</a></li>
+				<li class="${active}"><a href="<c:url value="/resultats" />"><span class="glyphicon glyphicon-time">&nbsp;</span>Résultats</a></li>
 				<c:if test="${loggedIn}">
 					<c:choose><c:when test="${titrePage == 'profile'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
 					<li class="${active}"><a href="<c:url value="/membre/profil" />"><span class="glyphicon glyphicon-cog">&nbsp;</span>Profil</a></li>

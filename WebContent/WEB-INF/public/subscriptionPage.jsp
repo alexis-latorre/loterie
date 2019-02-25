@@ -8,20 +8,24 @@
   	<c:import url="/WEB-INF/css/bootstrap.css.jsp" />
   	<c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
-<body class="container">
+<body class="container-fluid">
 	<c:import url="/WEB-INF/commun/header.jsp"></c:import>
-	<h4 style="text-align: center; margin: 40px;">Créez votre compte en remplissant le formulaire ci-dessous :</h4>
-	<div class="well" style="margin: auto; max-width: 500px;">
-		<form action="<c:url value="/inscription" />" method="post" accept-charset="ISO-8859-1">
-			<c:import url="/WEB-INF/forms/utilisateur/accountForm.jsp"></c:import>
-			<br />
-			<c:import url="/WEB-INF/forms/utilisateur/passwordForm.jsp"></c:import>
-			<p id="erreursMDP"></p>
-			<p id="erreursConfirmationMDP"></p>
-			<br />
-			<br />
-			<input class="btn btn-blue" type="submit" value="Valider mes informations" />
-		</form>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				Formulaire d'inscription
+			</h3>
+		</div>
+		<div class="panel-body">
+			<form action="<c:url value="/inscription" />" method="post" accept-charset="ISO-8859-1">
+				<c:import url="/WEB-INF/forms/utilisateur/accountForm.jsp"></c:import>
+				<c:import url="/WEB-INF/forms/utilisateur/passwordForm.jsp"></c:import>
+				<p id="erreursMDP"></p>
+				<p id="erreursConfirmationMDP"></p>
+				<br />
+				<input class="btn btn-primary" type="submit" value="Valider" />
+			</form>
+		</div>
 	</div>
 	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
