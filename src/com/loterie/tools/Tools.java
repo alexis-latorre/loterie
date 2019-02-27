@@ -353,7 +353,18 @@ public class Tools {
 	 */
 	public static String getDateSlash() {
 		DateTime now = new DateTime();
-		return now.getDayOfMonth() + "/" + now.getMonthOfYear() + "/" + now.getYear();
+		String jour = String.valueOf(now.getDayOfMonth());
+		String mois = String.valueOf(now.getMonthOfYear());
+		String annee = String.valueOf(now.getYear());
+		
+		if (jour.length() == 1) {
+			jour = "0" + jour;
+		}
+		
+		if (mois.length() == 1) {
+			mois = "0" + mois;
+		}
+		return jour + "/" + mois + "/" + annee;
 	}
 
 	/**
@@ -365,7 +376,18 @@ public class Tools {
 	 */
 	public static String getDateTiret() {
 		DateTime now = new DateTime();
-		return now.getYear() + "-" + now.getMonthOfYear() + "-" + now.getDayOfMonth();
+		String jour = String.valueOf(now.getDayOfMonth());
+		String mois = String.valueOf(now.getMonthOfYear());
+		String annee = String.valueOf(now.getYear());
+		
+		if (jour.length() == 1) {
+			jour = "0" + jour;
+		}
+		
+		if (mois.length() == 1) {
+			mois = "0" + mois;
+		}
+		return annee + "-" + mois + "-" + jour;
 	}
 
 	/**

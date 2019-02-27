@@ -31,6 +31,7 @@ import com.loterie.forms.GrilleCreationForm;
 import com.loterie.forms.GrilleJeuForm;
 //import com.loterie.forms.GrilleJointureForm;
 import com.loterie.tools.Logger;
+import com.loterie.tools.Tools;
 
 @WebServlet(urlPatterns = {
 		//Constants.URL_MEMBRE_PROFIL,
@@ -71,6 +72,8 @@ public class GrilleServlet extends HttpServlet {
 		String cible = Constants.URN_MEMBRE_403;
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		String dateJour = Tools.getDateTiret();
+		req.setAttribute("dateJour", dateJour);
 
 		if (utilisateur != null) {
 			// Vérifie que l'utilisateur est accréditer pour les opérations qui suivent

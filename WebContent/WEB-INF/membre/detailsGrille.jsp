@@ -119,6 +119,9 @@
 						<option id="input-joueur-${joueur.id}" value="${joueur.id}" ${selected}>${joueur.prenom} ${joueur.nom}</option>
 						</c:forEach>
 					</select>
+					<c:if test="${utilisateur != null and utilisateur.estModerateur()}">
+					 le <input type="date" id="input-date" name="date" value="${dateJour}" />
+					</c:if>
 					</p>
 					<br />
 					<input class="btn-blue" type="submit" value="Jouer" />

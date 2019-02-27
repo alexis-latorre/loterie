@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,11 +36,15 @@ public class GrilleJeuForm {
 	private HttpServletRequest req;
 	private Map<String, String> erreurs;
 	private String periode;
+	private String date;
 	private List<LienGrilleUtilisateur> lgus;
 	private Grille grille;
 	private Utilisateur utilisateur;
 	private Utilisateur joueur;
 	private HttpSession session;
+	private int jourJeu;
+	private int moisJeu;
+	private int anneeJeu;
 	
 	public GrilleJeuForm(LienGUDao lguDao, JourDao jourDao, BanqueDao banqueDao, PortefeuilleDao portefeuilleDao, 
 			UtilisateurDao utilisateurDao, HttpServletRequest req) {
@@ -50,13 +56,15 @@ public class GrilleJeuForm {
 		this.req = req;
 		erreurs = new HashMap<String, String>();
 		periode = req.getParameter("periode");
+		date = req.getParameter("date");
 		session = this.req.getSession();
 		grille = (Grille) session.getAttribute("grille");
 		utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		setJoueur(null);
 		
 		try {
-			setJoueur((Utilisateur) this.utilisateurDao.trouverParId(Long.valueOf(req.getParameter("joueur"))));
+			setJoueur((Utilisateur) this.utilisateurDao.trouverParId(
+					Long.valueOf(req.getParameter("joueur"))));
 		} catch (Exception e) {
 		}
 		
@@ -68,6 +76,27 @@ public class GrilleJeuForm {
 		
 		if (grille == null) {
 			erreurs.put("grille", "La grille n'est pas valide");
+		}
+		
+		if (date == null || date.isEmpty()) {
+			date = Tools.getDateTiret();
+		} else {
+			Pattern p = Pattern.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}");
+			Matcher m = p.matcher(date);
+			
+			if (m.matches()) {
+				String[] dateArgs = date.split("-");
+				
+				jourJeu = Integer.valueOf(dateArgs[2]);
+				moisJeu = Integer.valueOf(dateArgs[1]);
+				anneeJeu = Integer.valueOf(dateArgs[0]);
+				
+				if (jourJeu > 31 || moisJeu > 12 ) {
+					erreurs.put("date", "La date ne respecte pas le format demandé");
+				}
+			} else {
+				erreurs.put("date", "La date ne respecte pas le format demandé");
+			}
 		}
 	}
 
@@ -85,6 +114,9 @@ public class GrilleJeuForm {
 		int minuteValidation = Integer.parseInt(jeu.getHeureValidation().split(":")[1]);
 		String[] jours = jeu.getJourDeTirage();
 		DateTime ajd = new DateTime()
+				.withYear(anneeJeu)
+				.withMonthOfYear(moisJeu)
+				.withDayOfMonth(jourJeu)
 				.withHourOfDay(heureValidation)
 				.withMinuteOfHour(minuteValidation)
 				.withSecondOfMinute(0)
@@ -115,13 +147,13 @@ public class GrilleJeuForm {
 		retour.put("joueur", joueur);
 		retour.put("periode", retourPeriode);
 		
-		DateTime maintenant = new DateTime();
+		/*DateTime maintenant = new DateTime();
 
 		if (maintenant.isAfter(dateValidation)) {
 			dateValidation = dateValidation.plusDays(1);
 		} else {
 			dateValidation = maintenant;
-		}
+		}*/
 		
 		if (typePeriode.equals("s")) {
 			nbPeriode *= jours.length;
