@@ -39,10 +39,12 @@ public class GrilleAffichageForm {
 		this.req = req;
 		Long id = validerId(req.getParameter("id"));
 		grille = this.grilleDao.trouverParId(id);
-		validerGrille(grille);
-		jour = jourDao.trouverDernierJourJoue(grille);
-		grille.setJoueurs(utilisateurDao.trouverParGrille(grille));
-		utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		
+		if (validerGrille(grille)) {
+			jour = jourDao.trouverDernierJourJoue(grille);
+			grille.setJoueurs(utilisateurDao.trouverParGrille(grille));
+			utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		}
 	}
 
 	public Map<String, String> getErreurs() {
@@ -59,10 +61,12 @@ public class GrilleAffichageForm {
 		}
 	}
 
-	private void validerGrille(Grille grille) {
+	private boolean validerGrille(Grille grille) {
 		if (grille == null) {
 			erreurs.put("grille", Messages.MSG_ID_INTROUVABLE);
+			return false;
 		}
+		return true;
 	}
 
 	public HttpServletRequest afficherGrille() {		
