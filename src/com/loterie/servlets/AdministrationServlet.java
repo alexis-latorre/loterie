@@ -153,13 +153,13 @@ public class AdministrationServlet extends HttpServlet {
 				switch (uri) {
 					case Constants.URL_ADMIN_CREDITER: {
 						//DevTools.dumpSession(req);
-						String id = req.getParameter("joueur");
+						String id = req.getParameter("joueurAcrediter");
 						
 						if (id == null || id.isEmpty()) {
-							req.setAttribute("joueur", session.getAttribute("joueurAcrediter"));
+							req.setAttribute("joueurAcrediter", session.getAttribute("joueurAcrediter"));
 							req.getSession().setAttribute("joueurAcrediter", null);
 						} else {
-							req.setAttribute("joueur", id);
+							req.setAttribute("joueurAcrediter", id);
 						}
 						UtilisateurCreditForm ucf = new UtilisateurCreditForm(utilisateurDao, portefeuilleDao, req);
 						Map<String, Object> retour = ucf.crediter();
@@ -174,8 +174,13 @@ public class AdministrationServlet extends HttpServlet {
 									" euros.", Constants.LOG_INFO, Constants.LOG_FINANCE, utilisateur, 
 									(Utilisateur)retour.get("joueur"));
 						}
-						resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_ADMIN_CREDITER);
-						return;
+
+						req.setAttribute("titrePage", "creditPlayer");
+						UtilisateurRecuperationForm urf = new UtilisateurRecuperationForm(utilisateurDao, grilleDao, 
+								retardDao, req);
+						urf.recupererRang(Constants.L_UTILISATEUR_ROLE_MEMBRE);
+						cible = Constants.URN_ADMIN_CREDITER;
+						break;
 					}
 					case Constants.URL_ADMIN_MODIFIER_PRIVILEGES: {
 						String idJoueur = (String) session.getAttribute("idJoueur");

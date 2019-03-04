@@ -34,9 +34,9 @@
 					<c:if test="${empty joueur}">
 					<div class="form-group">
 						<label for="input-joueur">Sélectionnez le joueur à créditer</label>
-						<select class="form-control" name="joueur" id="input-joueur">
+						<select class="form-control" name="joueurAcrediter" id="input-joueur">
 						<c:forEach items="${joueurs}" var="joueur">
-							<option value="${joueur.u.id}">${joueur.u.prenom} ${joueur.u.nom}</option>
+							<option value="${joueur.u.id}">${joueur.u.prenom} ${joueur.u.nom} (<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${joueur.u.portefeuille.fonds}" type="currency"></fmt:formatNumber>)</option>
 						</c:forEach>
 						</select>
 					</div>
