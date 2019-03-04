@@ -25,13 +25,13 @@
 		</c:otherwise>
 	</c:choose>
 	<div class="well">
-		<form action="<c:url value="/admin/crediterJoueur" />" method="post">
+		<form action="<c:url value="/admin/crediterJoueur" />" method="post" onsubmit="return popupConfirmFundsChange(this);">
 			<c:if test="${empty joueur}">
 			<p>
 				<label for="input-joueur">Sélectionnez le joueur à créditer</label><br />
 				<select class="" name="joueur" id="input-joueur">
 				<c:forEach items="${joueurs}" var="joueur">
-					<option value="${joueur.u.id}">${joueur.u.prenom} ${joueur.u.nom}</option>
+					<option value="${joueur.u.id}" id="u${joueur.u.id}">${joueur.u.prenom} ${joueur.u.nom}</option>
 				</c:forEach>
 				</select>
 			</p>
@@ -44,5 +44,6 @@
 		</form>
 	</div>
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
+	<c:import url="/WEB-INF/js/popup.js.jsp" />
 </body>
 </html>
