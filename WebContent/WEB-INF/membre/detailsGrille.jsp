@@ -50,14 +50,17 @@
 				<p><span class="glyphicon glyphicon-repeat">&nbsp;</span>Jouer la grille</p>
 				<c:if test="${utilisateur != null and utilisateur.estModerateur()}">
 				<form role="form" data-toggle="validator" action='<c:url value="/membre/jouerGrille" />' method="post">
-					<div class="form-group">
-						<label class="radio premier"><input type="radio" name="periode" id="input-periode-1j" value="1j" /> 1 jour</label>
-						<label class="radio"><input type="radio" name="periode" id="input-periode-1s" value="1s" /> 1 semaine</label>
-						<label class="radio"><input type="radio" name="periode" id="input-periode-2s" value="2s" /> 2 semaines</label>
-						<label class="radio"><input type="radio" name="periode" id="input-periode-3s" value="3s" /> 3 semaines</label>
-						<label class="radio"><input type="radio" name="periode" id="input-periode-4s" value="4s" /> 4 semaines</label>
-						<label class="radio"><input type="radio" name="periode" id="input-periode-5s" value="5s" checked="checked" /> 5 semaines</label>
+					<div class="radio">
+						<label>
+							<input type="radio" class="form-control" name="periode" id="input-periode-1j" value="1j" />
+							1 jour
+						</label>
 					</div>
+					<label class="col-sm-2"><input type="radio" name="periode" id="input-periode-1s" value="1s" /> 1 semaine</label>
+					<label class="col-sm-2"><input type="radio" name="periode" id="input-periode-2s" value="2s" /> 2 semaines</label>
+					<label class="col-sm-2"><input type="radio" name="periode" id="input-periode-3s" value="3s" /> 3 semaines</label>
+					<label class="col-sm-2"><input type="radio" name="periode" id="input-periode-4s" value="4s" /> 4 semaines</label>
+					<label class="col-sm-2"><input type="radio" name="periode" id="input-periode-5s" value="5s" checked="checked" /> 5 semaines</label>
 					<c:if test="${not empty erreurs}">
 						<c:if test="${not empty erreurs.format}">
 							<span class="text-danger">${erreurs.format}</span><br />
