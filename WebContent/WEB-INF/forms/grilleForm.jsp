@@ -1,10 +1,14 @@
-<h3 class="main-text-blue"><label for="input-nom">Nom de la grille</label></h3>
-<c:set var="nomDisabled" value=' disabled' />
-<c:if test='${utilisateur.checkPrivilege("grille-modifier-nom")}'>
-	<c:set var="nomDisabled" value='' />
-</c:if>
-<input class="input"${nomDisabled} type="text" name="nom" id="input-nom" value="${requestScope.grille.nom}" />
-<h3 class="main-text-blue">Choisir les numéros</h3>
+<div class="form-group">
+	<label for="input-nom">Nom de la grille</label>
+	<c:set var="nomDisabled" value=' disabled' />
+	<c:if test='${utilisateur.checkPrivilege("grille-modifier-nom")}'>
+		<c:set var="nomDisabled" value='' />
+	</c:if>
+	<input class="form-control"${nomDisabled} type="text" name="nom" id="input-nom" value="${requestScope.grille.nom}" />
+</div>
+<div class="form-group">
+	<label>Choisir les numéros</label>
+</div>
 <table class="table">
 <c:forEach items="${tableNumeros}" var="ligneNumeros">
 	<tr>		
@@ -34,7 +38,9 @@
 	</tr>
 </c:forEach>
 </table>
-<h3 class="main-text-blue">Choisir les étoiles</h3>
+<div class="form-group">
+	<label>Choisir les étoiles</label>
+</div>
 <table class="table">
 <c:forEach items="${tableEtoiles}" var="ligneEtoiles">
 	<tr>		
@@ -72,11 +78,16 @@
 <c:if test="${requestScope.grille.etoilePlus}">
 	<c:set var="etoilePlus" value='checked="checked"'></c:set>
 </c:if>
-<label>Étoile + <input type="checkbox"${etoilePlusDisabled} name="etoilePlus" id="input-etoilePlus" <c:out value="${etoilePlus}" /> /></label><br />
-<h3><label for="input-mymillion">Code MyMillion</label></h3>
-<c:set var="myMillionDisabled" value=' disabled' />
-<c:if test='${utilisateur.checkPrivilege("grille-modifier-mymillion")}'>
-	<c:set var="myMillionDisabled" value='' />
-</c:if>
-<input type="text"${myMillionDisabled} name="myMillion" id="input-mymillion" value="${requestScope.grille.myMillion}" /><br />
-<br />
+<div class="checkbox">
+	<label>
+		<input type="checkbox"${etoilePlusDisabled} name="etoilePlus" id="input-etoilePlus" <c:out value="${etoilePlus}" /> />Étoile +
+	</label>
+</div>
+<div class="form-group">
+	<label for="input-mymillion">Code MyMillion</label>
+	<c:set var="myMillionDisabled" value=' disabled' />
+	<c:if test='${utilisateur.checkPrivilege("grille-modifier-mymillion")}'>
+		<c:set var="myMillionDisabled" value='' />
+	</c:if>
+	<input type="text"${myMillionDisabled} class="form-control" name="myMillion" id="input-mymillion" value="${requestScope.grille.myMillion}" />
+</div>

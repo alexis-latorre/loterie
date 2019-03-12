@@ -97,4 +97,14 @@
 	</div>
 	<br />
 </div>
-<c:import url="/WEB-INF/js/ajax.js.jsp" />
+<script type="text/javascript">
+	chargerDetailJour = function(id) {
+		$.ajax({
+			url: '<c:url value="/jour/detailsJour"><c:param name="id" value="" /></c:url>' + id
+		}).done(function(data) {
+			$("#detailsJour").html(data);
+		}).fail(function(error) {
+			$("#detailsJour").html("Erreur de chargement");
+		});
+	}
+</script>

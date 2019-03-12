@@ -1,4 +1,6 @@
-<h3 class="main-text-blue">Choisir les joueurs</h3>
+<div class="form-group">
+	<label>Choisir les joueurs</label>
+</div>
 <div class="col-md-12" style="margin: 0; padding: 0">
 	<div class="col-md-3" style="margin: 0; padding: 0">
 		<p style="margin-bottom: 6px" class="main-text-blue">Joueurs disponibles</p>
@@ -18,11 +20,11 @@
 			</c:forEach>
 		</select>
 	</div>
-	<div class="col-md-1" style="display: inline-block; min-height: 160px; margin-top: 6px; margin-bottom: 2px">
-		<input class="btn btn-blue" type="button" onclick="retirerTousJoueurs()" style="width: 36px; " value="<< " /><br />
-		<input class="btn btn-blue" type="button" onclick="retirerJoueurs()" style="width: 36px; " value="< " /><br />
-		<input class="btn btn-blue" type="button" onclick="ajouterJoueurs()" style="width: 36px; " value=">" /><br />
-		<input class="btn btn-blue" type="button" onclick="ajouterTousJoueurs()" style="width: 36px; " value=">>" />
+	<div class="col-md-1" style="display: inline-block; min-height: 176px; margin-left: 6px; margin-top: 6px; margin-bottom: 2px">
+		<input class="btn btn-primary" type="button" onclick="retirerTousJoueurs()" style="width: 40px; margin-bottom: 6px" value="<< " /><br />
+		<input class="btn btn-primary" type="button" onclick="retirerJoueurs()" style="width: 40px; margin-bottom: 6px" value="< " /><br />
+		<input class="btn btn-primary" type="button" onclick="ajouterJoueurs()" style="width: 40px; margin-bottom: 6px" value=">" /><br />
+		<input class="btn btn-primary" type="button" onclick="ajouterTousJoueurs()" style="width: 40px; " value=">>" />
 	</div>
 	<div class="col-md-3" style="margin: 0; padding: 0">
 		<select id="input-joueurs" style="display: block; min-width: 100%; min-height: 160px" multiple="multiple" name="joueurs[]">
