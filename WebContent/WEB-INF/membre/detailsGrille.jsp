@@ -64,27 +64,33 @@
 							<span class="text-danger">${erreurs.grille}</span><br />
 						</c:if>
 					</c:if>
-					<div class="form-group row">
-						<div class="col-md-12 col-lg-3">
+					<div class="form-group">
+						<label for="input-joueur">
 							Grille validée par
-						</div>
-						<div class="col-md-4 col-lg-4">
-							<select name="joueur" id="input-joueur" class="form-control">
-								<c:forEach items="${grille.joueurs}" var="joueur">
-								<c:set var="selected" value="" />
-								<c:choose>
-									<c:when test="${joueur.id == utilisateur.id}">
-									<c:set var="selected" value=' selected="selected"' />
-									</c:when>
-									<c:otherwise>
-									<c:set var="selected" value='' />
-									</c:otherwise>
-								</c:choose>
-								<option id="input-joueur-${joueur.id}" value="${joueur.id}" ${selected}>${joueur.prenom} ${joueur.nom}</option>
-								</c:forEach>
-							</select>
-						</div>
+						</label>
+						<select name="joueur" id="input-joueur" class="form-control">
+							<c:forEach items="${grille.joueurs}" var="joueur">
+							<c:set var="selected" value="" />
+							<c:choose>
+								<c:when test="${joueur.id == utilisateur.id}">
+								<c:set var="selected" value=' selected="selected"' />
+								</c:when>
+								<c:otherwise>
+								<c:set var="selected" value='' />
+								</c:otherwise>
+							</c:choose>
+							<option id="input-joueur-${joueur.id}" value="${joueur.id}" ${selected}>${joueur.prenom} ${joueur.nom}</option>
+							</c:forEach>
+						</select>
 					</div>
+					<c:if test="${utilisateur != null and utilisateur.estModerateur()}">
+					<div class="form-group">
+						<label for="input-date">
+							le
+						</label>
+						<input class="form-control" type="date" id="input-date" name="date" value="${dateJour}" />
+					</div>
+					</c:if>
 					<br />
 					<button type="submit" class="btn btn-primary">Jouer</button>
 				</form>
@@ -143,9 +149,6 @@
 					</tbody>
 				</table>
 			</div>
-					<c:if test="${utilisateur != null and utilisateur.estModerateur()}">
-					 le <input type="date" id="input-date" name="date" value="${dateJour}" />
-					</c:if>
 		</div>
 	</div>
 	</c:when>
