@@ -14,10 +14,12 @@ import javax.servlet.http.HttpSession;
 
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
+import com.loterie.dao.LienGUDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.UtilisateurConnexionForm;
 import com.loterie.tools.DevTools;
+import com.loterie.forms.GrilleRecuperationDuJourForm;
 import com.loterie.forms.GrilleRecuperationDuMoisForm;
 
 @WebServlet(urlPatterns = {
@@ -33,6 +35,8 @@ public class ConnexionServlet extends HttpServlet {
 	private JourDao jourDao;
 	@EJB
 	private GrilleDao grilleDao;
+	@EJB
+	private LienGUDao lguDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,14 +58,19 @@ public class ConnexionServlet extends HttpServlet {
 		
 		// Si l'utilisateur est authentifié, le calendrier est affiché en page d'accueil
 		if (loggedIn) {
+			req.setAttribute("titrePage", "dashboard");
 			// L'utilisateur n'est récupéré que s'il est authentifié, pas besoin de le récupérer avant
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");			
 			// Récupère les grilles du mois pour lequel l'utilisateur participe ou celles qu'il a créées
 			GrilleRecuperationDuMoisForm gdmf = new GrilleRecuperationDuMoisForm(jourDao, grilleDao, utilisateur, req);
+			GrilleRecuperationDuJourForm gdjf = new GrilleRecuperationDuJourForm(lguDao, jourDao, utilisateur, req);
 			//TODO: bouger cette portion
 			req.setAttribute("mois", gdmf.getMois());
 			req.setAttribute("anneeAjd", gdmf.getMois().isAnneeAjd());
 			req.setAttribute("moisAjd", gdmf.getMois().isMoisAjd());
+			req.setAttribute("jour", gdjf.getJour());
+		} else {
+			req.setAttribute("titrePage", "connection");
 		}
 		// Transmet l'information de connexion à la page JSP
 		req.setAttribute("loggedIn", loggedIn);
@@ -82,6 +91,7 @@ public class ConnexionServlet extends HttpServlet {
 		redirigé vers l'accueil */
 		if (utilisateur != null) {
 			session.setAttribute("utilisateur", utilisateur);
+			req.setAttribute("titrePage", "dashboard");
 			
 			/* Si le mot de passe n'est pas encore défini en BDD, l'utilisateur est invité à le créer sur la 
 			 * page dédiée à la création/modification de mot de passe
@@ -94,7 +104,6 @@ public class ConnexionServlet extends HttpServlet {
 					req.setAttribute("utilisateur", utilisateur);
 					// L'utilisateur est redirigé vers la page d'accueil
 					// TODO: Rediriger vers la page demandée par l'utilisateur 
-					cible = Constants.URN_ACCUEIL;
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_PUBLIC_ACCUEIL);
 					return;
 				} else {
@@ -107,6 +116,7 @@ public class ConnexionServlet extends HttpServlet {
 				cible = Constants.URN_CREER_MDP;
 			}
 		} else {
+			req.setAttribute("titrePage", "connection");
 			cible = Constants.URN_ACCUEIL;
 		}
 		// Transmet les erreurs (s'il y en a) à la JSP

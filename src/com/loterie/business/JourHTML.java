@@ -20,6 +20,8 @@ public class JourHTML {
 	private String initiale;
 	private List<Grille> grilles;
 	private boolean paye;
+	private double gains;
+	private int nombreJoueurs;
 	
 	/**
 	 * <b><i>JourHTML</i></b><br />
@@ -164,6 +166,22 @@ public class JourHTML {
 		return paye;
 	}
 	
+	public double getGains() {
+		return gains;
+	}
+
+	public void setGains(double gains) {
+		this.gains = gains;
+	}
+
+	public int getNombreJoueurs() {
+		return nombreJoueurs;
+	}
+
+	public void setNombreJoueurs(int nombreJoueurs) {
+		this.nombreJoueurs = nombreJoueurs;
+	}
+
 	public String toString() {
 		return dt.toString() + ";" + numeroDansSemaine + ";" + numeroDansMois + ";" + numeroDansAnnee + ";" + 
 				numeroMois + ";" + nomLong + ";" + nomCourt + ";" + initiale + ";" + grilles;

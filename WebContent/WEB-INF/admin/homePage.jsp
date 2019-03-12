@@ -21,6 +21,7 @@
 		<li><a href="<c:url value="/admin/detailsUtilisateurs" />">Afficher les utilisateurs</a></li>
 		<li><a href="<c:url value="/admin/logs" />">Consulter les logs</a></li>
 	</ul>
+	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

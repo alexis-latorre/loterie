@@ -19,6 +19,7 @@
 			<!--input type="submit" value="Créer la grille" /-->
 		</form>
 	</div>
+	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

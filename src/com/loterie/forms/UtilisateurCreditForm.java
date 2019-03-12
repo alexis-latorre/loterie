@@ -25,7 +25,7 @@ public class UtilisateurCreditForm {
 		this.utilisateurDao = utilisateurDao;
 		this.portefeuilleDao = portefeuilleDao;
 		this.req = req;
-		utilisateur = validerUtilisateur(req.getAttribute("joueur"));
+		utilisateur = validerUtilisateur(req.getAttribute("joueurAcrediter"));
 		portefeuille = utilisateur.getPortefeuille();
 		fonds = validerFonds(req.getParameter("fonds"));
 		majErreurs();
@@ -73,6 +73,7 @@ public class UtilisateurCreditForm {
 		retour.put("action", action);
 		retour.put("fonds", fonds);
 		retour.put("joueur", utilisateur);
+		req.setAttribute("messageSucces", "Joueur " + action + " avec succès");
 		return retour;
 	}
 

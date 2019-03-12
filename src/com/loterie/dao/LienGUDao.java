@@ -73,4 +73,11 @@ public class LienGUDao extends LoterieDao {
 		return (LienGrilleUtilisateur) super.resultat(Constants.SELECT_LIEN_GU_PAR_GRILLE_ET_UTILISATEUR, params,
 				"trouverParGrilleEtUtilisateur");
 	}
+
+	public List<LienGrilleUtilisateur> trouverParUtilisateur(Utilisateur utilisateur) {
+		params.clear();
+		params.put("utilisateur", utilisateur);
+		return (List<LienGrilleUtilisateur>) super.resultats(Constants.SELECT_LIEN_GU_PAR_UTILISATEUR, params,
+				"trouverParUtilisateur");
+	}
 }

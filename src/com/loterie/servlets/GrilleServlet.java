@@ -201,7 +201,8 @@ public class GrilleServlet extends HttpServlet {
 			}
 			Logger.log(logDao, Messages.LOG_MODIFIER_GRILLE, 
 					Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, (Grille)retour.get("grille"));
-			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLES);
+			resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE +
+					"?id=" + ((Grille)retour.get("grille")).getId());
 			return;
 			
 		} else if (uri.equals(Constants.URL_MEMBRE_BANQUE_AJOUT)) {

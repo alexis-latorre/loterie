@@ -1,11 +1,10 @@
-<label for="input-pseudo">Pseudo</label><br />
-<input type="text" name="pseudo" id="input-pseudo" value="${champs.pseudo}" />
+<div class="form-group">
+	<label for="input-pseudo">Pseudo</label>
+	<input type="text" class="form-control" name="pseudo" id="input-pseudo" value="${champs.pseudo}" />
+</div>
 <c:if test="${not empty erreurs and not empty erreurs.pseudo}">
 <span class="text-danger"><c:out value="${erreurs.pseudo}"></c:out></span>
 </c:if>
-<br />
 <c:import url="/WEB-INF/forms/utilisateur/nomForm.jsp" />
-<br />
 <c:import url="/WEB-INF/forms/utilisateur/prenomForm.jsp" />
-<br />
 <c:import url="/WEB-INF/forms/utilisateur/emailForm.jsp" />

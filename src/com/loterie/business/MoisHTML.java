@@ -277,6 +277,7 @@ public class MoisHTML {
 			// Le jour venant de la BDD est lié à son objet métier par sa date
 			//JourHTML j = trouverJourParDate(jour.getDateJour());
 			String jourSemaine = String.valueOf(jour.getNumeroDansSemaine());
+			double gains = 0.0D;
 			
 			if (grilles != null) {
 				for (Grille grille : grilles) {
@@ -292,6 +293,7 @@ public class MoisHTML {
 									if (j.getDateJour().equals(jour.getDateJour()) && 
 											j.getLgu().getGrille().getId().equals(g.getId())) {
 										paye = j.getPaye();
+										gains += j.getGains();
 										break;
 									}
 								}
@@ -304,6 +306,7 @@ public class MoisHTML {
 					}
 				}
 			}
+			jour.setGains(gains);
 		}
 	}
 }

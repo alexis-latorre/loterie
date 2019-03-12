@@ -8,25 +8,39 @@
   <c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
 <body>
-	<div class="container">
-		<c:import url="/WEB-INF/commun/header.jsp" />
-		
-		<c:choose>
-			<c:when test="${not loggedIn}">
-			<h4>Accédez à votre espace membre en vous connectant ci-dessous</h4>
-			<div class="well" style="margin: auto; max-width: 500px;">
-				<form method="post" action="<c:url value="/connexion" />">
-					<c:import url="/WEB-INF/forms/loginForm.jsp" />
-				</form>
+	<c:import url="/WEB-INF/commun/header.jsp" />		
+	<c:choose>
+		<c:when test="${not loggedIn}">
+		<div class="container-fluid">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						Formulaire de connexion
+					</h3>
+				</div>
+				<div class="panel-body">
+					<form role="form" data-toggle="validator" accept-charset="ISO-8859-1" method="post" action="<c:url value="/connexion" />">
+						<c:import url="/WEB-INF/forms/loginForm.jsp" />
+					</form>
+				</div>
 			</div>
-			</c:when>
-			<c:otherwise>
-				<h4 style="text-align: center;">Résumé de mon compte</h4>
-				<c:import url="/WEB-INF/membre/resumePortefeuille.jsp" />
-				<c:import url="/WEB-INF/commun/afficherMois.jsp" />
-			</c:otherwise>
-		</c:choose>
-	</div>
+		</div>
+		</c:when>
+		<c:otherwise>
+			<div class="container-fluid">
+				<div class="col-md-7">
+					<c:import url="/WEB-INF/membre/resumePortefeuille.jsp" />
+					<div id="detailsJour">
+						<c:import url="/WEB-INF/jour/detailsJour.jsp" />
+					</div>
+				</div>
+				<div class="col-md-5">
+					<c:import url="/WEB-INF/commun/afficherMois.jsp" />
+				</div>
+			</div>
+		</c:otherwise>
+	</c:choose>
+	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 </body>
 </html>

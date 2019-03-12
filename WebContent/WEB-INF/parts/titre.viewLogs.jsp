@@ -1,0 +1,1 @@
+<span></span><span class="glyphicon glyphicon-duplicate">&nbsp;</span>Consulter les logs
