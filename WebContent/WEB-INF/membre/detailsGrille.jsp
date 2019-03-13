@@ -21,13 +21,13 @@
 					Nom de la grille : <c:out value="${grille.nom}" /> 
 				</div>
 				<div class="row">
-					<div class="col-lg-5">
+					<div class="col-lg-6">
 						<h3 class="main-text-blue">Numéros</h3>
 						<c:forEach items="${grille.numeros}" var="boule">
 							<span class="boule"><c:out value="${boule}"></c:out></span>
 						</c:forEach>
 					</div>
-					<div class="col-lg-7">
+					<div class="col-lg-6">
 						<h3 class="main-text-blue">Étoiles</h3>
 						<c:forEach items="${grille.etoiles}" var="etoile">
 							<span class="etoile"><c:out value="${etoile}"></c:out></span>
