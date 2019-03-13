@@ -1,3 +1,6 @@
+## [1.2.1]	 - 	[Bug Fix]	 - 	2019-03-13
+- Rétabli la popup de confirmation lors du crédit d'un joueur
+
 ## [1.2.0]	 - 	[Update]	 - 	2019-03-13
 - Refont le design de l'application
 

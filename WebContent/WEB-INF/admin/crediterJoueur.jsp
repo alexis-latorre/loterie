@@ -30,7 +30,7 @@
 				</h3>
 			</div>
 			<div class="panel-body">
-				<form action="<c:url value="/admin/crediterJoueur" />" method="post">
+				<form action="<c:url value="/admin/crediterJoueur" />" method="post" onsubmit="return popupConfirmFundsChange(this);">
 					<c:if test="${empty joueur}">
 					<div class="form-group">
 						<label for="input-joueur">Sélectionnez le joueur à créditer</label>
