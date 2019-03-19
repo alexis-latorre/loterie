@@ -126,6 +126,11 @@ public class GrilleJeuForm {
 		int idJour = 0;
 		int nbPeriode = Integer.parseInt(periode.substring(0, 1));
 		String typePeriode = periode.substring(1);
+		
+		if (dateValidation.isAfter(DateTime.now().plusDays(1))) {
+			retour.put("messageEchec", "Cette date de jeu est trop loin dans le futur pour être jouée");
+			return retour;
+		}	
 
 		if (typePeriode.equals("j")) {
 			retourPeriode = nbPeriode + " jour";
@@ -146,14 +151,6 @@ public class GrilleJeuForm {
 
 		retour.put("joueur", joueur);
 		retour.put("periode", retourPeriode);
-		
-		/*DateTime maintenant = new DateTime();
-
-		if (maintenant.isAfter(dateValidation)) {
-			dateValidation = dateValidation.plusDays(1);
-		} else {
-			dateValidation = maintenant;
-		}*/
 		
 		if (typePeriode.equals("s")) {
 			nbPeriode *= jours.length;
