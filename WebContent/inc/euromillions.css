@@ -301,7 +301,7 @@ h4 {
 }
 
 .main {
-  padding: 20px;
+  padding-top: 20px;
 }
 
 .main .page-header {
@@ -329,8 +329,8 @@ h4 {
 	}
 	
 	.main {
-	  padding-right: 40px;
-	  padding-left: 40px;
+	  /*padding-right: 40px;*/
+	  /*padding-left: 40px;*/
 	}
 }
 
@@ -382,4 +382,17 @@ h4 {
 .detailHistorique {
 	float: right;
 	margin-right: 1em;
+}
+
+@media (min-width: 768px) {
+	#alertes {
+		position: fixed;
+		display: none;
+		height: 100%;
+		width: 100%;
+	  	z-index: 2000;
+	  	background: rgba(128, 128, 128, 0.5);
+	  	margin-left: -30px;
+	  	margin-top: -20px;
+	}
 }

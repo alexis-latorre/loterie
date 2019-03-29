@@ -28,19 +28,21 @@
 		</c:when>
 		<c:otherwise>
 			<div class="container-fluid">
-				<div class="col-md-7">
-					<c:import url="/WEB-INF/membre/resumePortefeuille.jsp" />
-					<div id="detailsJour">
-						<c:import url="/WEB-INF/jour/detailsJour.jsp" />
-					</div>
-				</div>
-				<div class="col-md-5">
-					<c:import url="/WEB-INF/commun/afficherMois.jsp" />
-				</div>
+				<c:import url="/WEB-INF/membre/dashboard.jsp" />
 			</div>
 		</c:otherwise>
 	</c:choose>
 	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
+	<script type="text/javascript">
+		<c:if test="${not empty alertes}">
+			var alertes = [];
+			<c:forEach items="${alertes}" var="alerte">
+				alertes.push("${alerte.message}");
+			</c:forEach>
+			
+			showAlert(alertes);
+		</c:if>
+	</script>
 </body>
 </html>

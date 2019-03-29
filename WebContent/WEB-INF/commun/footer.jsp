@@ -14,3 +14,4 @@
 </div>
 </c:if>
 <c:import url="/WEB-INF/js/scrollspy.js.jsp" />	
+<c:import url="/WEB-INF/js/alertes.js.jsp" />
