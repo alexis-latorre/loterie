@@ -1,5 +1,5 @@
 <div class="form-group">
-	<label for="input-email">E-mai</label>
+	<label for="input-email">E-mail</label>
 	<input type="text" class="form-control" name="email" id="input-email" value="${champs.email}" />
 </div>
 <c:if test="${not empty erreurs and not empty erreurs.email}">

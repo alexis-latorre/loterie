@@ -155,6 +155,8 @@ public class GrilleServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		boolean loggedIn = false;
+		String dateJour = Tools.getDateTiret();
+		req.setAttribute("dateJour", dateJour);
 		
 		if (session.getAttribute("loggedIn") != null) {
 			loggedIn = (boolean) session.getAttribute("loggedIn");
@@ -234,6 +236,7 @@ public class GrilleServlet extends HttpServlet {
 				Object messageEchec = retour.get("messageEchec");
 				
 				if (null != messageEchec && !((String) messageEchec).isEmpty()) {
+					req.setAttribute("jour", retour.get("jour"));
 					req.setAttribute("messageEchec", messageEchec);
 				} else {
 					if (jgf.getJoueur() != null) {
@@ -244,6 +247,7 @@ public class GrilleServlet extends HttpServlet {
 						Logger.log(logDao, "%u a joué la grille %g pour " + retour.get("periode") + ".", 
 								Constants.LOG_INFO, Constants.LOG_GRILLE, utilisateur, retour.get("grille"));
 					}
+					req.setAttribute("messageSucces", "Grille jouée avec succès");
 					resp.sendRedirect(req.getServletContext().getContextPath() + Constants.URL_MEMBRE_AFFICHER_GRILLE + 
 							"?id=" + jgf.getGrilleId());
 					return;

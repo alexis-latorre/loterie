@@ -9,3 +9,4 @@
 /euromillionsParser/bin/com/ale/euromillions/EuromillionsUpdateDB.class
 /euromillionsParser/bin/com/ale/euromillions/Mkdirs.class
 /renewLetsEncrypt.txt
+/importCertificate.sh

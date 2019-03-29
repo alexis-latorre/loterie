@@ -257,6 +257,8 @@ public class GrilleJeuForm {
 			banqueDao.maj(banque);
 		}
 		Utilisateur joueur = utilisateurDao.trouverParId(utilisateur.getId());
+		joueur.setGrilles(utilisateur.getGrilles());
+		retour.put("jour", jourDao.trouverDernierJourJoue(grille));
 		session.setAttribute("utilisateur", joueur);
 		return retour;
 	}

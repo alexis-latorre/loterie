@@ -1,3 +1,6 @@
+## [1.2.2]	 - 	[Bug Fix]	 - 	2019-03-29
+- Rétabli la liste des grilles sur le tableau de bord après validation d'une grille
+
 ## [1.2.1]	 - 	[Bug Fix]	 - 	2019-03-13
 - Rétabli la popup de confirmation lors du crédit d'un joueur
 
