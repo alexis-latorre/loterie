@@ -1,16 +1,20 @@
-showAlert = function(alertes) {
-	var messages = "";
+var nbNotifications = 0;
 
-	for (i = 0; i < alertes.length; i++) {
-		alerte = alertes[i];
-		
-		messages += "<p>\"" + alerte + "\"</p>";
-	}
-	$("#alertes").html(messages);
-	
-	$("#alertes").show();
+setNbNotifications = function (notifs) {
+	nbNotifications = notifs;
 }
 
-hideAlert = function() {
-	$("#alertes").hide();
+fermerNotifications = function() {
+	$("#notificationsFrame").fadeOut();
+}
+
+fermerNotification = function(id) {
+	nbNotifications--;
+	$("#nbNotifs").text(nbNotifications);
+	
+	if (nbNotifications == 0) {
+		fermerNotifications();
+	} else {
+		$("#alerte-" + id).fadeOut();
+	}
 }

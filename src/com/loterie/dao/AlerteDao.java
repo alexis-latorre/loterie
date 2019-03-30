@@ -12,6 +12,7 @@ import com.loterie.entities.Alerte;
 import com.loterie.entities.Grille;
 import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Utilisateur;
+import com.loterie.tools.DevTools;
 
 @Stateless
 public class AlerteDao extends LoterieDao {
@@ -20,25 +21,33 @@ public class AlerteDao extends LoterieDao {
 	private Map<String, Object> params = new HashMap<String, Object>();
 
 	public List<Alerte> trouverTout() {
+		DevTools.clearCache(this);
 		params.clear();	
 		return (List<Alerte>) super.resultats(Constants.SELECT_ALERTES, params, "trouverTout");
 	}
 	
-	public Alerte trouverParUtilisateur(Utilisateur utilisateur) {
+	public List<Alerte> trouverParUtilisateur(Utilisateur utilisateur) {
+		DevTools.clearCache(this);
 		params.clear();
 		params.put("utilisateur", utilisateur);	
-		return (Alerte) super.resultat(Constants.SELECT_ALERTES_PAR_UTILISATEUR, params, "trouverParUtilisateur");
+		return (List<Alerte>) super.resultats(Constants.SELECT_ALERTES_PAR_UTILISATEUR, params, "trouverParUtilisateur");
 	}
 	
-	public Alerte trouverParGrille(Grille grille) {
+	public List<Alerte> trouverParGrille(Grille grille) {
+		DevTools.clearCache(this);
 		params.clear();
 		params.put("grille", grille);	
-		return (Alerte) super.resultat(Constants.SELECT_ALERTES_PAR_GRILLE, params, "trouverParGrille");
+		return (List<Alerte>) super.resultats(Constants.SELECT_ALERTES_PAR_GRILLE, params, "trouverParGrille");
 	}
 	
-	public Alerte trouverParLGU(LienGrilleUtilisateur lgu) {
+	public List<Alerte> trouverParLGU(LienGrilleUtilisateur lgu) {
+		DevTools.clearCache(this);
 		params.clear();
 		params.put("lgu", lgu);	
-		return (Alerte) super.resultat(Constants.SELECT_ALERTES_PAR_LGU, params, "trouverParLGU");
+		return (List<Alerte>) super.resultats(Constants.SELECT_ALERTES_PAR_LGU, params, "trouverParLGU");
+	}
+	
+	public void clearCache() {
+		super.clearCache();
 	}
 }

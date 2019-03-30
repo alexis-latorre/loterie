@@ -34,15 +34,5 @@
 	</c:choose>
 	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
-	<script type="text/javascript">
-		<c:if test="${not empty alertes}">
-			var alertes = [];
-			<c:forEach items="${alertes}" var="alerte">
-				alertes.push("${alerte.message}");
-			</c:forEach>
-			
-			showAlert(alertes);
-		</c:if>
-	</script>
 </body>
 </html>

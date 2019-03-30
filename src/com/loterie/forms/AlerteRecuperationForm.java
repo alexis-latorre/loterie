@@ -29,15 +29,17 @@ public class AlerteRecuperationForm {
 	}
 
 	public List<Alerte> getAlertes() {
-		List<Alerte> alertes = new ArrayList<Alerte>();
+		List<Alerte> alertesRecuperees = new ArrayList<Alerte>();
 		
 		for (LienGrilleUtilisateur lgu : lgus) {
-			Alerte alerte = alerteDao.trouverParLGU(lgu);
+			List<Alerte> alertes = alerteDao.trouverParLGU(lgu);
 			
-			if (null != alerte) {
-				alertes.add(alerte);
+			if (null != alertes) {
+				for (Alerte alerte : alertes) {
+					alertesRecuperees.add(alerte);
+				}
 			}
 		}
-		return alertes;
+		return alertesRecuperees;
 	}
 }
