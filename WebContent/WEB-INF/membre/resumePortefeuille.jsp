@@ -1,19 +1,10 @@
-<c:choose>
-<c:when test="${utilisateur.portefeuille != null}">
-	<c:choose>
-	<c:when test="${utilisateur.portefeuille.fonds >= 0}">
-	<c:set var="classeSolde" value="Positif" />
-	</c:when>
-	<c:otherwise>
-	<c:set var="classeSolde" value="Negatif" />
-	</c:otherwise>
-	</c:choose>
-	<c:set var="solde" value="${utilisateur.portefeuille.fonds}" />
-</c:when>
-<c:otherwise>
-	<c:set var="solde" value="0" />
-</c:otherwise>
-</c:choose>
+<c:set var="soldeTotal" value="0" />
+<c:set var="soldePortefeuille" value="0" />
+<c:set var="soldeGrilles" value="0" />
+<c:if test="${utilisateur.portefeuille != null}">
+	<c:set var="soldePortefeuille" value="${utilisateur.portefeuille.fonds}" />
+	<c:set var="soldeTotal" value="${soldeTotal + utilisateur.portefeuille.fonds}" />
+</c:if>
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title">
@@ -21,10 +12,52 @@
 		</h3>
 	</div>
 	<div class="panel-body">
+		<c:if test="${fn:length(utilisateur.lgus) > 0}">
+		<c:forEach items="${utilisateur.lgus}" var="lgu">
+			<c:if test="${lgu.fonds != null}">
+				<c:set var="soldeTotal" value="${soldeTotal + lgu.fonds}" />
+				<c:set var="soldeGrilles" value="${soldeGrilles + lgu.fonds}" />
+			</c:if>
+		</c:forEach>
+		</c:if>
 		<div class="col-md-5">
+			<c:choose>
+			<c:when test="${soldeTotal >= 0}">
+			<c:set var="classeSoldeTotal" value="Positif" />
+			</c:when>
+			<c:otherwise>
+			<c:set var="classeSoldeTotal" value="Negatif" />
+			</c:otherwise>
+			</c:choose>
+			<c:choose>
+			<c:when test="${soldePortefeuille >= 0}">
+			<c:set var="classeSoldePortefeuille" value="Positif" />
+			</c:when>
+			<c:otherwise>
+			<c:set var="classeSoldePortefeuille" value="Negatif" />
+			</c:otherwise>
+			</c:choose>
+			<c:choose>
+			<c:when test="${soldeGrilles >= 0}">
+			<c:set var="classeSoldeGrilles" value="Positif" />
+			</c:when>
+			<c:otherwise>
+			<c:set var="classeSoldeGrilles" value="Negatif" />
+			</c:otherwise>
+			</c:choose>
 			<span>Solde</span>
 			<br />
-			<span class="solde${classeSolde}"><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${solde}" type="currency"></fmt:formatNumber></span>
+			<span style="cursor: help;" class="solde soldePortefeuille ${classeSoldePortefeuille}" data-toggle="tooltip" data-placement="right" title="Solde de réserve">
+				<span class="monospace">&nbsp;&nbsp;</span>
+				<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${soldePortefeuille}" type="currency"></fmt:formatNumber>
+			</span>
+			<br />
+			<span style="cursor: help;" class="solde soldeGrilles ${classeSoldeGrilles}" data-toggle="tooltip" data-placement="right" title="Solde placé sur des grilles">
+				<span class="monospace">+</span>
+				<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${soldeGrilles}" type="currency"></fmt:formatNumber>
+			</span>
+			<br />
+			<span style="cursor: help;" class="solde  soldeTotal ${classeSoldeTotal}" data-toggle="tooltip" data-placement="right" title="Solde total"><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${soldeTotal}" type="currency"></fmt:formatNumber></span>
 		</div>
 		<c:if test="${fn:length(utilisateur.grilles) > 0}">
 		<div class="col-md-7">
@@ -46,7 +79,7 @@
 					</c:if>
 					<c:out value="${etoile}" />
 				</c:forEach>
-				 : ${grille.nom}
+				 (${grille.nom})
 				</a><br />
 			</c:forEach>
 		</div>

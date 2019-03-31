@@ -207,20 +207,39 @@ public class GrilleJeuForm {
 		prix = prixTirage * datesTotalesJouees.size();
 		int nbJoueurs = joueurs.size();
 		Double prixParJoueur = prix / nbJoueurs;
+		List<LienGrilleUtilisateur> lgus = new ArrayList<LienGrilleUtilisateur>();
 		List<Portefeuille> portefeuilles = new ArrayList<Portefeuille>();
-		
-		for (Utilisateur joueur : joueurs) {			
-			Portefeuille portefeuille = joueur.getPortefeuille();
-
-			if (portefeuille == null) {
-				PortefeuilleCreationForm cpf = new PortefeuilleCreationForm(portefeuilleDao, utilisateurDao, joueur); 
-				portefeuille = cpf.getPortefeuille();
-			}
-			portefeuille.retirerFonds(prixParJoueur);
-			portefeuilles.add(portefeuille);
-			banque.ajouterFonds(prixParJoueur);
-		}
 		boolean commit = true;
+		
+		for (Utilisateur joueur : joueurs) {
+			LienGrilleUtilisateur lgu = lguDao.trouverParGrilleEtUtilisateur(grille, joueur);
+			
+			// On regarde d'abord si le joueur a les fonds sur la grille
+			if (null != lgu && lgu.getFonds() > 0) {
+				lgu.retirerFonds(prixParJoueur);
+				lgus.add(lgu);
+			// Sinon on pioche directement dans son portefeuille
+			} else {			
+				Portefeuille portefeuille = joueur.getPortefeuille();
+	
+				if (portefeuille == null) {
+					PortefeuilleCreationForm cpf = new PortefeuilleCreationForm(portefeuilleDao, utilisateurDao, joueur); 
+					portefeuille = cpf.getPortefeuille();
+				}
+				
+				/* TODO: paramétrer s'il est possible de forcer le jeu malgré un solde négatif
+				// Si le joueur n'a pas du tout les fonds pour jouer, on abandonne l'opération complète
+				if (portefeuille.getFonds() < prixParJoueur) {
+					commit = false;
+					retour.put("messageEchec", joueur.getPseudo() + " n'a pas assez de fonds pour jouer.");
+					break;
+				} else {*/
+					portefeuille.retirerFonds(prixParJoueur);
+					portefeuilles.add(portefeuille);
+					banque.ajouterFonds(prixParJoueur);
+				//} FIN TODO
+			}
+		}
 		
 		if (prix <= banque.getFonds()) {
 			banque.retirerFonds(prix);
@@ -251,6 +270,10 @@ public class GrilleJeuForm {
 		}
 		
 		if (commit) {
+			for (LienGrilleUtilisateur lgu : lgus) {	
+				lguDao.maj(lgu);
+			}
+			
 			for (Portefeuille portefeuille : portefeuilles) {	
 				portefeuilleDao.maj(portefeuille);
 			}

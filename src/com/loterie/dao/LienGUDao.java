@@ -14,6 +14,17 @@ public class LienGUDao extends LoterieDao {
 	private Map<String, Object> params = new HashMap<String, Object>();
 
 	/**
+	 * <b><i>maj</i></b><br />
+	 * <pre>public void maj({@link com.loterie.entities.LienGrilleUtilisateur LienGrilleUtilisateur} lgu)</pre>
+	 * Met à jour l'entité lien grille / utilisateur en BDD 
+	 * 
+	 * @param lgu - entité à mettre à jour
+	 */
+	public void maj(LienGrilleUtilisateur lgu) {
+		super.maj(lgu);
+	}
+
+	/**
 	 * <b><i>creer</i></b><br />
 	 * <pre>public void creer({@link com.loterie.entities.LienGrilleUtilisateur LienGrilleUtilisateur} lgu)</pre>
 	 * Crée une nouvelle entité lgu et la stocke en BDD 

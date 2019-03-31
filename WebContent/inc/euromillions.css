@@ -359,15 +359,19 @@ h4 {
 	margin-left: 5px;
 }
 
-.soldePositif {
+.soldeTotal {
 	font-size: 2.5em;
+}
+
+.soldePortefeuille, .soldeGrilles {
 	font-style: italic;
+}
+
+.Positif {
 	color: #11db44;
 }
 
-.soldeNegatif {
-	font-size: 2.5em;
-	font-style: italic;
+.Negatif {
 	color: #f84518;
 }
 

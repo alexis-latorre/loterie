@@ -17,6 +17,7 @@ public class LienGrilleUtilisateur {
 	@ManyToOne(targetEntity = Utilisateur.class)
 	@JoinColumn(name = "fk_utilisateur_id")
 	private Utilisateur utilisateur;
+	private Double fonds; 
 	
 	public Long getId() {
 		return id;
@@ -40,5 +41,22 @@ public class LienGrilleUtilisateur {
 	
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+	
+	public void setFonds(Double fonds) {
+		this.fonds = fonds;
+	}
+	
+	public Double getFonds() {
+		return this.fonds;
+	}
+
+	public void ajouterFonds(Double montant) {
+		this.fonds += montant;
+	}
+
+	public void retirerFonds(Double montant) {
+		this.fonds -= montant;
+		
 	}
 }

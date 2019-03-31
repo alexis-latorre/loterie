@@ -11,13 +11,16 @@ import javax.servlet.http.HttpSession;
 import com.loterie.config.Messages;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
+import com.loterie.dao.LienGUDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jour;
+import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Utilisateur;
 
 public class GrilleAffichageForm {
 	private Map<String, String> erreurs = new HashMap<String, String>();
+	private LienGUDao lguDao;
 	private GrilleDao grilleDao;
 	private String className = this.getClass().getName(); 
 	private Grille grille;
@@ -33,9 +36,11 @@ public class GrilleAffichageForm {
 		this.req = req;
 	}
 
-	public GrilleAffichageForm(GrilleDao grilleDao, JourDao jourDao, UtilisateurDao utilisateurDao, HttpServletRequest req) {
+	public GrilleAffichageForm(LienGUDao lguDao, GrilleDao grilleDao, JourDao jourDao, UtilisateurDao utilisateurDao, 
+			HttpServletRequest req) {
 		session = req.getSession();
 		this.grilleDao = grilleDao;
+		this.lguDao = lguDao;
 		this.req = req;
 		Long id = validerId(req.getParameter("id"));
 		grille = this.grilleDao.trouverParId(id);
@@ -44,6 +49,8 @@ public class GrilleAffichageForm {
 			jour = jourDao.trouverDernierJourJoue(grille);
 			grille.setJoueurs(utilisateurDao.trouverParGrille(grille));
 			utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+			List<LienGrilleUtilisateur> lgus = this.lguDao.trouverParUtilisateur(utilisateur);
+			utilisateur.setLgus(lgus);
 		}
 	}
 

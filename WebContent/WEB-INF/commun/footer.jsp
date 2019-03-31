@@ -15,3 +15,8 @@
 </c:if>
 <c:import url="/WEB-INF/js/scrollspy.js.jsp" />
 <c:import url="/WEB-INF/js/alertes.js.jsp" />
+<script type="text/javascript">
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	})
+</script>

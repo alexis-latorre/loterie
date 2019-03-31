@@ -37,6 +37,8 @@ public class Utilisateur {
 	@Transient
 	private String privileges = null;
 	@Transient
+	private List<LienGrilleUtilisateur> lgus;
+	@Transient
 	private List<Grille> grilles;
 	@Transient
 	private String nomRole;
@@ -115,6 +117,14 @@ public class Utilisateur {
 
 	public void setGrilles(List<Grille> grilles) {
 		this.grilles = grilles;
+	}
+	
+	public List<LienGrilleUtilisateur> getLgus() {
+		return lgus;
+	}
+
+	public void setLgus(List<LienGrilleUtilisateur> lgus) {
+		this.lgus = lgus;
 	}
 	
 	public String getNomRole() {

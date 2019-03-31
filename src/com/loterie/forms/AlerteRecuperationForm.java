@@ -22,9 +22,11 @@ public class AlerteRecuperationForm {
 		this.alerteDao = alerteDao;
 		List<Grille> grilles = utilisateur.getGrilles();
 		
-		for (Grille grille : grilles) {
-			LienGrilleUtilisateur lgu = this.lguDao.trouverParGrilleEtUtilisateur(grille, utilisateur);
-			lgus.add(lgu);
+		if (null != grilles) {
+			for (Grille grille : grilles) {
+				LienGrilleUtilisateur lgu = this.lguDao.trouverParGrilleEtUtilisateur(grille, utilisateur);
+				lgus.add(lgu);
+			}
 		}
 	}
 
