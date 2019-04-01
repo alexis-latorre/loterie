@@ -56,7 +56,6 @@ a.main-text-gold:hover {
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: "Ubuntu Medium";
-	color: #FCB749;
 }
 
 .header-hr {
@@ -151,11 +150,6 @@ table th {
 
 .etoile {
 	background: url('img/etoile.png');
-}
-
-h4 {
-	text-align: center;
-	margin: 40px;
 }
 
 .mymillion .code {

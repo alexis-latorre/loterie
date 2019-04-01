@@ -212,21 +212,42 @@ public class GrilleJeuForm {
 		boolean commit = true;
 		
 		for (Utilisateur joueur : joueurs) {
+			Double prixApayer = prixParJoueur;
+			Double fondsLGU = 0D;
+			Double fondsPortefeuille = 0D;
 			LienGrilleUtilisateur lgu = lguDao.trouverParGrilleEtUtilisateur(grille, joueur);
+			Portefeuille portefeuille = joueur.getPortefeuille();
+			
+			if (portefeuille == null) {
+				PortefeuilleCreationForm cpf = new PortefeuilleCreationForm(portefeuilleDao, utilisateurDao, joueur); 
+				portefeuille = cpf.getPortefeuille();
+				fondsPortefeuille = portefeuille.getFonds();
+			}
+			
+			if (null != lgu) {
+				fondsLGU = lgu.getFonds();
+			}
 			
 			// On regarde d'abord si le joueur a les fonds sur la grille
-			if (null != lgu && lgu.getFonds() > 0) {
+			if (fondsLGU >= prixApayer) {
 				lgu.retirerFonds(prixParJoueur);
 				lgus.add(lgu);
-			// Sinon on pioche directement dans son portefeuille
-			} else {			
-				Portefeuille portefeuille = joueur.getPortefeuille();
-	
-				if (portefeuille == null) {
-					PortefeuilleCreationForm cpf = new PortefeuilleCreationForm(portefeuilleDao, utilisateurDao, joueur); 
-					portefeuille = cpf.getPortefeuille();
+			// Ou s'il faut compléter avec son portefeuille
+			} else if ((fondsLGU + fondsPortefeuille) >= prixApayer) {
+				if (fondsLGU < prixApayer) {
+					prixApayer -= fondsLGU;
+					lgu.retirerFonds(fondsLGU);
+					lgus.add(lgu);
+
+					portefeuille.retirerFonds(prixApayer);
+					portefeuilles.add(portefeuille);
+					banque.ajouterFonds(prixParJoueur);
+				} else {
+					lgu.retirerFonds(prixApayer);
+					prixApayer = prixParJoueur - lgu.getFonds();
 				}
-				
+			// Ou si on pioche tout directement dans son portefeuille
+			} else {
 				/* TODO: paramétrer s'il est possible de forcer le jeu malgré un solde négatif
 				// Si le joueur n'a pas du tout les fonds pour jouer, on abandonne l'opération complète
 				if (portefeuille.getFonds() < prixParJoueur) {

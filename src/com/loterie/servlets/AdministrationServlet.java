@@ -31,6 +31,7 @@ import com.loterie.tools.Logger;
 @WebServlet(urlPatterns = {
 		Constants.URL_ADMIN_ACCUEIL,
 		Constants.URL_ADMIN_CREDITER,
+		Constants.URL_ADMIN_REDISTRIBUER,
 		Constants.URL_ADMIN_DETAILS_UTILISATEUR,
 		Constants.URL_ADMIN_DETAILS_UTILISATEURS,
 		Constants.URL_ADMIN_LOGS,
@@ -123,6 +124,13 @@ public class AdministrationServlet extends HttpServlet {
 					LogRecuperationForm lrf = new LogRecuperationForm(logDao);
 					req.setAttribute("logs", lrf.parseLogs());
 					cible = Constants.URN_ADMIN_LOGS;
+					break;
+				}
+				case Constants.URL_ADMIN_REDISTRIBUER: {
+					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
+
+					req.setAttribute("titrePage", "redistribute");
+					cible = Constants.URN_ADMIN_REDISTRIBUER;
 					break;
 				}
 				case Constants.URL_ADMIN_RETABLIR_GRILLE: {

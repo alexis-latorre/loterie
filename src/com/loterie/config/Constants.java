@@ -106,6 +106,7 @@ public interface Constants {
 	
 	public static final String URL_ADMIN_ACCUEIL 							= "/admin/accueil";
 	public static final String URL_ADMIN_CREDITER							= "/admin/crediterJoueur";
+	public static final String URL_ADMIN_REDISTRIBUER						= "/admin/redistribuerGains";
 	public static final String URL_ADMIN_DETAILS_UTILISATEUR 				= "/admin/detailsUtilisateur";
 	public static final String URL_ADMIN_DETAILS_UTILISATEURS 				= "/admin/detailsUtilisateurs";
 	public static final String URL_ADMIN_RETABLIR_GRILLE	 				= "/admin/retablirGrille";
@@ -135,6 +136,7 @@ public interface Constants {
 	public static final String URN_ADMIN_403 								= "/WEB-INF/admin/403.jsp";
 	public static final String URN_ADMIN_ACCUEIL 							= "/WEB-INF/admin/homePage.jsp";
 	public static final String URN_ADMIN_CREDITER 							= "/WEB-INF/admin/crediterJoueur.jsp";
+	public static final String URN_ADMIN_REDISTRIBUER 						= "/WEB-INF/admin/redistribuerGains.jsp";
 	public static final String URN_ADMIN_DETAILS_UTILISATEUR 				= "/WEB-INF/admin/detailsUtilisateur.jsp";
 	public static final String URN_ADMIN_DETAILS_UTILISATEURS 				= "/WEB-INF/admin/detailsUtilisateurs.jsp";
 	public static final String URN_ADMIN_LOGS				 				= "/WEB-INF/admin/logs.jsp";

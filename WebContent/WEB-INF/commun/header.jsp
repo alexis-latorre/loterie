@@ -26,6 +26,7 @@
 							<c:if test="${utilisateur.estAdministrateur() or utilisateur.estModerateur()}">
 								<li><span class="glyphicon glyphicon-briefcase">&nbsp;</span>Administration</li>
 								<li><a href="<c:url value="/admin/crediterJoueur" />"><span class="glyphicon glyphicon-piggy-bank">&nbsp;</span>Créditer un joueur</a></li>
+								<li><a href="<c:url value="/admin/redistribuerGains" />"><span class="glyphicon glyphicon-euro">&nbsp;</span>Redistribuer les gains</a></li>
 								<li><a href="<c:url value="/admin/detailsUtilisateurs" />"><span class="glyphicon glyphicon-th-list">&nbsp;</span>Afficher les utilisateurs</a></li>
 								<li><a href="<c:url value="/admin/logs" />"><span class="glyphicon glyphicon-duplicate">&nbsp;</span>Consulter les logs</a></li>
 								<hr />
@@ -59,7 +60,7 @@
 					<li>
 						<c:set var="expanded" value="false" />
 						<c:set var="in" value="" />
-						<c:if test="${titrePage == 'creditPlayer' or titrePage == 'listUsers' or titrePage == 'viewLogs'}">
+						<c:if test="${titrePage == 'creditPlayer' or titrePage == 'redistribute' or titrePage == 'listUsers' or titrePage == 'viewLogs'}">
 							<c:set var="expanded" value="true" /><c:set var="in" value=" in" />
 						</c:if>
 						<a role="button" data-toggle="collapse" href="#adminLinks" aria-expanded="${expanded}" aria-controls="adminLinks"><span class="glyphicon glyphicon-briefcase">&nbsp;</span>Administration</a>
@@ -67,6 +68,8 @@
 							<ul class="nav nav-sidebar subnav">
 								<c:choose><c:when test="${titrePage == 'creditPlayer'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
 								<li class="${active}"><a href="<c:url value="/admin/crediterJoueur" />"><span class="glyphicon glyphicon-piggy-bank">&nbsp;</span>Créditer un joueur</a></li>
+								<c:choose><c:when test="${titrePage == 'redistribute'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
+								<li class="${active}"><a href="<c:url value="/admin/redistribuerGains" />"><span class="glyphicon glyphicon-euro">&nbsp;</span>Redistribuer les gains</a></li>
 								<c:choose><c:when test="${titrePage == 'listUsers'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
 								<li class="${active}"><a href="<c:url value="/admin/detailsUtilisateurs" />"><span class="glyphicon glyphicon-th-list">&nbsp;</span>Afficher les utilisateurs</a></li>
 								<c:choose><c:when test="${titrePage == 'viewLogs'}"><c:set var="active" value=" active"></c:set></c:when><c:otherwise><c:set var="active" value=""></c:set></c:otherwise></c:choose>
