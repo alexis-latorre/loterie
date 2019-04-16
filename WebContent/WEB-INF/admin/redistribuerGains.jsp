@@ -16,8 +16,9 @@
 				</h3>
 			</div>
 			<div class="panel-body">
+				<c:forEach items="${gains}" var="gain">
 				<div class="well">
-					<h4>Gains du 12/12/2018</h4>
+					<h4>Gains du ${gain.jour.dateJour}</h4>
 					<div class="row">
 						<div class="col-md-4">
 						</div>
@@ -46,7 +47,7 @@
 								<div class="form-group">
 									<label for="repartitionBanque">Montant à envoyer en banque :</label>
 		    						<div class="input-group">
-										<input id="repartitionBanque" type="number" lang="en" lang="fr" step="0.1" value="0" min="0" max="66695,80" class="form-control" onchange="update(1)" />
+										<input id="repartitionBanque" type="number" lang="en" lang="fr" step="0.1" value="0" min="0" max="66695.80" class="form-control" onchange="update(1)" />
 		      							<div class="input-group-addon">&euro;</div>
 	      							</div>
 								</div>
@@ -65,6 +66,7 @@
 						</div>
 					</form>
 				</div>
+				</c:forEach>
 			</div>
 		</div>
 	</div>

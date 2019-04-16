@@ -1,7 +1,9 @@
 package com.loterie.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -12,14 +14,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.loterie.business.GainRedistribuableHTML;
 import com.loterie.config.Constants;
 import com.loterie.config.Privileges;
 import com.loterie.dao.GrilleDao;
+import com.loterie.dao.JourDao;
+import com.loterie.dao.LienGUDao;
 import com.loterie.dao.LogDao;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.PrivilegeDao;
 import com.loterie.dao.RetardDao;
 import com.loterie.dao.UtilisateurDao;
+import com.loterie.entities.Grille;
+import com.loterie.entities.Jour;
+import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.GrilleActivationForm;
 import com.loterie.forms.LogRecuperationForm;
@@ -53,6 +61,10 @@ public class AdministrationServlet extends HttpServlet {
 	private LogDao logDao;
 	@EJB
 	private PrivilegeDao privilegeDao;
+	@EJB
+	private LienGUDao lguDao;
+	@EJB
+	private JourDao jourDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -130,6 +142,29 @@ public class AdministrationServlet extends HttpServlet {
 					if (!utilisateur.estModerateur() && !utilisateur.estAdministrateur()) break;
 
 					req.setAttribute("titrePage", "redistribute");
+					List<GainRedistribuableHTML> gains = new ArrayList<GainRedistribuableHTML>();
+					List<LienGrilleUtilisateur> lgusUtilisateur = lguDao.trouverGagnantParUtilisateur(utilisateur);
+
+					for (LienGrilleUtilisateur lguUtilisateur : lgusUtilisateur) {
+						Grille grille = lguUtilisateur.getGrille();
+						List<Jour> jours = jourDao.trouverParLGU(lguUtilisateur);
+						
+						for (Jour jour : jours) {
+							if (jour.getGains() > 0) {
+								List<LienGrilleUtilisateur> lgus = lguDao.trouverParGrille(grille);
+								List<Utilisateur> joueurs = new ArrayList<Utilisateur>();
+								
+								for (LienGrilleUtilisateur lgu : lgus) {
+									jourDao.trouverParLGU(lgu);
+									joueurs.add(lgu.getUtilisateur());
+								}
+								GainRedistribuableHTML gain = new GainRedistribuableHTML(jour, grille, joueurs);
+								gains.add(gain);
+							}
+						}
+					}
+					
+					req.setAttribute("gains", gains);
 					cible = Constants.URN_ADMIN_REDISTRIBUER;
 					break;
 				}
