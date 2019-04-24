@@ -16,14 +16,16 @@
 				</h3>
 			</div>
 			<div class="panel-body">
+				<c:set var="id" value="0" />
 				<c:forEach items="${gains}" var="gain">
+				<c:set var="id" value="${id + 1}" />
 				<div class="well">
-					<h4>Gains du ${gain.jour.dateJour}</h4>
+					<h4>Gains du ${gain.date}</h4>
 					<div class="row">
 						<div class="col-md-4">
 						</div>
 						<div class="col-md-4 col-xs-12">
-							Montant total : <span id="montantTotal">66695,80</span> €
+							Montant total : <span id="montantTotal-${id}" class="montantTotal"><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${gain.jour.gains}" /></span> €
 						</div>
 						<div class="col-md-4">
 						</div>
@@ -34,9 +36,9 @@
 							</div>
 							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
-									<label for="repartitionJoueurs">Montant à répartir entre les joueurs :</label>
+									<label for="repartitionJoueurs-${id}">Montant à répartir entre les joueurs :</label>
 		    						<div class="input-group">
-										<input id="repartitionJoueurs" type="number" lang="en" lang="fr" step="0.1"  value="66695.80" min="0" max="66695.80" class="form-control" onchange="update(0)" />
+										<input id="repartitionJoueurs-${id}" type="number" lang="en" lang="fr" step="${gain.jour.nbJoueurs * 0.01}"  value="${gain.jour.gains}" min="0" max="${gain.jour.gains}" class="form-control" onchange="update(${id}, 0)" />
 	      								<div class="input-group-addon">&euro;</div>
 	      							</div>
 								</div>
@@ -45,9 +47,9 @@
 							</div>
 							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
-									<label for="repartitionBanque">Montant à envoyer en banque :</label>
+									<label for="repartitionBanque-${id}">Montant à envoyer en banque :</label>
 		    						<div class="input-group">
-										<input id="repartitionBanque" type="number" lang="en" lang="fr" step="0.1" value="0" min="0" max="66695.80" class="form-control" onchange="update(1)" />
+										<input id="repartitionBanque-${id}" type="number" lang="en" lang="fr" step="${gain.jour.nbJoueurs * 0.01}" value="0" min="0" max="${gain.jour.gains}" class="form-control" onchange="update(${id}, 1)" />
 		      							<div class="input-group-addon">&euro;</div>
 	      							</div>
 								</div>
@@ -73,14 +75,25 @@
 	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
 	<script type="text/javascript">
-		var montantTotal = 0;
+		/*var montantTotal = 0;
 		
 		$(document).ready(function() {
-			montantTotal = $("#montantTotal").text().replace(',', '');
-		});
+			montantTotal = $(".montantTotal").text().replace('.', ',');
+		});*/
 	
-		update = function(e) {
-			repartitionBanqueStr = $("#repartitionBanque").val();
+		update = function(id, e) {
+			montantTotalStr = $("#montantTotal-" + id).text().replace(',', '.');
+			montantTotalEntier = montantTotalStr;
+			montantTotalDec = "00";
+			
+			if (montantTotalStr.includes(".")) {
+				montantTotalParts = (montantTotalStr + "00").split('.');
+				montantTotalEntier = montantTotalParts[0];
+				montantTotalDec = montantTotalParts[1].substring(0, 2);
+			}
+			montantTotal = montantTotalEntier + "" + montantTotalDec;
+			
+			repartitionBanqueStr = $("#repartitionBanque-" + id).val();
 			repartitionBanqueDec = "00";
 			repartitionBanqueEntier = repartitionBanqueStr;
 			
@@ -91,7 +104,7 @@
 			}
 			repartitionBanque = repartitionBanqueEntier + "" + repartitionBanqueDec;
 			
-			repartitionJoueursStr = $("#repartitionJoueurs").val();
+			repartitionJoueursStr = $("#repartitionJoueurs-" + id).val();
 			repartitionJoueursDec = "00";
 			repartitionJoueursEntier = repartitionJoueursStr;
 			
@@ -109,23 +122,23 @@
 			if (newRepartitionBanque > montantTotal || newRepartitionJoueurs < 0) {
 				newRepartitionBanque = montantTotal;
 				newRepartitionJoueurs = 0;
-				$("#repartitionJoueurs").val(0);
-				$("#repartitionBanque").val(montantTotal / 100);
+				$("#repartitionJoueurs-" + id).val(0);
+				$("#repartitionBanque-" + id).val(montantTotal / 100);
 			}
 
 			if (newRepartitionJoueurs > montantTotal || newRepartitionBanque < 0) {
 				newRepartitionJoueurs = montantTotal;
 				newRepartitionBanque = 0;
-				$("#repartitionBanque").val(0);
-				$("#repartitionJoueurs").val(montantTotal / 100);
+				$("#repartitionBanque-" + id).val(0);
+				$("#repartitionJoueurs-" + id).val(montantTotal / 100);
 			}
 			
 			switch (e) {
 				case 0:
-					$("#repartitionBanque").val(newRepartitionBanque / 100);
+					$("#repartitionBanque-" + id).val(newRepartitionBanque / 100);
 					break;
 				case 1:
-					$("#repartitionJoueurs").val(newRepartitionJoueurs / 100);
+					$("#repartitionJoueurs-" + id).val(newRepartitionJoueurs / 100);
 					break;
 			}
 		}

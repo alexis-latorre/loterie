@@ -143,24 +143,23 @@ public class AdministrationServlet extends HttpServlet {
 
 					req.setAttribute("titrePage", "redistribute");
 					List<GainRedistribuableHTML> gains = new ArrayList<GainRedistribuableHTML>();
-					List<LienGrilleUtilisateur> lgusUtilisateur = lguDao.trouverGagnantParUtilisateur(utilisateur);
+					List<LienGrilleUtilisateur> lgusUtilisateur = lguDao.trouverParUtilisateur(utilisateur);
+					
 
 					for (LienGrilleUtilisateur lguUtilisateur : lgusUtilisateur) {
-						Grille grille = lguUtilisateur.getGrille();
-						List<Jour> jours = jourDao.trouverParLGU(lguUtilisateur);
-						
-						for (Jour jour : jours) {
-							if (jour.getGains() > 0) {
-								List<LienGrilleUtilisateur> lgus = lguDao.trouverParGrille(grille);
-								List<Utilisateur> joueurs = new ArrayList<Utilisateur>();
+						List<Jour> joursGains = jourDao.trouverJoursGagnantParLGU(lguUtilisateur);
+	
+						for (Jour jour : joursGains) {
+							LienGrilleUtilisateur lgu = jour.getLgu();
+							Grille grille = lgu.getGrille();
+							List<LienGrilleUtilisateur> lgus = lguDao.trouverParGrille(grille);
+							List<Utilisateur> joueurs = new ArrayList<Utilisateur>();
 								
-								for (LienGrilleUtilisateur lgu : lgus) {
-									jourDao.trouverParLGU(lgu);
-									joueurs.add(lgu.getUtilisateur());
-								}
-								GainRedistribuableHTML gain = new GainRedistribuableHTML(jour, grille, joueurs);
-								gains.add(gain);
+							for (LienGrilleUtilisateur l : lgus) {
+								joueurs.add(l.getUtilisateur());
 							}
+							GainRedistribuableHTML gain = new GainRedistribuableHTML(jour, grille, joueurs);
+							gains.add(gain);
 						}
 					}
 					

@@ -121,8 +121,15 @@ public class JourDao extends LoterieDao {
 		return (Jour) super.resultat(Constants.SELECT_JOUR_PAR_DATE_ET_LGU, params, "trouverParDateEtLGU");
 	}
 
-	public List<LienGrilleUtilisateur> trouverLguGagnantParUtilisateur(Utilisateur utilisateur) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Jour> trouverJoursGagnantParUtilisateur(Utilisateur utilisateur) {
+		params.clear();
+		params.put("utilisateur", utilisateur);
+		return (List<Jour>) super.resultats(Constants.SELECT_JOUR_GAGNANT_PAR_UTILISATEUR, params, "trouverJoursGagnantParUtilisateur");
+	}
+
+	public List<Jour> trouverJoursGagnantParLGU(LienGrilleUtilisateur lguUtilisateur) {
+		params.clear();
+		params.put("lguUtilisateur", lguUtilisateur);
+		return (List<Jour>) super.resultats(Constants.SELECT_JOUR_GAGNANT_PAR_LGU, params, "trouverJoursGagnantParLGU");
 	}
 }

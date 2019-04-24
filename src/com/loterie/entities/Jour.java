@@ -29,6 +29,8 @@ public class Jour {
 	private LienGrilleUtilisateur lgu;
 	private Long paye;
 	private Double gains;
+	@Column(name = "gains_redistribues")
+	private Double gainsRedistribues;
 	@Column(name = "nb_joueurs")
 	private Long nbJoueurs;
 	@Transient
@@ -77,6 +79,14 @@ public class Jour {
 
 	public void setGains(Double gains) {
 		this.gains = gains;
+	}
+
+	public Double getGainsRedistribues() {
+		return gainsRedistribues;
+	}
+
+	public void setGainsRedistribues(Double gainsRedistribues) {
+		this.gainsRedistribues = gainsRedistribues;
 	}
 
 	public Long getNbJoueurs() {

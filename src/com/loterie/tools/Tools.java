@@ -368,6 +368,22 @@ public class Tools {
 	}
 
 	/**
+	 * <b><i>getDateSlash</i></b><br />
+	 * <pre>public static {@link java.lang.String String} getDateSlash({@link java.lang.String String} dateTiret)</pre>
+	 * Retourne la date convertie de tiret vers slash
+	 * 
+	 * @param dateTiret - la date à convertir
+	 * @return la date du convertie au format jj/mm/aaaa
+	 */
+	public static String getDateSlash(String dateTiret) {
+		try {
+			return dateTiret.substring(8, 10) + "/" + dateTiret.substring(5, 7) + "/" + dateTiret.substring(0, 4);
+		} catch (Exception e) {
+			return "<Error>" + getDateSlash();
+		}
+	}
+
+	/**
 	 * <b><i>getDateTiret</i></b><br />
 	 * <pre>public static {@link java.lang.String String} getDateTiret()</pre>
 	 * Retourne la date du moment
