@@ -30,7 +30,8 @@
 						<div class="col-md-4">
 						</div>
 					</div>
-					<form action="<c:url value="/admin/redistribuerGains" />" method="post" onsubmit="return popupConfirmFundsChange(this);">
+					<form action="<c:url value="/admin/redistribuerGains" />" method="post">
+						<input type="hidden" name="token" value="${gain.token}" />
 						<div class="row">
 							<div class="col-md-1">
 							</div>
@@ -38,7 +39,7 @@
 								<div class="form-group">
 									<label for="repartitionJoueurs-${id}">Montant à répartir entre les joueurs :</label>
 		    						<div class="input-group">
-										<input id="repartitionJoueurs-${id}" type="number" lang="en" lang="fr" step="${gain.jour.nbJoueurs * 0.01}"  value="${gain.jour.gains}" min="0" max="${gain.jour.gains}" class="form-control" onchange="update(${id}, 0)" />
+										<input name="repartitionJoueurs" id="repartitionJoueurs-${id}" type="number" lang="en" lang="fr" step="${gain.jour.nbJoueurs * 0.01}"  value="${gain.jour.gains}" min="0" max="${gain.jour.gains}" class="form-control" onchange="update(${id}, 0)" />
 	      								<div class="input-group-addon">&euro;</div>
 	      							</div>
 								</div>
@@ -49,7 +50,7 @@
 								<div class="form-group">
 									<label for="repartitionBanque-${id}">Montant à envoyer en banque :</label>
 		    						<div class="input-group">
-										<input id="repartitionBanque-${id}" type="number" lang="en" lang="fr" step="${gain.jour.nbJoueurs * 0.01}" value="0" min="0" max="${gain.jour.gains}" class="form-control" onchange="update(${id}, 1)" />
+										<input name="repartitionBanque" id="repartitionBanque-${id}" type="number" lang="en" lang="fr" step="${gain.jour.nbJoueurs * 0.01}" value="0" min="0" max="${gain.jour.gains}" class="form-control" onchange="update(${id}, 1)" />
 		      							<div class="input-group-addon">&euro;</div>
 	      							</div>
 								</div>

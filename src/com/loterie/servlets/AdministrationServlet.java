@@ -35,6 +35,7 @@ import com.loterie.forms.PrivilegesModificationForm;
 import com.loterie.forms.UtilisateurCreditForm;
 import com.loterie.forms.UtilisateurRecuperationForm;
 import com.loterie.tools.Logger;
+import com.loterie.tools.TokenManager;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_ADMIN_ACCUEIL,
@@ -241,6 +242,19 @@ public class AdministrationServlet extends HttpServlet {
 						resp.sendRedirect(req.getServletContext().getContextPath() + 
 								Constants.URL_ADMIN_DETAILS_UTILISATEURS);
 						return;
+					}
+					case Constants.URL_ADMIN_REDISTRIBUER: {
+						String token = req.getParameter("token");
+						System.out.println("On récupère l'objet associé au token '" + token + "'");
+						GainRedistribuableHTML gainsHTML = (GainRedistribuableHTML) TokenManager.retrieve(token);
+						//TokenManager.list();
+						
+						if (null != gainsHTML) {
+							System.out.println("Token valide");
+							//TokenManager.delete(token);
+						} else {
+							System.out.println("Token invalide");
+						}
 					}
 					default: cible = Constants.URN_ADMIN_ACCUEIL;
 				}
