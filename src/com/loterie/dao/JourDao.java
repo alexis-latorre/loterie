@@ -27,6 +27,17 @@ public class JourDao extends LoterieDao {
 	}
 
 	/**
+	 * <b><i>maj</i></b><br />
+	 * <pre>public void maj({@link com.loterie.entities.Jour Jour} jour)</pre>
+	 * Met à jour l'entité jour en BDD 
+	 * 
+	 * @param jour - entité à mettre à jour
+	 */
+	public void maj(Jour jour) {
+		super.maj(jour);
+	}
+
+	/**
 	 * <b><i>trouverParDate</i></b><br />
 	 * <pre>public {@link com.loterie.entities.Jour Jour} trouverParDate({@link java.lang.String String} dateJour)</pre>
 	 * Retourne le jour qui correspond à la date renseignée
@@ -131,5 +142,11 @@ public class JourDao extends LoterieDao {
 		params.clear();
 		params.put("lguUtilisateur", lguUtilisateur);
 		return (List<Jour>) super.resultats(Constants.SELECT_JOUR_GAGNANT_PAR_LGU, params, "trouverJoursGagnantParLGU");
+	}
+
+	public List<Jour> trouverParGroupe(String groupe) {
+		params.clear();
+		params.put("groupe", groupe);
+		return (List<Jour>) super.resultats(Constants.SELECT_JOUR_PAR_GROUPE, params, "trouverParGroupe");
 	}
 }

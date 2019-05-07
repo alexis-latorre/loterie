@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -126,6 +127,7 @@ public class GrilleJeuForm {
 		int idJour = 0;
 		int nbPeriode = Integer.parseInt(periode.substring(0, 1));
 		String typePeriode = periode.substring(1);
+		String idGroupe = UUID.randomUUID().toString();
 		
 		if (dateValidation.isAfter(DateTime.now().plusDays(1))) {
 			retour.put("messageEchec", "Cette date de jeu est trop loin dans le futur pour être jouée");
@@ -268,6 +270,8 @@ public class GrilleJeuForm {
 			for (Jour jour : joursAjouer) {
 				jour.setGains(0D);
 				jour.setNbJoueurs((long) nbJoueurs);
+				jour.setGainsRedistribues(0D);
+				jour.setGroupe(idGroupe);
 				try {
 					jourDao.creer(jour);
 				} catch (Exception e) {

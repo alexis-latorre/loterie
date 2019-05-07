@@ -26,7 +26,7 @@ public class GrilleRecuperationDuJourForm {
 			String id = req.getParameter("id");
 			
 			if (null == id) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				id = sdf.format(new Date());
 			}
 			String[] parameters = id.split("-");

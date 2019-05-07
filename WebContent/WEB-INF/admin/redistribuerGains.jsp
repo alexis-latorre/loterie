@@ -16,6 +16,8 @@
 				</h3>
 			</div>
 			<div class="panel-body">
+			<c:choose>
+				<c:when test="${fn:length(gains) > 0}">
 				<c:set var="id" value="0" />
 				<c:forEach items="${gains}" var="gain">
 				<c:set var="id" value="${id + 1}" />
@@ -70,6 +72,11 @@
 					</form>
 				</div>
 				</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>Aucun gain à redistribuer</p>
+				</c:otherwise>
+			</c:choose>
 			</div>
 		</div>
 	</div>

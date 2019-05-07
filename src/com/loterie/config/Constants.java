@@ -168,6 +168,7 @@ public interface Constants {
 	public static final String SELECT_JOUR_DERNIER_JOUE_PAR_GRILLE			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l ON j.lgu = l JOIN Grille g WHERE l.grille = :grille ORDER BY j.dateJour DESC";
 	public static final String SELECT_JOUR_GAGNANT_PAR_UTILISATEUR 			= "SELECT j FROM Jour j JOIN LienGrilleUtilisateur l WHERE j.gains > 0 AND j.gains != j.gainsRedistribues AND l.utilisateur = :utilisateur";
 	public static final String SELECT_JOUR_GAGNANT_PAR_LGU 					= "SELECT j FROM Jour j WHERE (j.gains > 0) AND (j.gains != j.gainsRedistribues) AND (j.lgu = :lguUtilisateur)";
+	public static final String SELECT_JOUR_PAR_GROUPE 						= "SELECT j FROM Jour j WHERE j.groupe = :groupe";
 	public static final String SELECT_JEU_PAR_NOM 							= "SELECT j FROM Jeu j WHERE j.nom = :nom";
 	public static final String SELECT_LOG		 							= "SELECT l FROM Log l ORDER BY l.utc DESC";
 	public static final String SELECT_RESULTATS_DESC 						= "SELECT r FROM Resultat r ORDER BY r.id DESC";

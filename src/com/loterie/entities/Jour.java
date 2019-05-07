@@ -33,6 +33,7 @@ public class Jour {
 	private Double gainsRedistribues;
 	@Column(name = "nb_joueurs")
 	private Long nbJoueurs;
+	private String groupe;
 	@Transient
 	private Date date = null;
 	
@@ -95,6 +96,14 @@ public class Jour {
 
 	public void setNbJoueurs(Long nbJoueurs) {
 		this.nbJoueurs = nbJoueurs;
+	}
+
+	public void setGroupe(String groupe) {
+		this.groupe = groupe;
+	}
+
+	public String getGroupe() {
+		return groupe;
 	}
 
 	public Date getDate() {

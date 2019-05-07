@@ -14,18 +14,20 @@ public class GainRedistribuableHTML {
 	private Jour jour;
 	private Grille grille;
 	private List<Utilisateur> joueurs;
+	private List<Jour> jours;
 	private String date;
 	private String token;
 	
-	public GainRedistribuableHTML(Jour jour, Grille grille, List<Utilisateur> joueurs) {
+	public GainRedistribuableHTML(Jour jour, Grille grille, List<Utilisateur> joueurs, List<Jour> jours) {
 		this.setJour(jour);
 		this.setDate(Tools.getDateSlash(jour.getDateJour()));
 		this.setGrille(grille);
 		this.setJoueurs(joueurs);
+		System.out.println(jours);
+		this.setJours(jours);
 		
 		try {
 			this.setToken(TokenManager.newToken(this));
-			System.out.println("Le gain du " + jour.getDateJour() + " est associé au token '" + this.getToken() + "'");
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,6 +56,14 @@ public class GainRedistribuableHTML {
 	
 	public void setJoueurs(List<Utilisateur> joueurs) {
 		this.joueurs = joueurs;
+	}
+
+	public List<Jour> getJours() {
+		return jours;
+	}
+
+	public void setJours(List<Jour> jours) {
+		this.jours = jours;
 	}
 
 	public int getNbJoueurs() {

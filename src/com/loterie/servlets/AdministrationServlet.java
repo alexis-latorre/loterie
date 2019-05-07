@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import com.loterie.business.GainRedistribuableHTML;
 import com.loterie.config.Constants;
 import com.loterie.config.Privileges;
+import com.loterie.dao.BanqueDao;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
@@ -25,9 +26,11 @@ import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.PrivilegeDao;
 import com.loterie.dao.RetardDao;
 import com.loterie.dao.UtilisateurDao;
+import com.loterie.entities.Banque;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jour;
 import com.loterie.entities.LienGrilleUtilisateur;
+import com.loterie.entities.Portefeuille;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.GrilleActivationForm;
 import com.loterie.forms.LogRecuperationForm;
@@ -66,6 +69,8 @@ public class AdministrationServlet extends HttpServlet {
 	private LienGUDao lguDao;
 	@EJB
 	private JourDao jourDao;
+	@EJB
+	private BanqueDao banqueDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -150,17 +155,20 @@ public class AdministrationServlet extends HttpServlet {
 					for (LienGrilleUtilisateur lguUtilisateur : lgusUtilisateur) {
 						List<Jour> joursGains = jourDao.trouverJoursGagnantParLGU(lguUtilisateur);
 	
-						for (Jour jour : joursGains) {
-							LienGrilleUtilisateur lgu = jour.getLgu();
-							Grille grille = lgu.getGrille();
-							List<LienGrilleUtilisateur> lgus = lguDao.trouverParGrille(grille);
-							List<Utilisateur> joueurs = new ArrayList<Utilisateur>();
-								
-							for (LienGrilleUtilisateur l : lgus) {
-								joueurs.add(l.getUtilisateur());
+						if (null != joursGains) {
+							for (Jour jour : joursGains) {
+								LienGrilleUtilisateur lgu = jour.getLgu();
+								Grille grille = lgu.getGrille();
+								List<LienGrilleUtilisateur> lgus = lguDao.trouverParGrille(grille);
+								List<Utilisateur> joueurs = new ArrayList<Utilisateur>();
+								List<Jour> jours = jourDao.trouverParGroupe(jour.getGroupe());
+									
+								for (LienGrilleUtilisateur l : lgus) {
+									joueurs.add(l.getUtilisateur());
+								}
+								GainRedistribuableHTML gain = new GainRedistribuableHTML(jour, grille, joueurs, jours);
+								gains.add(gain);
 							}
-							GainRedistribuableHTML gain = new GainRedistribuableHTML(jour, grille, joueurs);
-							gains.add(gain);
 						}
 					}
 					
@@ -244,16 +252,61 @@ public class AdministrationServlet extends HttpServlet {
 						return;
 					}
 					case Constants.URL_ADMIN_REDISTRIBUER: {
-						String token = req.getParameter("token");
-						System.out.println("On récupère l'objet associé au token '" + token + "'");
-						GainRedistribuableHTML gainsHTML = (GainRedistribuableHTML) TokenManager.retrieve(token);
-						//TokenManager.list();
+						cible = Constants.URN_ADMIN_REDISTRIBUER;
 						
-						if (null != gainsHTML) {
-							System.out.println("Token valide");
-							//TokenManager.delete(token);
-						} else {
-							System.out.println("Token invalide");
+						try {
+							String token = req.getParameter("token");
+							Double repartitionJoueurs = Double.valueOf(req.getParameter("repartitionJoueurs"));
+							Double repartitionBanque = Double.valueOf(req.getParameter("repartitionBanque"));
+							GainRedistribuableHTML gainsHTML = (GainRedistribuableHTML) TokenManager.retrieve(token);
+							
+							if (null != gainsHTML) {
+								Double total = repartitionJoueurs + repartitionBanque;
+								int nbJoueurs = gainsHTML.getJoueurs().size();
+								
+								if (!total.equals(gainsHTML.getJour().getGains())) {
+									throw new Exception("Les gains à redistribuer (" + total + ") ne correspondent pas aux gains réels (" + gainsHTML.getJour().getGains() + ")");
+								}
+								
+								if ((repartitionJoueurs * 100) % nbJoueurs != 0) {
+									throw new Exception("Les gains à redistribuer (" + repartitionJoueurs + ") ne sont pas divisibles par le nombre de joueurs (" + nbJoueurs + ") renseigné");
+								}
+								List<Object> listeObjets = new ArrayList<Object>();
+								Banque banqueGrille = gainsHTML.getGrille().getBanque();
+								banqueGrille.ajouterFonds(repartitionBanque);
+								listeObjets.add(banqueGrille);								
+								Double montantParJoueur = (repartitionJoueurs / nbJoueurs);
+								
+								for (Utilisateur joueur : gainsHTML.getJoueurs()) {
+									Portefeuille portefeuille = joueur.getPortefeuille();
+									portefeuille.ajouterFonds(montantParJoueur);
+									listeObjets.add(portefeuille);
+								}
+
+								List<Jour> jours = gainsHTML.getJours();
+								
+								for (Jour j : jours) {
+									j.setGainsRedistribues(total);
+									listeObjets.add(j);
+								}
+									
+								for (Object o : listeObjets) {
+									if (o instanceof Portefeuille) {
+										portefeuilleDao.maj((Portefeuille) o);
+										System.out.println("Portefeuille " + ((Portefeuille) o).getId() + " mis à jour");
+									}
+									if (o instanceof Banque) {
+										banqueDao.maj((Banque) o);
+										System.out.println("Banque " + ((Banque) o).getId() + " mise à jour");
+									}
+									if (o instanceof Jour) {
+										jourDao.maj((Jour) o);
+										System.out.println("Jour " + ((Jour) o).getId() + " mis à jour");
+									}
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
 					}
 					default: cible = Constants.URN_ADMIN_ACCUEIL;
