@@ -293,21 +293,19 @@ public class AdministrationServlet extends HttpServlet {
 								for (Object o : listeObjets) {
 									if (o instanceof Portefeuille) {
 										portefeuilleDao.maj((Portefeuille) o);
-										System.out.println("Portefeuille " + ((Portefeuille) o).getId() + " mis à jour");
 									}
 									if (o instanceof Banque) {
 										banqueDao.maj((Banque) o);
-										System.out.println("Banque " + ((Banque) o).getId() + " mise à jour");
 									}
 									if (o instanceof Jour) {
 										jourDao.maj((Jour) o);
-										System.out.println("Jour " + ((Jour) o).getId() + " mis à jour");
 									}
 								}
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
+						break;
 					}
 					default: cible = Constants.URN_ADMIN_ACCUEIL;
 				}
