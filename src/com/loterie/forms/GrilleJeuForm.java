@@ -303,6 +303,7 @@ public class GrilleJeuForm {
 				portefeuilleDao.maj(portefeuille);
 			}
 			banqueDao.maj(banque);
+			utilisateurDao.clearCache();
 		}
 		Utilisateur joueur = utilisateurDao.trouverParId(utilisateur.getId());
 		joueur.setGrilles(utilisateur.getGrilles());
