@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.joda.time.DateTime;
 
 import com.loterie.dao.BanqueDao;
+import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.dao.PortefeuilleDao;
@@ -34,6 +35,7 @@ public class GrilleJeuForm {
 	private BanqueDao banqueDao;
 	private PortefeuilleDao portefeuilleDao;
 	private UtilisateurDao utilisateurDao;
+	private GrilleDao grilleDao;
 	private HttpServletRequest req;
 	private Map<String, String> erreurs;
 	private String periode;
@@ -48,16 +50,18 @@ public class GrilleJeuForm {
 	private int anneeJeu;
 	
 	public GrilleJeuForm(LienGUDao lguDao, JourDao jourDao, BanqueDao banqueDao, PortefeuilleDao portefeuilleDao, 
-			UtilisateurDao utilisateurDao, HttpServletRequest req) {
+			UtilisateurDao utilisateurDao, GrilleDao grilleDao, HttpServletRequest req) {
 		this.banqueDao = banqueDao;
 		this.lguDao = lguDao;
 		this.jourDao = jourDao;
 		this.portefeuilleDao = portefeuilleDao;
 		this.utilisateurDao = utilisateurDao;
+		this.grilleDao = grilleDao;
 		this.req = req;
 		erreurs = new HashMap<String, String>();
 		periode = req.getParameter("periode");
 		date = req.getParameter("date");
+		String myMillion = req.getParameter("mymillion");
 		session = this.req.getSession();
 		grille = (Grille) session.getAttribute("grille");
 		utilisateur = (Utilisateur) session.getAttribute("utilisateur");
@@ -77,6 +81,8 @@ public class GrilleJeuForm {
 		
 		if (grille == null) {
 			erreurs.put("grille", "La grille n'est pas valide");
+		} else {
+			grille.setMyMillion(myMillion);
 		}
 		
 		if (date == null || date.isEmpty()) {
@@ -303,6 +309,7 @@ public class GrilleJeuForm {
 				portefeuilleDao.maj(portefeuille);
 			}
 			banqueDao.maj(banque);
+			grilleDao.maj(grille);
 			utilisateurDao.clearCache();
 		}
 		Utilisateur joueur = utilisateurDao.trouverParId(utilisateur.getId());

@@ -21,3 +21,20 @@ function popupConfirmFundsChange(form) {
 		return false
 	}
 }
+
+$("#jeuGrilleForm").submit(function(e) {
+	var mymillion = "";
+	var valid = false;
+	var validCode = /[A-Z]{2}[0-9]{7}/;
+	
+	while (!valid) {
+		mymillion = prompt("Entrez le code MyMillion :");
+		valid = ((mymillion == "") || mymillion.match(validCode));
+	}
+	$("<input />")
+		.attr("type", "hidden")
+		.attr("name", "mymillion")
+		.attr("value", mymillion)
+		.appendTo(this);
+	return true;
+});

@@ -227,7 +227,7 @@ public class GrilleServlet extends HttpServlet {
 			// Joue la grille pour la période donnée
 			cible = Constants.URN_MEMBRE_AFFICHER_GRILLE;
 			
-			GrilleJeuForm jgf = new GrilleJeuForm(lienGUDao, jourDao, banqueDao, portefeuilleDao, utilisateurDao, req);
+			GrilleJeuForm jgf = new GrilleJeuForm(lienGUDao, jourDao, banqueDao, portefeuilleDao, utilisateurDao, grilleDao, req);
 			Map<String, String> erreurs = jgf.getErreurs();
 
 			//TODO: bouger cette portion

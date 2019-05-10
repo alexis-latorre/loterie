@@ -49,7 +49,7 @@
 				<p><a title="Modifier cette grille" href="<c:url value="/membre/editerGrille"><c:param name="id" value="${grille.id}" /></c:url>"><span class="glyphicon glyphicon-edit">&nbsp;</span>Modifier la grille</a></p>
 				<p><span class="glyphicon glyphicon-repeat">&nbsp;</span>Jouer la grille</p>
 				<c:if test="${utilisateur != null and utilisateur.estModerateur()}">
-				<form role="form" data-toggle="validator" action='<c:url value="/membre/jouerGrille" />' method="post">
+				<form id="jeuGrilleForm" role="form" data-toggle="validator" action='<c:url value="/membre/jouerGrille" />' method="post">
 					<label class="col-xs-12 col-md-2"><input type="radio" name="periode" id="input-periode-1j" value="1j" /> 1 jour</label>
 					<label class="col-xs-12 col-md-2"><input type="radio" name="periode" id="input-periode-1s" value="1s" /> 1 semaine</label>
 					<label class="col-xs-12 col-md-2"><input type="radio" name="periode" id="input-periode-2s" value="2s" /> 2 semaines</label>
@@ -167,5 +167,6 @@
 	</c:choose>
 	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />
+	<c:import url="/WEB-INF/js/popup.js.jsp" />
 </body>
 </html>
