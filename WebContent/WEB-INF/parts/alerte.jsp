@@ -11,22 +11,22 @@
 	<c:forEach items="${alertes}" var="alerte">
 		<c:set var="classeAlerte" value="primary" />
 		<c:choose>
-			<c:when test="${alerte.type == 'I'}">
+			<c:when test="${alerte.a.type == 'I'}">
 				<c:set var="classeAlerte" value="info" />
 			</c:when>
-			<c:when test="${alerte.type == 'Q'}">
+			<c:when test="${alerte.a.type == 'Q'}">
 				<c:set var="classeAlerte" value="primary" />
 			</c:when>
-			<c:when test="${alerte.type == 'W'}">
+			<c:when test="${alerte.a.type == 'W'}">
 				<c:set var="classeAlerte" value="warning" />
 			</c:when>
-			<c:when test="${alerte.type == 'E'}">
+			<c:when test="${alerte.a.type == 'E'}">
 				<c:set var="classeAlerte" value="danger" />
 			</c:when>
 		</c:choose>
-		<div class="alert alert-${classeAlerte}" id="alerte-${alerte.id}">
+		<div class="alert alert-${classeAlerte}" id="alerte-${alerte.a.id}">
 			${alerte.message}
-			<a class="alert-link" href="#" style="float: right" onclick="fermerNotification(${alerte.id})">X</a>
+			<a class="alert-link" href="#" style="float: right" onclick="fermerNotification(${alerte.a.id})">X</a>
 		</div>
 	</c:forEach>
 	<script type="text/javascript">

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.loterie.business.AlerteHTML;
 import com.loterie.dao.AlerteDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.entities.Alerte;
@@ -30,15 +31,15 @@ public class AlerteRecuperationForm {
 		}
 	}
 
-	public List<Alerte> getAlertes() {
-		List<Alerte> alertesRecuperees = new ArrayList<Alerte>();
+	public List<AlerteHTML> getAlertes() {
+		List<AlerteHTML> alertesRecuperees = new ArrayList<AlerteHTML>();
 		
 		for (LienGrilleUtilisateur lgu : lgus) {
 			List<Alerte> alertes = alerteDao.trouverParLGU(lgu);
 			
 			if (null != alertes) {
 				for (Alerte alerte : alertes) {
-					alertesRecuperees.add(alerte);
+					alertesRecuperees.add(new AlerteHTML(alerte));
 				}
 			}
 		}

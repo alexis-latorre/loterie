@@ -2,7 +2,7 @@
 -- Hôte :                        51.255.49.30
 -- Version du serveur:           10.1.37-MariaDB-0+deb9u1 - Debian 9.6
 -- SE du serveur:                debian-linux-gnu
--- HeidiSQL Version:             9.5.0.5196
+-- HeidiSQL Version:             9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,6 +16,25 @@
 CREATE DATABASE IF NOT EXISTS `loterie_dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `loterie_dev`;
 
+-- Export de la structure de la table loterie_dev. alerte
+CREATE TABLE IF NOT EXISTS `alerte` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` enum('I','Q','W','E') NOT NULL DEFAULT 'W',
+  `message` mediumtext NOT NULL,
+  `acquittee` tinyint(4) NOT NULL DEFAULT '0',
+  `fk_utilisateur_id` int(11) DEFAULT NULL,
+  `fk_grille_id` int(11) DEFAULT NULL,
+  `fk_lgu_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_alerte_utilisateur` (`fk_utilisateur_id`),
+  KEY `FK_alerte_grille` (`fk_grille_id`),
+  KEY `FK_alerte_lien_grille_utilisateur` (`fk_lgu_id`),
+  CONSTRAINT `FK_alerte_grille` FOREIGN KEY (`fk_grille_id`) REFERENCES `grille` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_alerte_lien_grille_utilisateur` FOREIGN KEY (`fk_lgu_id`) REFERENCES `lien_grille_utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_alerte_utilisateur` FOREIGN KEY (`fk_utilisateur_id`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+
+-- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table loterie_dev. banque
 CREATE TABLE IF NOT EXISTS `banque` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -24,9 +43,57 @@ CREATE TABLE IF NOT EXISTS `banque` (
   `mises` double DEFAULT NULL,
   `gains` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
+-- Export de la structure de l'évènement loterie_dev. checkJeux
+DELIMITER //
+CREATE DEFINER=`root`@`%` EVENT `checkJeux` ON SCHEDULE EVERY 1 DAY STARTS '2019-05-16 00:00:00' ON COMPLETION PRESERVE ENABLE DO BEGIN
+	SET @maintenant = CURDATE();
+	
+	-- Si on est mardi
+	IF WEEKDAY(@maintenant) = 1 THEN
+		SET @mardi = DATE_FORMAT(@maintenant, '%Y-%m-%d 20:00:00');
+		
+		-- Si on a depasse l'heure de validation, on prend le mardi suivant
+		IF @maintenant > @mardi THEN
+			SET @mardi = @maintenant + INTERVAL 8 - WEEKDAY(@maintenant) DAY;
+		END IF;
+	-- Si on est apres de mardi
+	ELSEIF WEEKDAY(@maintenant) > 1 THEN
+		SET @mardi = @maintenant + INTERVAL 8 - WEEKDAY(@maintenant) DAY;
+	-- Si on est avant de mardi
+	ELSE
+		SET @mardi = @maintenant + INTERVAL 1 - WEEKDAY(@maintenant) DAY;
+	END IF;
+	
+	-- Si on est vendredi
+	IF WEEKDAY(@maintenant) = 4 THEN
+		SET @vendredi = DATE_FORMAT(@maintenant, '%Y-%m-%d 20:00:00');
+		
+		-- Si on a depasse l'heure de validation, on prend le vendredi suivant
+		IF @maintenant > @vendredi THEN
+			SET @vendredi = @maintenant + INTERVAL 11 - WEEKDAY(@maintenant) DAY;
+		END IF;
+	-- Si on est apres de vendredi
+	ELSEIF WEEKDAY(@maintenant) > 4 THEN
+		SET @vendredi = @maintenant + INTERVAL 11 - WEEKDAY(@maintenant) DAY;
+	-- Si on est avant de vendredi
+	ELSE
+		SET @vendredi = @maintenant + INTERVAL 4 - WEEKDAY(@maintenant) DAY;
+	END IF;
+	
+	-- On insere l'alerte dans la base uniquement si c'est une nouvelle entree
+	INSERT INTO alerte (`type`, message, acquittee, fk_grille_id, fk_lgu_id)
+	SELECT DISTINCT 'E', 'La grille ''%g'' va bientôt expirer', 0, l.fk_grille_id, l.id FROM lien_grille_utilisateur l 
+	WHERE l.id NOT IN (
+		SELECT DISTINCT j.fk_lien_gu_id FROM jour j WHERE j.date_jour > @mardi AND j.date_jour > @vendredi
+	) AND (
+		SELECT COUNT(id) FROM alerte WHERE fk_grille_id = l.fk_grille_id AND fk_lgu_id = l.id
+	) = 0;
+END//
+DELIMITER ;
+
 -- Export de la structure de la vue loterie_dev. gains_par_joueur
 -- Création d'une table temporaire pour palier aux erreurs de dépendances de VIEW
 CREATE TABLE `gains_par_joueur` (
@@ -82,12 +149,14 @@ CREATE TABLE IF NOT EXISTS `jour` (
   `fk_lien_gu_id` int(4) DEFAULT NULL,
   `paye` tinyint(1) NOT NULL DEFAULT '0',
   `gains` double NOT NULL DEFAULT '0',
+  `gains_redistribues` double NOT NULL DEFAULT '0',
   `nb_joueurs` int(11) NOT NULL DEFAULT '1',
+  `groupe` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `numero_fk_lien_gu_id` (`date_jour`,`fk_lien_gu_id`),
   KEY `FK_semaine_liens_grille_utilisateur` (`fk_lien_gu_id`),
   CONSTRAINT `FK_semaine_liens_grille_utilisateur` FOREIGN KEY (`fk_lien_gu_id`) REFERENCES `lien_grille_utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1807 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=234 DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table loterie_dev. lien_grille_utilisateur
@@ -95,6 +164,7 @@ CREATE TABLE IF NOT EXISTS `lien_grille_utilisateur` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_grille_id` int(11) NOT NULL,
   `fk_utilisateur_id` int(11) NOT NULL,
+  `fonds` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `fk_grille_id_fk_utilisateur_id` (`fk_grille_id`,`fk_utilisateur_id`),
   KEY `FK_liens_grille_utilisateur_utilisateur` (`fk_utilisateur_id`),
@@ -122,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   CONSTRAINT `FK_log_grille` FOREIGN KEY (`fk_grille_liee`) REFERENCES `grille` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `FK_log_utilisateur_declencheur` FOREIGN KEY (`fk_declencheur`) REFERENCES `utilisateur` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `FK_log_utilisateur_lie` FOREIGN KEY (`fk_joueur_lie`) REFERENCES `utilisateur` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table loterie_dev. portefeuille
@@ -194,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `retard` (
   PRIMARY KEY (`id`),
   KEY `fk_joueur` (`fk_joueur_id`),
   CONSTRAINT `FK_retard_utilisateur` FOREIGN KEY (`fk_joueur_id`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table loterie_dev. utilisateur
