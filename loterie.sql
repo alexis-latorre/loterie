@@ -16,12 +16,25 @@
 CREATE DATABASE IF NOT EXISTS `loterie_dev` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `loterie_dev`;
 
--- Export de la structure de la table loterie_dev. alerte
-CREATE TABLE IF NOT EXISTS `alerte` (
+-- Export de la structure de la vue loterie_dev. alerte
+-- Création d'une table temporaire pour palier aux erreurs de dépendances de VIEW
+CREATE TABLE `alerte` (
+	`id` INT(11) NOT NULL,
+	`type_id` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`type` ENUM('I','Q','W','E') NOT NULL COLLATE 'utf8mb4_general_ci',
+	`message` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`unique` BIT(1) NOT NULL,
+	`fk_utilisateur_id` INT(11) NULL,
+	`fk_grille_id` INT(11) NULL,
+	`fk_lgu_id` INT(11) NULL,
+	`acquittee` TINYINT(4) NOT NULL
+) ENGINE=MyISAM;
+
+-- Export de la structure de la table loterie_dev. alerte_lien
+CREATE TABLE IF NOT EXISTS `alerte_lien` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` enum('I','Q','W','E') NOT NULL DEFAULT 'W',
-  `message` mediumtext NOT NULL,
   `acquittee` tinyint(4) NOT NULL DEFAULT '0',
+  `fk_alerte_type_id` varchar(50) NOT NULL DEFAULT '0',
   `fk_utilisateur_id` int(11) DEFAULT NULL,
   `fk_grille_id` int(11) DEFAULT NULL,
   `fk_lgu_id` int(11) DEFAULT NULL,
@@ -29,10 +42,22 @@ CREATE TABLE IF NOT EXISTS `alerte` (
   KEY `FK_alerte_utilisateur` (`fk_utilisateur_id`),
   KEY `FK_alerte_grille` (`fk_grille_id`),
   KEY `FK_alerte_lien_grille_utilisateur` (`fk_lgu_id`),
+  KEY `FK_alerte_lien_alerte_type` (`fk_alerte_type_id`),
   CONSTRAINT `FK_alerte_grille` FOREIGN KEY (`fk_grille_id`) REFERENCES `grille` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_alerte_lien_alerte_type` FOREIGN KEY (`fk_alerte_type_id`) REFERENCES `alerte_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_alerte_lien_grille_utilisateur` FOREIGN KEY (`fk_lgu_id`) REFERENCES `lien_grille_utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_alerte_utilisateur` FOREIGN KEY (`fk_utilisateur_id`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+
+-- Les données exportées n'étaient pas sélectionnées.
+-- Export de la structure de la table loterie_dev. alerte_type
+CREATE TABLE IF NOT EXISTS `alerte_type` (
+  `id` varchar(4) NOT NULL,
+  `type` enum('I','Q','W','E') NOT NULL DEFAULT 'W',
+  `message` varchar(255) NOT NULL,
+  `unique` bit(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table loterie_dev. banque
@@ -84,8 +109,8 @@ CREATE DEFINER=`root`@`%` EVENT `checkJeux` ON SCHEDULE EVERY 1 DAY STARTS '2019
 	END IF;
 	
 	-- On insere l'alerte dans la base uniquement si c'est une nouvelle entree
-	INSERT INTO alerte (`type`, message, acquittee, fk_grille_id, fk_lgu_id)
-	SELECT DISTINCT 'E', 'La grille ''%g'' va bientôt expirer', 0, l.fk_grille_id, l.id FROM lien_grille_utilisateur l 
+	INSERT INTO alerte_lien (acquittee, fk_alerte_type_id, fk_grille_id, fk_lgu_id)
+	SELECT DISTINCT 0, '0001', l.fk_grille_id, l.id FROM lien_grille_utilisateur l 
 	WHERE l.id NOT IN (
 		SELECT DISTINCT j.fk_lien_gu_id FROM jour j WHERE j.date_jour > @mardi AND j.date_jour > @vendredi
 	) AND (
@@ -156,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `jour` (
   UNIQUE KEY `numero_fk_lien_gu_id` (`date_jour`,`fk_lien_gu_id`),
   KEY `FK_semaine_liens_grille_utilisateur` (`fk_lien_gu_id`),
   CONSTRAINT `FK_semaine_liens_grille_utilisateur` FOREIGN KEY (`fk_lien_gu_id`) REFERENCES `lien_grille_utilisateur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=234 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=288 DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table loterie_dev. lien_grille_utilisateur
@@ -192,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   CONSTRAINT `FK_log_grille` FOREIGN KEY (`fk_grille_liee`) REFERENCES `grille` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `FK_log_utilisateur_declencheur` FOREIGN KEY (`fk_declencheur`) REFERENCES `utilisateur` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `FK_log_utilisateur_lie` FOREIGN KEY (`fk_joueur_lie`) REFERENCES `utilisateur` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table loterie_dev. portefeuille
@@ -290,6 +315,53 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
+-- Export de la structure de déclencheur loterie_dev. jour_after_insert
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `jour_after_insert` AFTER INSERT ON `jour` FOR EACH ROW BEGIN
+	SET @maintenant = CURDATE();
+	
+	-- Si on est mardi
+	IF WEEKDAY(@maintenant) = 1 THEN
+		SET @mardi = DATE_FORMAT(@maintenant, '%Y-%m-%d 20:00:00');
+		
+		-- Si on a depasse l'heure de validation, on prend le mardi suivant
+		IF @maintenant > @mardi THEN
+			SET @mardi = @maintenant + INTERVAL 8 - WEEKDAY(@maintenant) DAY;
+		END IF;
+	-- Si on est apres de mardi
+	ELSEIF WEEKDAY(@maintenant) > 1 THEN
+		SET @mardi = @maintenant + INTERVAL 8 - WEEKDAY(@maintenant) DAY;
+	-- Si on est avant de mardi
+	ELSE
+		SET @mardi = @maintenant + INTERVAL 1 - WEEKDAY(@maintenant) DAY;
+	END IF;
+	
+	-- Si on est vendredi
+	IF WEEKDAY(@maintenant) = 4 THEN
+		SET @vendredi = DATE_FORMAT(@maintenant, '%Y-%m-%d 20:00:00');
+		
+		-- Si on a depasse l'heure de validation, on prend le vendredi suivant
+		IF @maintenant > @vendredi THEN
+			SET @vendredi = @maintenant + INTERVAL 11 - WEEKDAY(@maintenant) DAY;
+		END IF;
+	-- Si on est apres de vendredi
+	ELSEIF WEEKDAY(@maintenant) > 4 THEN
+		SET @vendredi = @maintenant + INTERVAL 11 - WEEKDAY(@maintenant) DAY;
+	-- Si on est avant de vendredi
+	ELSE
+		SET @vendredi = @maintenant + INTERVAL 4 - WEEKDAY(@maintenant) DAY;
+	END IF;
+	
+	-- On insere l'alerte dans la base uniquement si c'est une nouvelle entree
+	DELETE FROM alerte_lien 
+	WHERE NEW.fk_lien_gu_id IN (
+		SELECT DISTINCT j.fk_lien_gu_id FROM jour j WHERE j.date_jour > @mardi AND j.date_jour > @vendredi
+	) AND fk_lgu_id = NEW.fk_lien_gu_id AND fk_alerte_type_id = '0001';
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
 -- Export de la structure de déclencheur loterie_dev. portefeuille_after_update
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
@@ -303,6 +375,11 @@ CREATE TRIGGER `portefeuille_after_update` AFTER UPDATE ON `portefeuille` FOR EA
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Export de la structure de la vue loterie_dev. alerte
+-- Suppression de la table temporaire et création finale de la structure d'une vue
+DROP TABLE IF EXISTS `alerte`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `alerte` AS select `a1`.`id` AS `id`,`a1`.`fk_alerte_type_id` AS `type_id`,`a2`.`type` AS `type`,`a2`.`message` AS `message`,`a2`.`unique` AS `unique`,`a1`.`fk_utilisateur_id` AS `fk_utilisateur_id`,`a1`.`fk_grille_id` AS `fk_grille_id`,`a1`.`fk_lgu_id` AS `fk_lgu_id`,`a1`.`acquittee` AS `acquittee` from (`alerte_lien` `a1` join `alerte_type` `a2`) where (`a2`.`id` = `a1`.`fk_alerte_type_id`);
 
 -- Export de la structure de la vue loterie_dev. gains_par_joueur
 -- Suppression de la table temporaire et création finale de la structure d'une vue
