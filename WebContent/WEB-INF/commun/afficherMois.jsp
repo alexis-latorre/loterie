@@ -100,7 +100,8 @@
 <script type="text/javascript">
 	chargerDetailJour = function(id) {
 		$.ajax({
-			url: '<c:url value="/jour/detailsJour"><c:param name="id" value="" /></c:url>' + id
+			url: '<c:url value="/jour/detailsJour"><c:param name="id" value="" /></c:url>' + id,
+			contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
 		}).done(function(data) {
 			$("#detailsJour").html(data);
 		}).fail(function(error) {

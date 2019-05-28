@@ -1,4 +1,5 @@
 package com.loterie.servlets;
+import com.loterie.business.ResultatHTML;
 import com.loterie.config.Constants;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import com.loterie.dao.AlerteDao;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
+import com.loterie.dao.ResultatDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.UtilisateurConnexionForm;
@@ -23,6 +25,7 @@ import com.loterie.tools.DevTools;
 import com.loterie.forms.AlerteRecuperationForm;
 import com.loterie.forms.GrilleRecuperationDuJourForm;
 import com.loterie.forms.GrilleRecuperationDuMoisForm;
+import com.loterie.forms.ResultatRecuperationForm;
 
 @WebServlet(urlPatterns = {
 		//"/clearCache",
@@ -41,6 +44,10 @@ public class ConnexionServlet extends HttpServlet {
 	private LienGUDao lguDao;
 	@EJB
 	private AlerteDao alerteDao;
+	@EJB
+	private ResultatDao resultatDao;
+	@EJB
+	private LienGUDao lienGuDao;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,7 +71,17 @@ public class ConnexionServlet extends HttpServlet {
 		if (loggedIn) {
 			req.setAttribute("titrePage", "dashboard");
 			// L'utilisateur n'est récupéré que s'il est authentifié, pas besoin de le récupérer avant
-			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");			
+			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+
+			if (null != session && null != session.getAttribute("loggedIn") && (boolean) session.getAttribute("loggedIn")) {
+				utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+			}
+			
+			ResultatRecuperationForm rrf = new ResultatRecuperationForm(resultatDao, jourDao, lienGuDao, utilisateur);
+			
+			ResultatHTML r = new ResultatHTML();
+			r.setDernier(rrf.dernierResultat());
+			req.setAttribute("r", r);			
 			// Récupère les grilles du mois pour lequel l'utilisateur participe ou celles qu'il a créées
 			GrilleRecuperationDuMoisForm gdmf = new GrilleRecuperationDuMoisForm(jourDao, grilleDao, utilisateur, req);
 			GrilleRecuperationDuJourForm gdjf = new GrilleRecuperationDuJourForm(lguDao, jourDao, utilisateur, req);

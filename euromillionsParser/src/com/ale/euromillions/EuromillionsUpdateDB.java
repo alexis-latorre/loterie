@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EuromillionsUpdateDB {
 	public static final boolean DEBUG 				= false;
-	public static final String DB_NAME				= "loterie";
+	public static final String DB_NAME				= "loterie_dev";
 	public static final String DB_USER				= "loterie";
 	public static final String DB_PASS				= "Gg8KxR73";
 	

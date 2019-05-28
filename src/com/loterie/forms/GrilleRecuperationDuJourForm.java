@@ -43,6 +43,7 @@ public class GrilleRecuperationDuJourForm {
 				
 				if (null != j) {
 					grille.setPaye(j.getPaye());
+					grille.setGains(j.getGains());
 					gains += j.getGains();
 					jour.addGrille(grille);
 				} else {

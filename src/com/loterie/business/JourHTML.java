@@ -41,7 +41,7 @@ public class JourHTML {
 		this.nomLong = Constants.JOURS_LONGS[indiceJour];
 		this.nomCourt = Constants.JOURS_COURTS[indiceJour];
 		this.initiale = Constants.JOURS_INITIALES[indiceJour];
-		this.grilles = new ArrayList<>();
+		this.grilles = new ArrayList<Grille>();
 	}
 	
 	/**

@@ -133,7 +133,7 @@ public class GrilleJeuForm {
 		int idJour = 0;
 		int nbPeriode = Integer.parseInt(periode.substring(0, 1));
 		String typePeriode = periode.substring(1);
-		String idGroupe = UUID.randomUUID().toString();
+		Map<String, String> listeUUID = new HashMap<String, String>();
 		
 		if (dateValidation.isAfter(DateTime.now().plusDays(1))) {
 			retour.put("messageEchec", "Cette date de jeu est trop loin dans le futur pour être jouée");
@@ -187,6 +187,7 @@ public class GrilleJeuForm {
 					joueurs.add(joueur);
 				}
 				List<String> datesJouees = new ArrayList<>();
+				String idGroupe = UUID.randomUUID().toString();
 				
 				if (joursLGU != null && !joursLGU.isEmpty()) {
 					for (Jour j : joursLGU) {
@@ -197,7 +198,8 @@ public class GrilleJeuForm {
 				
 				if (joursLGU != null) {
 					jourDejaJoue = datesJouees.contains(prochainJour);					
-				}
+				}				
+				listeUUID.put(prochainJour.substring(0, 10), idGroupe);
 				
 				if (!jourDejaJoue) {
 					Jour jour = new Jour();
@@ -270,6 +272,8 @@ public class GrilleJeuForm {
 			}
 		}
 		
+		int nbJoursJoues = 0;
+		
 		if (prix <= banque.getFonds()) {
 			banque.retirerFonds(prix);
 			
@@ -277,9 +281,11 @@ public class GrilleJeuForm {
 				jour.setGains(0D);
 				jour.setNbJoueurs((long) nbJoueurs);
 				jour.setGainsRedistribues(0D);
-				jour.setGroupe(idGroupe);
+				jour.setGroupe(listeUUID.get(jour.getDateJour()));
+				
 				try {
 					jourDao.creer(jour);
+					nbJoursJoues++;
 				} catch (Exception e) {
 					Throwable cause = e.getCause();
 					boolean derniereCause = false;
@@ -295,9 +301,15 @@ public class GrilleJeuForm {
 							retour.put("messageEchec", "Grille déjà jouée pour cette période");
 						}
 					}
-					commit = false;
 				}
 			}
+		} else {
+			retour.put("messageEchec", "Pas assez de crédit pour jouer la grille");
+			commit = false;
+		}
+		
+		if (nbJoursJoues == 0) {
+			commit = false;
 		}
 		
 		if (commit) {
