@@ -10,7 +10,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="<c:url value="/accueil" />"><img alt="MyLoterie" src="inc/img/dollar.png" height="24px" /></a>
+					<a class="navbar-brand" href="<c:url value="/accueil" />"><img alt="MyLoterie" src='<c:url value="/inc/img/dollar.png" />' height="24px" /></a>
 					<c:if test="${not empty titrePage}">
 						<span class="hidden-sm hidden-md hidden-lg navbar-title"><c:import url="/WEB-INF/parts/titre.${titrePage}.jsp" /></span>
 					</c:if>

@@ -174,7 +174,7 @@ public class GrilleCreationForm {
 		List<Utilisateur> joueurs = utilisateurDao.trouverParGrille(grille);
 		
 		for (Utilisateur joueur : utilisateurs) {
-			if (null == lienGUDao.trouverParGrilleEtUtilisateur(grille, joueur)) {
+			if (null == lienGUDao || null == lienGUDao.trouverParGrilleEtUtilisateur(grille, joueur)) {
 				utilisateursEligibles.add(joueur);
 			}
 		}

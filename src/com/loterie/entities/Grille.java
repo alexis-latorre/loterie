@@ -30,6 +30,8 @@ public class Grille implements Cloneable {
 	private Utilisateur utilisateur;
 	@JoinColumn(name = "fk_jeu_id")
 	private Jeu jeu;
+	@JoinColumn(name = "fk_jeu_declinaison_id")
+	private JeuDeclinaison jeuDeclinaison;
 	@JoinColumn(name = "fk_banque_id")
 	private Banque banque;
 	private boolean publique;
@@ -126,6 +128,14 @@ public class Grille implements Cloneable {
 	
 	public void setJeu(Jeu jeu) {
 		this.jeu = jeu;
+	}
+
+	public JeuDeclinaison getJeuDeclinaison() {
+		return jeuDeclinaison;
+	}
+
+	public void setJeuDeclinaison(JeuDeclinaison jeuDeclinaison) {
+		this.jeuDeclinaison = jeuDeclinaison;
 	}
 
 	public Banque getBanque() {

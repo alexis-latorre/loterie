@@ -1,6 +1,7 @@
 package com.loterie.servlets;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +18,15 @@ import com.loterie.config.Messages;
 import com.loterie.dao.BanqueDao;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JeuDao;
+import com.loterie.dao.JeuDeclinaisonDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.dao.LogDao;
 import com.loterie.dao.PortefeuilleDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Grille;
+import com.loterie.entities.Jeu;
+import com.loterie.entities.JeuDeclinaison;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.GrilleActivationForm;
 import com.loterie.forms.GrilleAffichageForm;
@@ -36,7 +40,7 @@ import com.loterie.tools.Tools;
 @WebServlet(urlPatterns = {
 		//Constants.URL_MEMBRE_PROFIL,
 		Constants.URL_MEMBRE_AFFICHER_GRILLES,
-		//Constants.URL_MEMBRE_CREER_GRILLE, 
+		Constants.URL_MEMBRE_CREER_GRILLE, 
 		Constants.URL_MEMBRE_AFFICHER_GRILLE,
 		Constants.URL_MEMBRE_MODIFIER_GRILLE, 
 		//Constants.URL_MEMBRE_SUPPRIMER_GRILLE,
@@ -55,6 +59,8 @@ public class GrilleServlet extends HttpServlet {
 	private LienGUDao lienGUDao;
 	@EJB
 	private JeuDao jeuDao;
+	@EJB
+	private JeuDeclinaisonDao jeuDeclinaisonDao;
 	@EJB
 	private BanqueDao banqueDao;
 	@EJB
@@ -94,7 +100,38 @@ public class GrilleServlet extends HttpServlet {
 				} else if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
 					// Affiche le formulaire pour créer une nouvelle grille
 					GrilleCreationForm gcf = new GrilleCreationForm(utilisateurDao, req);
-					req = gcf.getFormulaire();		
+					req = gcf.getFormulaire();
+					// TODO: rendre générique
+					Jeu jeu = jeuDao.trouverParNom(Constants.EUROMILLIONS_NOM);
+					List<JeuDeclinaison> declinaisons = jeuDeclinaisonDao.trouverParJeu(jeu);
+					Map<String, String> limitesNumeros = new HashMap<String, String>();
+					Map<String, String> limitesEtoiles = new HashMap<String, String>();
+					Map<String, String> tirage = new HashMap<String, String>();
+					Map<String, String> etoilePlus = new HashMap<String, String>();
+					
+					try {
+						for (JeuDeclinaison declinaison : declinaisons) {
+							String nbNumeros = declinaison.getIndex1().split(":")[1];
+							String nbEtoiles = declinaison.getIndex2().split(":")[1];
+							
+							if (!limitesNumeros.containsKey(nbNumeros) || Integer.parseInt(nbEtoiles) > Integer.parseInt(limitesNumeros.get(nbNumeros))) {
+								limitesNumeros.put(nbNumeros, nbEtoiles);
+							}
+							
+							if (!limitesEtoiles.containsKey(nbEtoiles) || Integer.parseInt(nbNumeros) > Integer.parseInt(limitesEtoiles.get(nbEtoiles))) {
+								limitesEtoiles.put(nbEtoiles, nbNumeros);
+							}
+
+							tirage.put("prix_tirage_" + nbNumeros + "_" + nbEtoiles, declinaison.getParam1().split(":")[1]);
+							etoilePlus.put("prix_etoile_plus_" + nbNumeros + "_" + nbEtoiles, declinaison.getParam2().split(":")[1]);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					req.setAttribute("tirage", tirage);
+					req.setAttribute("mapEtoilePlus", etoilePlus);
+					req.setAttribute("limitesNumeros", limitesNumeros);
+					req.setAttribute("limitesEtoiles", limitesEtoiles);
 					cible = Constants.URN_MEMBRE_CREER_GRILLE;
 					
 				} else if (uri.equals(Constants.URL_MEMBRE_SUPPRIMER_GRILLE)) {

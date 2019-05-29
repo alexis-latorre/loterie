@@ -8,16 +8,22 @@
 <c:import url="/WEB-INF/css/bootstrap.css.jsp" />
   <c:import url="/WEB-INF/css/euromillions.css.jsp" />
 </head>
-<body class="container">
+<body class="container-fluid">
 	<c:import url="/WEB-INF/commun/header.jsp" />
-	<h4>Ajouter une nouvelle grille</h4>
-	<div class="well">
-		<form id="form-grille" action="<c:url value="/membre/creerGrille" />" method="post">
-			<c:import url="/WEB-INF/forms/grilleForm.jsp" />
-			<c:import url="/WEB-INF/forms/choisirParmiMembresForm.jsp" />
-			<input class="btn btn-blue" type="button" onclick="validerJoueurs()" value="Créer la grille" />
-			<!--input type="submit" value="Créer la grille" /-->
-		</form>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				Créer une nouvelle grille
+			</h3>
+		</div>
+		<div class="panel-body">
+			<form role="form" data-toggle="validator" id="form-grille" action="<c:url value="/membre/creerGrille" />" method="post">
+				<c:import url="/WEB-INF/forms/grilleForm.jsp" />
+				<c:import url="/WEB-INF/forms/choisirParmiMembresForm.jsp" />
+				<input class="btn btn-primary" type="button" onclick="validerJoueurs()" value="Créer la grille" />
+				<!--input type="submit" value="Créer la grille" /-->
+			</form>
+		</div>
 	</div>
 	<c:import url="/WEB-INF/commun/footer.jsp" />
 	<c:import url="/WEB-INF/css/bootstrap.js.jsp" />

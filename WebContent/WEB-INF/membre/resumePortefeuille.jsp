@@ -47,17 +47,12 @@
 			</c:choose>
 			<span>Solde</span>
 			<br />
-			<span style="cursor: help;" class="solde soldePortefeuille ${classeSoldePortefeuille}" data-toggle="tooltip" data-placement="right" title="Solde de réserve">
-				<span class="monospace">&nbsp;&nbsp;</span>
-				<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${soldePortefeuille}" type="currency"></fmt:formatNumber>
-			</span>
+			<span style="cursor: help;" class="solde  soldeTotal ${classeSoldeTotal}" data-toggle="tooltip" data-placement="right" title="Solde total"><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${soldeTotal}" type="currency"></fmt:formatNumber></span>
 			<br />
 			<span style="cursor: help;" class="solde soldeGrilles ${classeSoldeGrilles}" data-toggle="tooltip" data-placement="right" title="Solde placé sur des grilles">
 				<span class="monospace">+</span>
 				<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${soldeGrilles}" type="currency"></fmt:formatNumber>
 			</span>
-			<br />
-			<span style="cursor: help;" class="solde  soldeTotal ${classeSoldeTotal}" data-toggle="tooltip" data-placement="right" title="Solde total"><fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${soldeTotal}" type="currency"></fmt:formatNumber></span>
 		</div>
 		<c:if test="${fn:length(utilisateur.grilles) > 0}">
 		<div class="col-md-7">
@@ -82,6 +77,11 @@
 				 (${grille.nom})
 				</a><br />
 			</c:forEach>
+			<c:if test="${utilisateur != null and utilisateur.estModerateur()}">
+			<p>
+				<a href='<c:url value="/membre/creerGrille" />'><span class="glyphicon glyphicon-edit"></span> Créer une grille</a>
+			</p>
+			</c:if>
 		</div>
 		</c:if>
 	</div>

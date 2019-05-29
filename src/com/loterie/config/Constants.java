@@ -170,6 +170,7 @@ public interface Constants {
 	public static final String SELECT_JOUR_GAGNANT_PAR_LGU 					= "SELECT j FROM Jour j WHERE (j.gains > 0) AND (j.gains != j.gainsRedistribues) AND (j.lgu = :lguUtilisateur)";
 	public static final String SELECT_JOUR_PAR_GROUPE 						= "SELECT j FROM Jour j WHERE j.groupe = :groupe";
 	public static final String SELECT_JEU_PAR_NOM 							= "SELECT j FROM Jeu j WHERE j.nom = :nom";
+	public static final String SELECT_JEU_DECLINAISONS_PAR_JEU 				= "SELECT d FROM JeuDeclinaison d WHERE d.jeu = :jeu";
 	public static final String SELECT_LOG		 							= "SELECT l FROM Log l ORDER BY l.utc DESC";
 	public static final String SELECT_RESULTATS_DESC 						= "SELECT r FROM Resultat r ORDER BY r.id DESC";
 	public static final String SELECT_RETARDS 								= "SELECT r FROM Retard r WHERE r.relance = true";

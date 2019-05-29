@@ -145,11 +145,11 @@ table th {
 }
 
 .boule {
-	background: url('img/boule.png');
+	background: url('img/boule.png') no-repeat;
 }
 
 .etoile {
-	background: url('img/etoile.png');
+	background: url('img/etoile.png') no-repeat;
 }
 
 .mymillion .code {
