@@ -1,8 +1,10 @@
 package com.loterie.dao;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -29,5 +31,24 @@ public class JeuDeclinaisonDao extends LoterieDao {
 		params.clear();
 		params.put("jeu", jeu);		
 		return (List<JeuDeclinaison>) super.resultats(Constants.SELECT_JEU_DECLINAISONS_PAR_JEU, params, "trouverParJeu");
+	}
+	
+	public JeuDeclinaison trouverParIndex(Map<String, String> indexes) {
+		params.clear();
+		params.putAll(indexes);
+		String where = "";
+		String tmp = "";
+		Iterator<Entry<String, String>> it = indexes.entrySet().iterator();
+		
+		while (it.hasNext()) {
+			Map.Entry<String, String> entrySet = (Map.Entry<String, String>) it.next();
+			tmp += " (d." + entrySet.getKey() + " = :" + entrySet.getKey() + ") AND";
+		}
+		
+		if (tmp.length() > 0) {
+			where = " WHERE (" + tmp.substring(1, tmp.length() - 4) + ")";
+		}
+		System.out.println(Constants.SELECT_JEU_DECLINAISONS + where);
+		return (JeuDeclinaison) super.resultat(Constants.SELECT_JEU_DECLINAISONS + where, params, "trouverParIndex");
 	}
 }

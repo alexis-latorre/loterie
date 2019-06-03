@@ -19,6 +19,12 @@ public class LienGrilleUtilisateur {
 	private Utilisateur utilisateur;
 	private Double fonds; 
 	
+	public LienGrilleUtilisateur() {
+		this.setUtilisateur(null);
+		this.setGrille(null);
+		this.setFonds(0.00D);
+	}
+	
 	public Long getId() {
 		return id;
 	}

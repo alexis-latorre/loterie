@@ -23,6 +23,7 @@ import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Banque;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jeu;
+import com.loterie.entities.JeuDeclinaison;
 import com.loterie.entities.Jour;
 import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Portefeuille;
@@ -116,6 +117,7 @@ public class GrilleJeuForm {
 		retour.put("grille", grille);
 		String retourPeriode = "";
 		Jeu jeu = grille.getJeu();
+		JeuDeclinaison jeuDeclinaison = grille.getJeuDeclinaison();
 		Banque banque = grille.getBanque();
 		int heureValidation = Integer.parseInt(jeu.getHeureValidation().split(":")[0]);
 		int minuteValidation = Integer.parseInt(jeu.getHeureValidation().split(":")[1]);
@@ -165,7 +167,22 @@ public class GrilleJeuForm {
 		}
 		List<Jour> joursAjouer = new ArrayList<>();		
 		List<Utilisateur> joueurs = new ArrayList<>();
-		Double prixTirage = jeu.getPrixTirage();
+		Double prixNumeros = 0D;
+		Double prixEtoiles = 0D;
+		
+		try {
+			prixNumeros = Double.parseDouble(jeuDeclinaison.getParam1().split(":")[1]);
+			prixEtoiles = Double.parseDouble(jeuDeclinaison.getParam2().split(":")[1]);
+		} catch (Exception e) {
+			e.printStackTrace();
+			retour.put("messageEchec", e.getMessage());
+			return retour;
+		}
+		Double prixTirage = prixNumeros;
+
+		if (grille.getEtoilePlus()) {
+			prixTirage += prixEtoiles;
+		}
 		Double prix = 0D;
 		List<String> datesTotalesJouees = new ArrayList<>();
 		

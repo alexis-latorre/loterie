@@ -12,11 +12,13 @@ import com.loterie.config.Constants;
 import com.loterie.dao.BanqueDao;
 import com.loterie.dao.GrilleDao;
 import com.loterie.dao.JeuDao;
+import com.loterie.dao.JeuDeclinaisonDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Banque;
 import com.loterie.entities.Grille;
 import com.loterie.entities.Jeu;
+import com.loterie.entities.JeuDeclinaison;
 import com.loterie.entities.LienGrilleUtilisateur;
 import com.loterie.entities.Utilisateur;
 
@@ -28,7 +30,9 @@ public class GrilleCreationForm {
 	private BanqueDao banqueDao;
 	private Utilisateur utilisateur;
 	private LienGUDao lienGUDao;
+	private JeuDeclinaisonDao jeuDeclinaisonDao;
 	private Jeu jeu;
+	private JeuDeclinaison jeuDeclinaison;
 	private Banque banque;
 	private Grille grille;
 	private HttpServletRequest req;
@@ -44,19 +48,22 @@ public class GrilleCreationForm {
 		this.req = req;
 	}
 	
-	public GrilleCreationForm(GrilleDao grilleDao, UtilisateurDao utilisateurDao, HttpServletRequest req) {
+	public GrilleCreationForm(GrilleDao grilleDao, UtilisateurDao utilisateurDao, JeuDeclinaisonDao jeuDeclinaisonDao, 
+			HttpServletRequest req) {
 		this.grilleDao = grilleDao;
 		this.utilisateurDao = utilisateurDao;
+		this.jeuDeclinaisonDao = jeuDeclinaisonDao;
 		this.req = req;
 	}
 
 	public GrilleCreationForm(GrilleDao grilleDao, JeuDao jeuDao, BanqueDao banqueDao, LienGUDao lienGUDao,
-			UtilisateurDao utilisateurDao, HttpServletRequest req) {
+			JeuDeclinaisonDao jeuDeclinaisonDao, UtilisateurDao utilisateurDao, HttpServletRequest req) {
 		this.grilleDao = grilleDao;
 		this.jeuDao = jeuDao;
 		this.banqueDao = banqueDao;
 		this.lienGUDao = lienGUDao;
 		this.utilisateurDao = utilisateurDao;
+		this.jeuDeclinaisonDao = jeuDeclinaisonDao;
 		this.req = req;
 		erreurs = new HashMap<>();
 		session = this.req.getSession();
@@ -68,10 +75,12 @@ public class GrilleCreationForm {
 		validerForm();
 	}
 	
-	public GrilleCreationForm(GrilleDao grilleDao, JeuDao jeuDao, BanqueDao banqueDao, HttpServletRequest req) {
+	public GrilleCreationForm(GrilleDao grilleDao, JeuDao jeuDao, BanqueDao banqueDao, JeuDeclinaisonDao jeuDeclinaisonDao, 
+			HttpServletRequest req) {
 		this.grilleDao = grilleDao;
 		this.jeuDao = jeuDao;
 		this.banqueDao = banqueDao;
+		this.jeuDeclinaisonDao = jeuDeclinaisonDao;
 		this.req = req;
 		erreurs = new HashMap<>();
 		session = this.req.getSession();
@@ -109,20 +118,25 @@ public class GrilleCreationForm {
 		boolean etoilePlus = this.req.getParameter("etoilePlus") != null 
 				&& this.req.getParameter("etoilePlus").equals("on");
 		Grille grille = new Grille();
+		Map<String, String> indexes = new HashMap<String, String>();
+		indexes.put("index1", "nb_numeros:" + numeros.size());
+		indexes.put("index2", "nb_etoiles:" + etoiles.size());
+		jeuDeclinaison = jeuDeclinaisonDao.trouverParIndex(indexes);
 
-		if (numeros.size() >= Constants.EUROMILLIONS_NUMEROS_SELECTION_MIN 
-				&& numeros.size() <= Constants.EUROMILLIONS_NUMEROS_SELECTION_MAX
-				&& etoiles.size() >= Constants.EUROMILLIONS_ETOILES_SELECTION_MIN
-				&& etoiles.size() <= Constants.EUROMILLIONS_ETOILES_SELECTION_MAX) {
+		if (null != jeuDeclinaison) {
 			grille.setNom(nom);
 			grille.setNumeros(numeros);
 			grille.setEtoiles(etoiles);
 			grille.setEtoilePlus(etoilePlus);
 			grille.setMyMillion(myMillion);
 			grille.setJeu(jeu);
+			grille.setJeuDeclinaison(jeuDeclinaison);
 			grille.setUtilisateur(utilisateur);
 			grille.setBanque(banque);
 			this.grille = grille;
+			ajouter();
+		} else {
+			erreurs.put("declinaison", "Cette déclinaison n'existe pas");
 		}
 	}
 	
@@ -223,7 +237,6 @@ public class GrilleCreationForm {
 		Map<String, Object> retour = new HashMap<String, Object>();
 		List<String> joueurs = new ArrayList<>();
 		List<Utilisateur> joueursRetour = new ArrayList<>();
-		retour.put("grille", grille);
 		
 		if (req.getParameterValues("joueurs[]") != null) {
 			joueurs = Arrays.asList(req.getParameterValues("joueurs[]"));
@@ -238,6 +251,7 @@ public class GrilleCreationForm {
 			lienGUDao.creer(lienGU);
 		}
 		retour.put("joueurs", joueursRetour);
+		retour.put("grille", grille);
 		
 		return retour;
 	}

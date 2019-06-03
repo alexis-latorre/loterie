@@ -145,7 +145,7 @@ public class GrilleServlet extends HttpServlet {
 				} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 					// Affiche le formulaire pour modifier la grille
 					GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, jeuDao, banqueDao,
-							lienGUDao, utilisateurDao, req);
+							lienGUDao, jeuDeclinaisonDao, utilisateurDao, req);
 					req = gcf.getFormulaire(req.getParameter("id"));
 					cible = Constants.URN_MEMBRE_MODIFIER_GRILLE;
 					
@@ -202,8 +202,8 @@ public class GrilleServlet extends HttpServlet {
 		
 		if (uri.equals(Constants.URL_MEMBRE_CREER_GRILLE)) {
 			// Transmet les données nécessaires à la création d'une grille
-			GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, jeuDao, banqueDao, lienGUDao, utilisateurDao, 
-					req);
+			GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, jeuDao, banqueDao, lienGUDao, jeuDeclinaisonDao, 
+					utilisateurDao, req);
 
 			// Si aucune erreur n'est détectée, crée une nouvlle grille en BDD
 			if (gcf.getErreurs().isEmpty()) {
@@ -224,8 +224,8 @@ public class GrilleServlet extends HttpServlet {
 			
 		} else if (uri.equals(Constants.URL_MEMBRE_MODIFIER_GRILLE)) {
 			// Transmet les données nécessaires à la modification d'une grille
-			GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, jeuDao, banqueDao, lienGUDao, utilisateurDao, 
-					req);
+			GrilleCreationForm gcf = new GrilleCreationForm(grilleDao, jeuDao, banqueDao, lienGUDao, jeuDeclinaisonDao, 
+					utilisateurDao, req);
 			Map<String, Object> retour = gcf.modifier();
 			
 			for (Utilisateur joueurRetire : (List<Utilisateur>)retour.get("joueursRetires")) {
