@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.loterie.config.Constants;
+import com.loterie.dao.JeuDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.dao.LogDao;
 import com.loterie.entities.Utilisateur;
 import com.loterie.forms.GrilleRecuperationDuJourForm;
+import com.loterie.forms.JeuRecuperationDuJourForm;
 
 @WebServlet(urlPatterns = {
 		Constants.URL_JOUR_AFFICHER_DETAILS
@@ -25,6 +27,8 @@ public class JourServlet extends HttpServlet {
 	private LienGUDao lguDao;
 	@EJB
 	private JourDao jourDao;
+	@EJB
+	private JeuDao jeuDao;
 	@EJB
 	private LogDao logDao;
 
@@ -44,6 +48,8 @@ public class JourServlet extends HttpServlet {
 		// Si l'utilisateur est authentifié, son espace membre lui est montré
 		if (loggedIn) {
 			GrilleRecuperationDuJourForm grdjf = new GrilleRecuperationDuJourForm(lguDao, jourDao, utilisateur, req);
+			JeuRecuperationDuJourForm jdjf = new JeuRecuperationDuJourForm(jeuDao, req);
+			req.setAttribute("jeuxJour", jdjf.getJeuxJour());
 			req.setAttribute("jour", grdjf.getJour());
 			cible = Constants.URN_JOUR_AFFICHER_DETAILS;
 		}

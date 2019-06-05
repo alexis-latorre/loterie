@@ -35,5 +35,10 @@
 			<p>Pas de grille</p>
 		</c:otherwise>
 		</c:choose>
+		<c:if test="${fn:length(jeuxJour) > 0}">
+			<p>
+				<a href='<c:url value="/membre/creerGrille" />'><span class="glyphicon glyphicon-edit"></span> Créer une grille</a>
+			</p>
+		</c:if>
 	</div>
 </div>

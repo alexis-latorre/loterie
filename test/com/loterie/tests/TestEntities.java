@@ -89,7 +89,6 @@ class TestEntities {
 		jeu.setNom(jeuNom);
 		jeu.setTirageParSemaine(jeuTirageParSemaine);
 		jeu.setJourDeTirage(jeuJourDeTirage);
-		jeu.setPrixTirage(jeuPrixTirage);
 		jeu.setHeureValidation(jeuHeureValidation);
 		
 		portefeuille = new Portefeuille();
@@ -339,7 +338,6 @@ class TestEntities {
 				jeu.getNom(),
 				jeu.getTirageParSemaine(),
 				jeu.getJourDeTirage(),
-				jeu.getPrixTirage(),
 				jeu.getHeureValidation()
 		};
 		assertArrayEquals(expected, actual);

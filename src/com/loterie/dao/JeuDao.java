@@ -1,6 +1,7 @@
 package com.loterie.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.Stateless;
@@ -27,5 +28,11 @@ public class JeuDao extends LoterieDao {
 		params.clear();
 		params.put("nom", nom);		
 		return (Jeu) super.resultat(Constants.SELECT_JEU_PAR_NOM, params, "trouverParNom");
+	}
+	
+	public List<Jeu> trouverParJourTirage(String jour) {
+		params.clear();
+		params.put("jour", "%" + jour + "%");		
+		return (List<Jeu>) super.resultats(Constants.SELECT_JEU_PAR_JOUR_TIRAGE, params, "trouverParJourTirage");
 	}
 }

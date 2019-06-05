@@ -1,7 +1,4 @@
 package com.loterie.servlets;
-import com.loterie.business.ResultatHTML;
-import com.loterie.config.Constants;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -13,19 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.loterie.business.ResultatHTML;
+import com.loterie.config.Constants;
 import com.loterie.dao.AlerteDao;
 import com.loterie.dao.GrilleDao;
+import com.loterie.dao.JeuDao;
 import com.loterie.dao.JourDao;
 import com.loterie.dao.LienGUDao;
 import com.loterie.dao.ResultatDao;
 import com.loterie.dao.UtilisateurDao;
 import com.loterie.entities.Utilisateur;
-import com.loterie.forms.UtilisateurConnexionForm;
-import com.loterie.tools.DevTools;
 import com.loterie.forms.AlerteRecuperationForm;
 import com.loterie.forms.GrilleRecuperationDuJourForm;
 import com.loterie.forms.GrilleRecuperationDuMoisForm;
 import com.loterie.forms.ResultatRecuperationForm;
+import com.loterie.forms.UtilisateurConnexionForm;
+import com.loterie.tools.DevTools;
 
 @WebServlet(urlPatterns = {
 		//"/clearCache",
@@ -38,6 +38,8 @@ public class ConnexionServlet extends HttpServlet {
 	private UtilisateurDao utilisateurDao;
 	@EJB
 	private JourDao jourDao;
+	@EJB
+	private JeuDao jeuDao;
 	@EJB
 	private GrilleDao grilleDao;
 	@EJB
