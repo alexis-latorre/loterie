@@ -48,7 +48,6 @@ public class JeuDeclinaisonDao extends LoterieDao {
 		if (tmp.length() > 0) {
 			where = " WHERE (" + tmp.substring(1, tmp.length() - 4) + ")";
 		}
-		System.out.println(Constants.SELECT_JEU_DECLINAISONS + where);
 		return (JeuDeclinaison) super.resultat(Constants.SELECT_JEU_DECLINAISONS + where, params, "trouverParIndex");
 	}
 }

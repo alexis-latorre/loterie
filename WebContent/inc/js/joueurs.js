@@ -51,6 +51,7 @@ function retirerTousJoueurs() {
 function majNbJoueursGrille() {
 	var nbJoueurs = $('#input-joueurs').children().size();
 	$('#nbJoueurs').html(nbJoueurs);
+	majSelection();
 }
 
 majNbJoueursGrille();

@@ -132,6 +132,7 @@ $(document).ready(function() {
 	majSelection = function() {
 		nbNumeros = numeros.filter(':checked').length;
 		nbEtoiles = etoiles.filter(':checked').length;
+		nbJoueurs = $("#nbJoueurs").text();
 		
 		maxE = limitesNumeros[nbNumeros];
 		maxN = limitesEtoiles[nbEtoiles];
@@ -178,6 +179,14 @@ $(document).ready(function() {
 		
 		$("#prixEtoilePlus").text(ep.replace(".", ","));
 		$("#prixTirage").text(tirage.toString().replace(".", ","));
+		prixParJoueur = Math.ceil((tirage / nbJoueurs) * 100) / 100;
+		
+		if (prixParJoueur > 0 && isFinite(prixParJoueur)) {
+			$("#prixParJoueur").text(prixParJoueur.toString().replace(".", ","));
+			$("#parJoueur").show();
+		} else {
+			$("#parJoueur").hide();
+		}
 	};
 	
 	epCheck.change(function () {
@@ -219,5 +228,6 @@ $(document).ready(function() {
 			}
 		});
 	}
+	majSelection();
 });
 </script>

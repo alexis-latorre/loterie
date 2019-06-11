@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="form-group">
 	<label>Choisir les joueurs</label>
 </div>
@@ -47,10 +48,11 @@
 	<div class="col-md-5">&nbsp;</div>
 </div>
 <br />
-<p>Nombre de joueurs associés à la grille : <span id="nbJoueurs">
+<p>Nombre de joueurs associÃ©s Ã  la grille : <span id="nbJoueurs">
 <c:choose>
 	<c:when test="${not empty joueurs}">${joueurs.size()}</c:when>
 	<c:otherwise>1</c:otherwise>
 </c:choose>
-</span></p>
+</span><span id="parJoueur"> (<span id="prixParJoueur">0,00</span> &euro; par joueur par tirage)</span>
+</p>
 <c:import url="/WEB-INF/js/joueurs.js.jsp" />
